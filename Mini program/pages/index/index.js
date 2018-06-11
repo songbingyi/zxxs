@@ -12,7 +12,7 @@ Page({
   //   wx.showLoading({
   //     title: '加载中',
   //   })
-  // },
+  // }, 
   onShow: function () {
     wx.getUserInfo({
       success: res => {
