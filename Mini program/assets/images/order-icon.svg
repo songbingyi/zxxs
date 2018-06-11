@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 32 32" style="enable-background:new 0 0 32 32;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#F08300;}
+	.st1{fill:#9B9B9B;}
+</style>
+<g id="Symbols">
+	<g id="icon_x2F_order" transform="translate(-1.000000, 0.000000)">
+		<g id="订单" transform="translate(1.000000, 0.000000)">
+			<g id="order">
+				<polygon id="Path" class="st0" points="8,9.6 22.4,9.6 22.4,11.2 8,11.2 				"/>
+				<polygon id="Path_1_" class="st0" points="8,14.4 19.2,14.4 19.2,16 8,16 				"/>
+				<polygon id="Path_2_" class="st0" points="8,19.2 19.2,19.2 19.2,20.8 8,20.8 				"/>
+				<path id="Path_3_" class="st1" d="M3.2,32h25.6c0.9,0,1.6-0.7,1.6-1.6V3.2c0-0.9-0.7-1.6-1.6-1.6h-2.4v1.6h2.4v27.2H3.2V3.2h2.5
+					V1.6H3.2c-0.9,0-1.6,0.7-1.6,1.6v27.2C1.6,31.3,2.3,32,3.2,32z"/>
+				<path id="Combined-Shape" class="st1" d="M8,1.6C8,0.7,8.7,0,9.6,0h12.8C23.3,0,24,0.7,24,1.6v1.6c0,0.9-0.7,1.6-1.6,1.6H9.6
+					C8.7,4.8,8,4.1,8,3.2V1.6z M9.6,3.2h12.8V1.6H9.6V3.2z"/>
+			</g>
+		</g>
+	</g>
+</g>
+</svg>

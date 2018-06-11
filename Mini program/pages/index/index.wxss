@@ -1,0 +1,84 @@
+/**index.wxss**/
+ /* .userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+}
+
+.usermotto {
+  margin-top: 200px;
+}  */
+
+ .index-logo{
+  width: 480rpx;
+  height: 480rpx;
+  margin: 80rpx auto;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+.scan-qr{
+  width: 256rpx;
+  height: 256rpx;
+  position: relative;
+  margin: 0 auto;
+}
+.scan-qr .circle{
+  width: 256rpx;
+  height: 256rpx;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0.15;
+  background-color: #F5A623;
+  transform: scale(1.1,1.1);
+  border-radius: 50%;
+  z-index: 99;
+  animation: 2s circle-scale infinite ease;
+}
+@keyframes circle-scale{
+  0%{
+  transform: scale(1,1);
+  opacity: 0.15;
+  }
+  100%{
+  transform: scale(1.8,1.8);
+  opacity: 0;
+  }
+}
+.scan-btn{
+  width: 256rpx;
+  height: 256rpx;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  border: none;
+  background: -webkit-linear-gradient(-45deg, #FAD961, #f08300);
+  padding: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 100;
+}
+.scan-btn.button-hover{
+  background: #f08300;
+}
+.scan-btn .icon-scan{
+  font-size: 80rpx;
+  line-height: 1em;
+  margin-top: 20rpx;
+} 

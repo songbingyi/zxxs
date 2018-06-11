@@ -1,0 +1,56 @@
+/* pages/user/user.wxss */
+page{
+  background-color: #f8f8f8;
+}
+.wrap{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+.user-head{
+  padding: 40rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f08300;
+  color: #fff;
+  margin-bottom: 40rpx;
+}
+.user-head .user-avatar{
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 20rpx;
+}
+.user-head .user-avatar image{
+  width: 100%;
+  height: 100%;
+}
+.user-head text{
+  font-size: 40rpx;
+  font-weight: 100;
+}
+.weui-cell__hd{
+  height: 20px;
+  padding: 0;
+}
+.weui-cell__hd image{
+  vertical-align: top;
+  line-height: 20px;
+}
+.weui-cell__bd{
+  font-size: 32rpx;
+}
+.weui-cell{
+  padding: 10px 20px;
+}
+button.weui-cell{
+  background-color: #fff;
+  text-align: left;
+  line-height: initial;
+  border: none;
+}

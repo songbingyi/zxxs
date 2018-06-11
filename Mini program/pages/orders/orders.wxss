@@ -1,0 +1,101 @@
+.order-list{
+  padding: 40rpx;
+  margin-bottom: 0;
+}
+.order-item{
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 40rpx;
+  border-bottom: 1rpx solid #eee;
+}
+.item-title{
+  font-size: 32rpx;
+  line-height: 50rpx;
+  padding-right:40rpx; 
+}
+.counter-box{
+  text-align: right;
+  flex: none;
+}
+.unit-price{
+  font-size: 28rpx;
+  line-height: 50rpx;
+  margin-bottom: 40rpx;
+  display: block;
+}
+.counter{
+  vertical-align: top;
+  height: 50rpx;
+}
+.counter text,
+.counter button{
+  float: right;
+}
+.counter text{
+  display: block;
+  line-height: 50rpx;
+  height: 50rpx;
+  padding: 0 30rpx;
+  text-align: center;
+}
+.counter .btn{
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 50%;
+  font-size: 40rpx;
+  line-height: 42rpx;
+  text-align: center;
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: block;
+  box-sizing: border-box;
+}
+.counter .btn.add{
+  background-color: #F08300;
+  color: #fff;
+}
+.counter .btn.minus{
+  border: 1px solid #eee;
+  color: #9B9B9B;
+}
+.pay-count-box{
+  display: flex;
+  justify-content: space-between;
+  padding: 40rpx;
+  padding-top: 0;
+  vertical-align: text-top;
+  margin-bottom: 80rpx;
+}
+.weixin-pay{
+  height: 40rpx;
+  line-height: 40rpx;
+}
+.weixin-pay icon{
+  color: #1AAD19;
+  font-size: 40rpx;
+  line-height: 40rpx;
+  margin-right: 16rpx;
+  vertical-align: text-top;
+}
+.weixin-pay text{
+  font-size: 28rpx;
+  line-height: 40rpx;
+  display: inline-block;
+}
+.count-box{
+  margin-top: 12rpx;
+  text-align: right;
+  font-size: 28rpx;
+  line-height: 40rpx;
+}
+.count-box .count-price{
+  color: #D0021B;
+}
+.count-box .count{
+  font-size: 40rpx;
+  line-height: 40rpx;
+}
+button[type="primary"]{
+  margin: 40rpx;
+}

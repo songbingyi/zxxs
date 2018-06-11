@@ -1,0 +1,59 @@
+/* pages/user/orderlist/orderlist.wxss */
+
+page{
+  background-color: #f8f8f8;
+}
+.page-title{
+  margin-bottom: 40rpx;
+}
+.user-order-list .order-item{
+  margin-bottom: 40rpx;
+  background-color: #fff;
+  padding: 0 40rpx;
+}
+.order-con{
+  display: flex;
+  justify-content: space-between;
+  padding-top: 40rpx;
+  padding-bottom: 40rpx;
+  border-bottom: 1px solid #eee;
+}
+.order-con text{
+  display: block;
+  line-height: 40rpx;
+}
+.title-time .item-title{
+  font-size: 32rpx;
+  margin-bottom: 10rpx;
+}
+.title-time .item-time{
+  font-size: 28rpx;
+  color: #9B9B9B;
+}
+.price-counter{
+  flex: none;
+  text-align: right;
+}
+.price-counter .item-price{
+  font-size: 28rpx;
+  margin-bottom: 10rpx;
+}
+.price-counter .item-counter{
+  font-size: 28rpx;
+}
+.state-total{
+  padding: 20rpx 0;
+  display: flex;
+  justify-content: space-between;
+}
+.state-total text{
+  line-height: 40rpx;
+  font-size: 28rpx;
+}
+.state-total .item-total{
+  text-align: right;
+}
+.state-total text.price-total{
+  color: #D0021B;
+  font-size: 30rpx;
+}

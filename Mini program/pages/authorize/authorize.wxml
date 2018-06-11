@@ -1,0 +1,21 @@
+<!--pages/authorize/authorize.wxml-->
+<view class="wrap">
+  <view class="authorize-title">
+    <icon class="zuoxiang icon-weixin"></icon>
+    <text>微信</text>
+    <text>亲，使用坐享小食前，请完成以下两步</text>
+  </view>
+  <view class="content">
+    <view class="des-text">
+      <text class="title">登陆后该应用将获得以下权限</text>
+      <text class="des">获取你的公开信息（昵称，头像等）</text>
+      <text class="des">获取你的身份信息（手机号）用来登录</text>
+    </view>
+    <button type="primary" size="default" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo"><text class="list-num">1</text>授权登录</button>
+    <view class="des-text">
+      <text class="title">开通免密支付</text>
+      <text class="des">下单更便捷（开通后才能使用坐享小食）</text>
+    </view>
+    <button type="primary" size="default" disabled="disabled"><text class="list-num">2</text>立即开通</button>
+  </view>
+</view>

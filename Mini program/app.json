@@ -1,0 +1,17 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/authorize/authorize",
+    "pages/orders/orders",
+    "pages/user/user",
+    "pages/user/orderlist/orderlist",
+    "pages/text/text"
+  ],
+  "window": {
+    "backgroundTextStyle": "#fff",
+    "navigationBarBackgroundColor": "#f08300",
+    "navigationBarTitleText": "",
+    "navigationBarTextStyle": "#fff"
+  }
+}

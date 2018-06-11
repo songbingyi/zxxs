@@ -1,0 +1,90 @@
+<!--pages/user/orderlist/orderlist.wxml-->
+<view class="wrap">
+    <view class="page-title">
+      <text class="title">订单</text>
+    </view>
+    <view class="content">
+      <view class="user-order-list">
+        <view class="order-item">
+          <view class="order-con">
+            <view class="title-time">
+              <text class="item-title">精品午间套餐</text>
+              <text class="item-time">2018-05-20 20:20</text>
+            </view>
+            <view class="price-counter">
+              <text class="item-price">￥15.00</text>
+              <text class="item-counter">X2</text>
+            </view>
+          </view>
+          <view class="state-total">
+            <view class="item-state">
+              <text>订单完成</text>
+            </view>
+            <view class="item-total">
+              <text>共1份，合计<text class="price-total">￥30.00</text></text>
+            </view>
+          </view>
+        </view>
+        <view class="order-item">
+          <view class="order-con">
+            <view class="title-time">
+              <text class="item-title">精品午间套餐</text>
+              <text class="item-time">2018-05-20 20:20</text>
+            </view>
+            <view class="price-counter">
+              <text class="item-price">￥15.00</text>
+              <text class="item-counter">X2</text>
+            </view>
+          </view>
+          <view class="state-total">
+            <view class="item-state">
+              <text>订单完成</text>
+            </view>
+            <view class="item-total">
+              <text>共1份，合计<text class="price-total">￥30.00</text></text>
+            </view>
+          </view>
+        </view>
+        <view class="order-item">
+          <view class="order-con">
+            <view class="title-time">
+              <text class="item-title">精品午间套餐</text>
+              <text class="item-time">2018-05-20 20:20</text>
+            </view>
+            <view class="price-counter">
+              <text class="item-price">￥15.00</text>
+              <text class="item-counter">X2</text>
+            </view>
+          </view>
+          <view class="state-total">
+            <view class="item-state">
+              <text>订单完成</text>
+            </view>
+            <view class="item-total">
+              <text>共1份，合计<text class="price-total">￥30.00</text></text>
+            </view>
+          </view>
+        </view>
+        <view class="order-item">
+          <view class="order-con">
+            <view class="title-time">
+              <text class="item-title">精品午间套餐</text>
+              <text class="item-time">2018-05-20 20:20</text>
+            </view>
+            <view class="price-counter">
+              <text class="item-price">￥15.00</text>
+              <text class="item-counter">X2</text>
+            </view>
+          </view>
+          <view class="state-total">
+            <view class="item-state">
+              <text>订单完成</text>
+            </view>
+            <view class="item-total">
+              <text>共1份，合计<text class="price-total">￥30.00</text></text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+</view>

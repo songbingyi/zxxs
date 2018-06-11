@@ -1,0 +1,36 @@
+<!--index.wxml-->
+ <!-- <view class="container">
+  <view class="userinfo">
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </block>
+  </view>
+  <view class="usermotto">
+    <text class="user-motto">{{motto}}</text>
+  </view>
+</view>  -->
+ <view class="wrap">
+    <view class="page-title">
+        <text class="zuoxiang brand">坐享小食</text>
+          <!-- <block class="avatar">
+            <view class="default">
+              <icon class="zuoxiang icon-avatar"></icon>
+            </view>
+          </block> -->
+          <view class="user-avatar" bindtap="goUser">
+          <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}"></image> 
+        </view> 
+    </view>
+    <view class="content">
+      <view class="index-logo" style="background-image: url({{indexLogo}});"></view>
+      <view class="scan-qr">
+        <button bindtap="goAuthorize" class="scan-btn">
+          <icon class="zuoxiang icon-scan"></icon>
+          <text>扫码开门</text>
+        </button>
+        <view class="circle"></view>
+      </view>
+    </view>
+</view> 
