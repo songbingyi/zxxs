@@ -14,11 +14,11 @@
  <view class="wrap">
     <view class="page-title">
         <text class="zuoxiang brand">坐享小食</text>
-          <!-- <block class="avatar">
+           <!-- <block class="avatar">
             <view class="default">
               <icon class="zuoxiang icon-avatar"></icon>
             </view>
-          </block> -->
+          </block>  -->
           <view class="user-avatar" bindtap="goUser">
           <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}"></image> 
         </view> 

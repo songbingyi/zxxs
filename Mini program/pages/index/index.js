@@ -1,6 +1,6 @@
 //index.js
 //获取应用实例
-const app = getApp()
+let app = getApp()
 
 Page({
   data: {
@@ -8,31 +8,47 @@ Page({
     hasUserInfo: false,
     indexLogo: "http://218.244.158.175/static/zuoxiang/images/logo_indexbg.png",
   },
-  // onLoad: function () {
-  //   wx.showLoading({
-  //     title: '加载中',
-  //   })
-  // }, 
-  onShow: function () {
-    wx.getUserInfo({
-      success: res => {
-        app.globalData.userInfo = res.userInfo
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        });
-      },
-      fail: res => {
-        wx.showLoading({
-          title: '加载中',
-        });
-        wx.navigateTo({
-          url: '../authorize/authorize'
-        })
+  onLoad: function() {
+     wx.login({
+      success: (res) => {
+        if (res.code) {
+          wx.getUserInfo({
+            
+          })
+          wx.request({
+            url: 'https://api.weixin.qq.com/sns/jscode2session' + '?appid=wx8bf90b8b9fbcf28e' + '&secret=c4a02cb3d93cde0a949a505c5d7e5b9c' + '&js_code=' + res.code + '&grant_type=authorization_code',
+
+            success: (e) => {
+              wx.hideLoading()
+              console.log(e)
+              this.setData({
+                disabled: false
+              })
+            }
+          })
+        }
       }
     })
   },
-  onReady: function () {
+  onShow: function() {
+    //console.log(app.globalData)
+    // if (app.globalData.userPayStatus) {
+
+    //   this.setData({
+    //     userInfo: app.globalData.userInfo,
+    //     hasUserInfo: true,
+    //   })
+    // } else {
+    //   // wx.showLoading({
+    //   //   title: '加载中',
+    //   // });
+    //   wx.redirectTo({
+    //     url: '../authorize/authorize'
+    //   })
+    // }
+
+  },
+  onReady: function() {
     // setTimeout(function () {
     //   wx.hideLoading()
     // }, 1000)
@@ -46,7 +62,8 @@ Page({
     //   }
     // })
   },
-  goAuthorize: function () {
+  //首页扫码功能
+  goAuthorize: function() {
     wx.scanCode({
       onlyFromCamera: true,
       success: (result) => {
@@ -57,28 +74,28 @@ Page({
       },
       fail: (res) => {
 
-        wx.navigateTo({
-          url: '../orders/orders'
-        })
-        // wx.showModal({
-        //   title: '提示',
-        //   showCancel: false,
-        //   content: '请扫描正确的二维码',
-        //   success: function (res) {
-        //     if (res.confirm) {
-        //       console.log('点击了确定')
-        //     }
-        //   }
+        // wx.navigateTo({
+        //   url: '../orders/orders'
         // })
+        wx.showModal({
+          title: '提示',
+          showCancel: false,
+          content: '请扫描正确的二维码',
+          success: function(res) {
+            if (res.confirm) {
+              console.log('点击了确定')
+            }
+          }
+        })
       }
     })
   },
-  goUser: function () {
+  goUser: function() {
     wx.navigateTo({
       url: '../user/user'
     })
   },
-  
+
   // data: {
   //   motto: 'Hello World',
   //   userInfo: {},
