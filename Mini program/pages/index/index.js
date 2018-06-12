@@ -13,17 +13,15 @@ Page({
       success: (res) => {
         if (res.code) {
           wx.getUserInfo({
-            
+              complete: function(res1){
+                console.log(res1)
+            }
           })
           wx.request({
             url: 'https://api.weixin.qq.com/sns/jscode2session' + '?appid=wx8bf90b8b9fbcf28e' + '&secret=c4a02cb3d93cde0a949a505c5d7e5b9c' + '&js_code=' + res.code + '&grant_type=authorization_code',
-
             success: (e) => {
               wx.hideLoading()
               console.log(e)
-              this.setData({
-                disabled: false
-              })
             }
           })
         }
@@ -64,6 +62,7 @@ Page({
   },
   //首页扫码功能
   goAuthorize: function() {
+      if (app.globalData.userPayStatus){
     wx.scanCode({
       onlyFromCamera: true,
       success: (result) => {
@@ -73,7 +72,6 @@ Page({
         // })
       },
       fail: (res) => {
-
         // wx.navigateTo({
         //   url: '../orders/orders'
         // })
@@ -88,7 +86,11 @@ Page({
           }
         })
       }
-    })
+    })}else{
+          wx.navigateTo({
+              url: '../authorize/authorize'
+          })
+    }
   },
   goUser: function() {
     wx.navigateTo({

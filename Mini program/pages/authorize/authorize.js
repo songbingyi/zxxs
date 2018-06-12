@@ -5,6 +5,7 @@ Page({
   data: {
     phoneNumberBtnDisabled: false,
     payBtnDisabled: true,
+    authorizeStatus:'授权登录'
   },
   //授权登录按钮功能:
   getPhoneNumber: function(res) {
@@ -13,7 +14,8 @@ Page({
       console.log(res)
       this.setData({
         payBtnDisabled: false,
-        phoneNumberBtnDisabled: true
+        phoneNumberBtnDisabled: true,
+        authorizeStatus:'  已授权  '
       })
     }
   
@@ -21,7 +23,7 @@ Page({
 
   getPayInfo: () => {
     app.globalData.userPayStatus = true
-    wx.redirectTo({
+    wx.navigateBack({
       url: '../index/index'
     })
   }

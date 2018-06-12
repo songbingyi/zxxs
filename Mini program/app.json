@@ -1,9 +1,9 @@
 {
   "pages": [
-    "pages/authorize/authorize",
     "pages/index/index",
-    "pages/logs/logs",
     "pages/orders/orders",
+    "pages/authorize/authorize",
+    "pages/logs/logs",
     "pages/user/user",
     "pages/user/orderlist/orderlist",
     "pages/text/text"
