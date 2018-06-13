@@ -9,21 +9,23 @@ Page({
     indexLogo: "http://218.244.158.175/static/zuoxiang/images/logo_indexbg.png",
   },
   onLoad: function() {
+    wx.getUserInfo({
+      complete: function (d) {
+        console.log(d)
+      }
+    })
      wx.login({
       success: (res) => {
         if (res.code) {
-          wx.getUserInfo({
-              complete: function(res1){
-                console.log(res1)
-            }
-          })
           wx.request({
             url: 'https://api.weixin.qq.com/sns/jscode2session' + '?appid=wx8bf90b8b9fbcf28e' + '&secret=c4a02cb3d93cde0a949a505c5d7e5b9c' + '&js_code=' + res.code + '&grant_type=authorization_code',
             success: (e) => {
               wx.hideLoading()
               console.log(e)
+              
             }
           })
+
         }
       }
     })
