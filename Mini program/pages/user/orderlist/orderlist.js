@@ -1,18 +1,23 @@
 // pages/user/orderlist/orderlist.js
+const app = getApp()
+const datas = require('../../../assets/datas/mock.js')
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-  
+    orderPayList: []
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    //载入订单数据
+    this.setData({
+      orderPayList: datas.orderList
+    })
   },
 
   /**

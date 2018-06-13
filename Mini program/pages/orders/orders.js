@@ -1,4 +1,5 @@
 // page/component/new-pages/cart/cart.js
+const app = getApp()
 var datas = require('../../assets/datas/mock.js')
 Page({
   data: {
@@ -8,7 +9,9 @@ Page({
     disabled:false,
     orderPayBtn:'确认支付'
   },
-  onShow() {
+  
+  //onReady navigate返回后可以继续保持数据
+  onReady() {
     var data = datas.carts
     data[0].num = 1
     this.setData({
@@ -89,7 +92,10 @@ Page({
   
   //点击支付按钮后发起支付行为
   goOrder(){
-
+    app.globalData.orderList = this.data.carts
+    wx.navigateTo({
+      url: '/pages/user/orderlist/orderlist',
+    })
   }
 
 })

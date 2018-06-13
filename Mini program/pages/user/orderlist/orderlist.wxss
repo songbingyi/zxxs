@@ -11,35 +11,68 @@ page{
   background-color: #fff;
   padding: 0 40rpx;
 }
+
+.order-num {
+
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 1px solid #eee;
+}
+
+.title-num {
+  font-size: 28rpx;
+  color: #9B9B9B;
+  display: flex;
+  justify-content: space-between;
+}
+
+.orderlist {
+  line-height: 45rpx;
+  display: flex;
+  justify-content: space-between;
+
+}
+.orderlist-title {
+  font-size: 32rpx;
+}
+.orderlist-counter {
+  font-size: 28rpx;
+  color:#9B9B9B;
+  align-self: center
+}
+.iorderlist-price {
+  font-size: 28rpx;
+}
+
 .order-con{
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   padding-top: 40rpx;
   padding-bottom: 40rpx;
   border-bottom: 1px solid #eee;
 }
-.order-con text{
-  display: block;
-  line-height: 40rpx;
-}
+
 .title-time .item-title{
   font-size: 32rpx;
-  margin-bottom: 10rpx;
 }
-.title-time .item-time{
+
+.price-box{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   font-size: 28rpx;
-  color: #9B9B9B;
+  
 }
-.price-counter{
-  flex: none;
-  text-align: right;
-}
-.price-counter .item-price{
+.counter-box {
   font-size: 28rpx;
-  margin-bottom: 10rpx;
+  color:#9B9B9B;
+  display: flex;
+  flex-direction: column;
 }
-.price-counter .item-counter{
-  font-size: 28rpx;
+.price-box .item-counter{
+    margin-right: 30rpx;
+    color:#9B9B9B
 }
 .state-total{
   padding: 20rpx 0;

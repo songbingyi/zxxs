@@ -9,6 +9,7 @@ App({
   },
   globalData: {
     userphoneInfo: null,
-    userPayStatus: false
+    userPayStatus: false,
+    orderList:[]
   }
 })
