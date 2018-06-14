@@ -9,7 +9,7 @@
 
         <view class="order-num">
           <view class="title-num">
-            <text class="item-num">{{item.orderNum}}</text>
+            <text class="item-num">订单编号：{{item.orderNum}}</text>
             <text class="item-time">{{item.orderTime}}</text>
           </view>
         </view>
@@ -20,19 +20,7 @@
             <text class="orderlist-counter">X{{item.num}}</text>
             <text class="iorderlist-price">￥{{item.price}}</text>
           </view>
-          <!-- <view class="title-time">
-            <text class="item-title" >item.title</text>
-            <text class="item-title" >item.title</text>
-          </view>
-          <view class="counter-box" >
-            <text class="item-counter" >Xitem.num</text>
-            <text class="item-counter" >Xitem.num</text>
 
-          </view>
-          <view class="price-box" >
-            <text class="item-price" >￥item.price</text>
-            <text class="item-price" >￥item.price</text>
-          </view> -->
         </view>
         <view class="state-total">
           <view class="item-state">
