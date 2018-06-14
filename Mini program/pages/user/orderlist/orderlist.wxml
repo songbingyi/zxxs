@@ -15,10 +15,12 @@
         </view>
 
         <view class="order-con">
-          <view class='orderlist' wx:for='{{item.orderCarts}}'>
+          <view class='orderlist' wx:for='{{item.orderCarts}}' wx:key='{{index}}'>
             <text class="orderlist-title">{{item.title}}</text>
+            <view class='price-num'>
             <text class="orderlist-counter">X{{item.num}}</text>
             <text class="iorderlist-price">￥{{item.price}}</text>
+            </view>
           </view>
 
         </view>
@@ -31,6 +33,8 @@
           </view>
         </view>
       </view>
+
+      
 
     </view>
   </view>

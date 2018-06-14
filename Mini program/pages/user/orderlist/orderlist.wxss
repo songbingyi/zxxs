@@ -4,50 +4,64 @@ page{
   background-color: #f8f8f8;
 }
 .content {
-  margin-top: 185rpx;
+  padding-top: 160rpx;
 }
 .page-title{
   margin-bottom: 40rpx;
   position: fixed
 }
 .user-order-list .order-item{
-  margin-bottom: 40rpx;
+  margin-bottom: 20rpx;
   background-color: #fff;
   padding: 0 40rpx;
 }
 
 .order-num {
-
   padding-top: 20rpx;
   padding-bottom: 20rpx;
   border-bottom: 1px solid #eee;
 }
 
 .title-num {
-  font-size: 28rpx;
+  font-size: 24rpx;
   color: #9B9B9B;
   display: flex;
   justify-content: space-between;
 }
 
 .orderlist {
-  line-height: 60rpx;
-  display: flex;
-  justify-content: space-between;
+  line-height: 40rpx;
+  padding-top: 10rpx;
+  padding-bottom: 10rpx;
+  
+   display: flex;
+  justify-content: space-between; 
 
 }
 .orderlist-title {
-  font-size: 28rpx;
-  width: 60%
+  font-size: 32rpx;
+  line-height: 40rpx;
+  margin-right: 1em;
+  width: 60%;
+
+}
+.price-num {
+  display: flex;
+  width: 40%;
+  justify-content: space-between
 }
 .orderlist-counter {
   font-size: 28rpx;
   color:#9B9B9B;
-
-
+  line-height: 40rpx;
+  width: 40%;
+  flex: none;
+  text-align: right
 }
 .iorderlist-price {
   font-size: 28rpx;
+  line-height: 40rpx;
+  
 }
 
 .order-con{
