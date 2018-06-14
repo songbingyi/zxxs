@@ -2,14 +2,18 @@
 
 page{
   background-color: #f8f8f8;
-}
-.content {
-  padding-top: 160rpx;
+
 }
 .page-title{
   margin-bottom: 40rpx;
-  position: fixed
+  position: fixed;
+  z-index: 2;
 }
+.content {
+  padding-top: 160rpx;
+  z-index: 1；
+}
+
 .user-order-list .order-item{
   margin-bottom: 20rpx;
   background-color: #fff;
@@ -73,27 +77,6 @@ page{
   border-bottom: 1px solid #eee;
 }
 
-/* .title-time .item-title{
-  font-size: 32rpx;
-}
-
-.price-box{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  font-size: 28rpx;
-  
-}
-.counter-box {
-  font-size: 28rpx;
-  color:#9B9B9B;
-  display: flex;
-  flex-direction: column;
-}
-.price-box .item-counter{
-    margin-right: 30rpx;
-    color:#9B9B9B
-} */
 .state-total{
   padding: 20rpx 0;
   display: flex;
@@ -111,4 +94,10 @@ page{
 .state-total text.price-total{
   color: #D0021B;
   font-size: 30rpx;
+}
+.more {
+  color:#9B9B9B;
+  text-align: center;
+  font-size: 24rpx;
+  line-height: 80rpx;
 }

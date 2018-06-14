@@ -3,7 +3,7 @@
   <view class="page-title">
     <text class="title">订单</text>
   </view>
-  <view class="content">
+  <scroll-view class="content" bindscrolltolower="lower" style="height: {{height}}rpx;" scroll-y='true' lower-threshold='0'>
     <view class="user-order-list">
       <view class="order-item" wx:for="{{orderPayList}}" wx:key="{{index}}">
 
@@ -34,8 +34,11 @@
         </view>
       </view>
 
-      
-
     </view>
-  </view>
+    <view class='more'>
+      <text>加载更多</text>
+    </view>
+  </scroll-view>
+
+
 </view>
