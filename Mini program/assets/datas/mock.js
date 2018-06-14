@@ -33,5 +33,18 @@ module.exports = {
       orderTotalNum: 2,
       orderTotalPrice: 10
     },
+    {
+      orderNum: 22221111111111,
+      orderTime: '2018-06 - 20 20:20',
+      orderCarts: [
+        { id: 1, title: '驴肉火烧', num: 1, price: 15.00.toFixed(2) },
+        { id: 2, title: '三秦套餐', num: 1, price: 15.00.toFixed(2) },
+        { id: 5, title: '小卖店', num: 3, price: 15.00.toFixed(2) },
+        { id: 5, title: '小卖店', num: 3, price: 15.00.toFixed(2) }
+      ],
+      orderStatus: '订单完成',
+      orderTotalNum: 2,
+      orderTotalPrice: 10
+    },
   ]
 }

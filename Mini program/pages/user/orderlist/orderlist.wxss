@@ -3,8 +3,12 @@
 page{
   background-color: #f8f8f8;
 }
+.content {
+  margin-top: 185rpx;
+}
 .page-title{
   margin-bottom: 40rpx;
+  position: fixed
 }
 .user-order-list .order-item{
   margin-bottom: 40rpx;
@@ -77,12 +81,14 @@ page{
     color:#9B9B9B
 } */
 .state-total{
-  padding: 10rpx 0;
+  padding: 20rpx 0;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  height: 40rpx;
 }
 .state-total text{
-
+  line-height: 40rpx;
   font-size: 28rpx;
 }
 .state-total .item-total{
