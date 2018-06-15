@@ -82,3 +82,46 @@
   line-height: 1em;
   margin-top: 20rpx;
 } 
+
+.userInfoBox {
+  width: 80%;
+  background-color: #fff;
+  border-radius: 10px;
+  position: fixed;
+  top: 300rpx;
+  left: 10%;
+  border: 1px #eee solid;
+  z-index: 102;
+}
+
+.userInfoTitle {
+    font-size: 32rpx;
+    text-align: center;
+    line-height: 90rpx;
+    /* border-bottom: 1px #eee solid */
+  }
+.userInfoContent {
+  color: #9B9B9B;
+  font-size: 28rpx;
+  padding: 36rpx 30rpx;
+  border-bottom: 1px #eee solid;
+  text-align: center;
+  
+}
+
+.userAgreeBtn{
+  border: 1px #f08300 solid;
+}
+
+
+.userInfoMask{
+  position:fixed;
+  width:100%;
+  height:100%;
+  top:0px;
+  background:rgba(0,0,0,0.4);
+  overflow: hidden;
+  z-index: 101;
+  }
+
+

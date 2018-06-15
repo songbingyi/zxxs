@@ -18,7 +18,6 @@ Page({
         authorizeStatus:'  已授权  '
       })
     }
-  
   }, 
 
   getPayInfo: () => {
