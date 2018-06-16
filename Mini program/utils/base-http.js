@@ -46,7 +46,7 @@ BaseHttp.post = function (route, params, callback) {
 BaseHttp.handleResult = function (d, callback) {
   if (d && d.status) {
     if (d.status.succeed == '1') {
-      if (d.paginated) {
+      if (d.paginated) { //是否分页
         callback(d.data == null ? "" : d.data, true, d.paginated);
       } else {
         callback(d.data == null ? "" : d.data, true);

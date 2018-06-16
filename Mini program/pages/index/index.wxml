@@ -39,9 +39,9 @@
 </view>
 <view class="userInfoBox" wx:if="{{!hasUserInfo}}">
   <view class="userInfoTitle">
-    获取微信授权信息
+    标题
   </view>
-  <view class="userInfoContent">坐享小食需要您授权获取信息，点击“开始授权”进行授权。</view>
+  <view class="userInfoContent">坐享小食小程序需要您授权获取信息，点击“开始授权”进行授权</view>
 
   <button open-type="getUserInfo" bindgetuserinfo="agreeGetUser" plain="true" type='primary' style='border:none' class="userAgreeBtn" lang="zh_CN">开始授权</button>
 

@@ -84,35 +84,31 @@
 } 
 
 .userInfoBox {
-  width: 80%;
+  width: 560rpx;
   background-color: #fff;
-  border-radius: 10px;
+  border-radius: 8px;
   position: fixed;
-  top: 300rpx;
-  left: 10%;
+  top: 412rpx;
+  left: 95rpx;
   border: 1px #eee solid;
   z-index: 102;
 }
 
 .userInfoTitle {
-    font-size: 32rpx;
+    font-size: 36rpx;
     text-align: center;
-    line-height: 90rpx;
-    /* border-bottom: 1px #eee solid */
+        padding-top:50rpx;
+    /* line-height: 90rpx;*/
   }
 .userInfoContent {
-  color: #9B9B9B;
-  font-size: 28rpx;
-  padding: 36rpx 30rpx;
-  border-bottom: 1px #eee solid;
+  color: #888888;
+  font-size: 30rpx;
+  padding: 22rpx 30rpx;
+  padding-bottom: 30rpx;
+  border-bottom: 1px #e5e5e5 solid;
   text-align: center;
   
 }
-
-.userAgreeBtn{
-  border: 1px #f08300 solid;
-}
-
 
 .userInfoMask{
   position:fixed;

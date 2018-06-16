@@ -10,8 +10,8 @@ module.exports = {
   getMemberDetail: 'member/member/getMemberDetail',
   /** @name 获取信息数据 */
   getDataInfo: 'about/info/getDataInfo',
-  /** @name 获取信息数据 */
-  getTestInfo: 'orderList',
+  /** @name 订单-获取菜品信息数据 */
+  getOrderInfo: 'orderDatas',
 
   serve_url: serve_url
 }

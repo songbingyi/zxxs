@@ -12,14 +12,9 @@ Page({
     })
   },
   onLoad: function () {
-    // wx.getUserInfo({
-    //   success: res => {
-    //     app.globalData.userInfo = res.userInfo
-    //     this.setData({
-    //       userInfo: res.userInfo,
-    //       hasUserInfo: true
-    //     })
-    //   }
-    // })
+   var userInfo = app.globalData.userInfo;//从全局变量获取userinfo
+   this.setData({
+     userInfo: userInfo
+   })
   }
 })

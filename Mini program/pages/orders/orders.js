@@ -1,6 +1,7 @@
 // page/component/new-pages/cart/cart.js
 const app = getApp()
-var datas = require('../../assets/datas/mock.js')
+//var datas = require('../../assets/datas/mock.js')
+var orderService = require('../../service/order-http.service.js')
 Page({
   data: {
     carts: [],
@@ -12,12 +13,22 @@ Page({
   
   //onReady navigate返回后可以继续保持数据
   onReady() {
-    var data = datas.carts
-    data[0].num = 1
-    this.setData({
-      carts: data
+    orderService.getOrderInfo((d) => {
+      var carts = d.carts
+      carts[0].num = 1;
+     this.setData({
+      carts: carts
+     })
+     this.getTotalPrice();
     });
-    this.getTotalPrice();
+
+    
+    // var data = datas.carts
+    // data[0].num = 1
+    // this.setData({
+    //   carts: data
+    // });
+    // this.getTotalPrice();
   },
 
   addCount:function(e) {

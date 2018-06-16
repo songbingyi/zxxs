@@ -1,7 +1,7 @@
 //index.js
 //获取应用实例
 let app = getApp()
-var orderService = require('../../service/order-http.service.js')
+
 
 Page({
   data: {
@@ -21,10 +21,11 @@ Page({
           wx.getStorage({
             key: 'userInfo',
             success: (res) => {
-              this.setData({ //从缓存里读取userInfo
+              this.setData({ //从缓存里读取userInfo，设置到view层
                 hasUserInfo:true,
                 userInfo:res.data
               })
+              app.globalData.userInfo = res.data//userinfo赋给全局变量
             },
           })
         }else{
@@ -136,7 +137,7 @@ Page({
         title: '加载中...',
         duration: 600,
       })
-
+      app.globalData.userInfo = e.detail.userInfo
       wx.setStorage({
         key: 'userInfo',
         data: e.detail.userInfo,
@@ -185,16 +186,3 @@ Page({
 //     })
 //   }
 // },
-// getUserInfo: function(e) {
-//   console.log(e)
-//   app.globalData.userInfo = e.detail.userInfo
-//   this.setData({
-//     userInfo: e.detail.userInfo,
-//     hasUserInfo: true
-//   })
-// }
-// getinfo:function(e){
-//   orderService.getMemberDetail((d) => {
-
-//   });
-// }
