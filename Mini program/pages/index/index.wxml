@@ -14,14 +14,14 @@
 <view class="wrap">
   <view class="page-title">
     <text class="zuoxiang brand">坐享小食</text>
-    <block class="avatar">
+    <block wx:if="{{!hasUserInfo}}" class="avatar">
             <view class="default">
               <icon class="zuoxiang icon-avatar"></icon>
             </view>
     </block>  
-    <!-- <view class="user-avatar" bindtap="goUser">
+    <view  wx:if="{{hasUserInfo}}" class="user-avatar" bindtap="goUser">
       <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}"></image>
-    </view>  -->
+    </view> 
   </view>
   <view class="content">
     <view class="index-logo" style="background-image: url({{indexLogo}});"></view>
@@ -37,7 +37,7 @@
 
   </view>
 </view>
-<view class="userInfoBox" wx:if="{{hasUserInfo}}">
+<view class="userInfoBox" wx:if="{{!hasUserInfo}}">
   <view class="userInfoTitle">
     获取微信授权信息
   </view>
@@ -46,4 +46,4 @@
   <button open-type="getUserInfo" bindgetuserinfo="agreeGetUser" plain="true" type='primary' style='border:none' class="userAgreeBtn" lang="zh_CN">开始授权</button>
 
 </view>
-<view class="userInfoMask"  wx:if="{{hasUserInfo}}"></view>
+<view class="userInfoMask"  wx:if="{{!hasUserInfo}}"></view>
