@@ -1,11 +1,9 @@
 {
   "pages": [
-    "pages/index/index",
-    "pages/orders/orders",
-    "pages/user/user",
     "pages/user/orderlist/orderlist",
-    "pages/logs/logs",
-    "pages/text/text",
+    "pages/user/user",
+    "pages/orders/orders",
+    "pages/index/index",
     "pages/authorize/authorize"
   ],
   "window": {

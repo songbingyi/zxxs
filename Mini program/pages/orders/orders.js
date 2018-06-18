@@ -1,7 +1,7 @@
 // page/component/new-pages/cart/cart.js
 const app = getApp()
 //var datas = require('../../assets/datas/mock.js')
-var orderService = require('../../service/order-http.service.js')
+const orderService = require('../../service/order-http.service.js')
 Page({
   data: {
     carts: [],

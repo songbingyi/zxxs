@@ -49,8 +49,6 @@ module.exports = {
       orderTotalNum: 2,
       orderTotalPrice: 10
     },
-
-   
   ],
 
   orderListPage2: [
