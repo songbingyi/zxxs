@@ -1,14 +1,12 @@
 // pages/user/orderlist/orderlist.js
 const app = getApp()
-const datas = require('../../../assets/datas/mock.js')
 const orderListService = require('../../../service/user-order-http.service.js')
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
-    orderPayList: [],
+    hisOrderList: [],
     height:''
   },
 
@@ -25,16 +23,20 @@ Page({
       },
     })
     orderListService.getUserOrderList((d) => {
-        console.log(d)
-    })
-    //载入订单数据
-    this.setData({
-      orderPayList: datas.orderListPage1
+        
+        this.setData({
+          hisOrderList:d.orderList
+        })
     })
   },
 
   lower(){
-   
+    orderListService.getUserOrderList((d) => {
+      console.log(d.orderList.concat(d.orderList))
+      this.setData({
+        hisOrderList: d.orderList.concat(d.orderList)
+      })
+    })
   },
   /**
    * 用户点击右上角分享

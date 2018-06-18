@@ -3,11 +3,10 @@
   <view class="page-title">
     <text class="title">订单</text>
   </view>
-  <scroll-view class="content" bindscrolltolower="lower" style="height: {{height}}rpx;" scroll-y='true' lower-threshold='0'>
+  <scroll-view class="content" bindscrolltolower="lower" style="height: {{height}}rpx;" scroll-y='true' lower-threshold='10'>
     <view class="user-order-list">
-      <view class="order-item" wx:for="{{orderPayList}}" wx:key="{{index}}">
-
-        <view class="order-num">
+      <view class="order-item" wx:for="{{hisOrderList}}" wx:key="{{index}}">
+        <view class="order-num">    
           <view class="title-num">
             <text class="item-num">订单编号：{{item.orderNum}}</text>
             <text class="item-time">{{item.orderTime}}</text>
