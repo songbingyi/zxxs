@@ -13,6 +13,6 @@ module.exports = {
   /** @name 订单-获取菜品信息数据 */
   getOrderInfo: 'orderDatas',
 /**@name 用户-订单-以往订单信息 */
-getUserOrderList: 'UserOrderList',
+getUserOrderList: 'userOrderList',
   serve_url: serve_url
 }

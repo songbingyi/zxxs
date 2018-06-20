@@ -103,9 +103,16 @@ Page({
   
   //点击支付按钮后发起支付行为
   goOrder(){
-    app.globalData.orderList = this.data.carts
-    wx.navigateTo({
-      url: '/pages/user/orderlist/orderlist',
+    wx.requestPayment({
+      'timeStamp': '',
+      'nonceStr': '',
+      'package': '',
+      'signType': 'MD5',
+      'paySign': '',
+      'success': function (res) {
+      },
+      'fail': function (res) {
+      }
     })
   }
 
