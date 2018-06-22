@@ -27,8 +27,33 @@ const showModalWithNotice = (title, content) => {
     }
   });
 }
-
+/** @name 存储缓存
+ *  @keys 缓存键
+ *  @value 缓存值
+ *  @callback 回调
+ */
+const setStorage = (keys,value,callback) => {
+  wx.setStorage({
+    key: keys,
+    data: value,
+    success:(res)=>{console.log('success:setStorage=>',res);callback},
+    fail: (res) => { console.log('fail:setStorage=>', res)}
+  })
+}
+/** @name 获取缓存
+ *  @keys 缓存键
+ *  @callback 回调
+ */
+const getStorage = (keys,callback) => {
+  if(wx.getStorageSync(keys)){
+    console.log('getStorage =>', keys, ':', wx.getStorageSync(keys))
+    callback()
+  }else{
+    console.log('getStorage =>',keys,'fail')
+  }
+}
 module.exports = {
   formatTime: formatTime,
-  showModalWithNotice: showModalWithNotice
+  showModalWithNotice: showModalWithNotice,
+  getStorage: getStorage
 }

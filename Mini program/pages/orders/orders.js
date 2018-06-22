@@ -103,6 +103,7 @@ Page({
   
   //点击支付按钮后发起支付行为
   goOrder(){
+    console.log(this.data.carts)
     wx.requestPayment({
       'timeStamp': '',
       'nonceStr': '',

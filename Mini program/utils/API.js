@@ -8,11 +8,20 @@ const serve_url = 'https://easy-mock.com/mock/5b224b06fcfce63e92dc3e06/zxxs/';
 module.exports = {
   /** @name 会员-获取个人信息详情 */
   getMemberDetail: 'member/member/getMemberDetail',
+
   /** @name 获取信息数据 */
   getDataInfo: 'about/info/getDataInfo',
+
   /** @name 订单-获取菜品信息数据 */
   getOrderInfo: 'orderDatas',
-/**@name 用户-订单-以往订单信息 */
-getUserOrderList: 'userOrderList',
+
+  /**@name 用户-订单-以往订单信息 */
+  getUserOrderList: 'userOrderList',
+
+  /**@name 会员-微信登录-获取token和会员id */
+  loginWithWechat: 'member/thirdpart_wx/loginWithWechat',
+
+
+
   serve_url: serve_url
 }

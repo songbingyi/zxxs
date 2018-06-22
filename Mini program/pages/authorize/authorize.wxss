@@ -1,5 +1,6 @@
 /* pages/authorize/authorize.wxss */
-.authorize-title{
+
+.authorize-title {
   padding: 40rpx;
   display: flex;
   flex-direction: column;
@@ -8,30 +9,37 @@
   background-color: #f08300;
   color: #fff;
 }
-.authorize-title .icon-weixin{
+
+.authorize-title .icon-weixin {
   font-size: 130rpx;
 }
-.authorize-title text{
+
+.authorize-title text {
   font-size: 30rpx;
   line-height: 2em;
 }
-.des-text{
+
+.des-text {
   padding: 40rpx;
 }
-.des-text text{
+
+.des-text text {
   display: block;
   font-size: 24rpx;
   line-height: 2em;
-  color: #9B9B9B;
+  color: #9b9b9b;
 }
-.des-text text.title{
+
+.des-text text.title {
   color: #000;
   font-size: 28rpx;
 }
-button{
+
+button {
   margin: 0 40rpx;
 }
-button text{
+
+.list-num {
   display: inline-block;
   width: 40rpx;
   height: 40rpx;
@@ -42,9 +50,37 @@ button text{
   font-size: 24rpx;
   line-height: 40rpx;
   text-align: center;
-  color: #1AAD19;
+  color: #1aad19;
   vertical-align: text-top;
 }
-button[disabled][type=primary] text{
+
+button[disabled][type=primary] text {
   opacity: 0.6;
+}
+
+navigator {
+  width: 670rpx;
+  color: #fff;
+  background-color: #1aad19;
+  position: relative;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 14px;
+  padding-right: 14px;
+  box-sizing: border-box;
+  font-size: 18px;
+  text-align: center;
+  text-decoration: none;
+  line-height: 2.55555556;
+  border-radius: 5px;
+  -webkit-tap-highlight-color: transparent;
+  overflow: hidden;
+}
+.disabled {
+  background-color:#9ED99D;
+  color:rgba(255, 255, 255, 0.6);
+}
+.disabled text {
+  opacity: 0.6
 }
