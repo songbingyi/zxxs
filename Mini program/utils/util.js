@@ -27,33 +27,30 @@ const showModalWithNotice = (title, content) => {
     }
   });
 }
-/** @name 存储缓存
- *  @keys 缓存键
- *  @value 缓存值
- *  @callback 回调
+
+
+/** @name storageMethod缓存方法
+ *  @function get(keys|缓存赋值对象,key|请求缓存的key) 获取缓存
+ *  @function set(key|缓存key,data|缓存数据) 存储缓存
  */
-const setStorage = (keys,value,callback) => {
-  wx.setStorage({
-    key: keys,
-    data: value,
-    success:(res)=>{console.log('success:setStorage=>',res);callback},
-    fail: (res) => { console.log('fail:setStorage=>', res)}
-  })
-}
-/** @name 获取缓存
- *  @keys 缓存键
- *  @callback 回调
- */
-const getStorage = (keys,callback) => {
-  if(wx.getStorageSync(keys)){
-    console.log('getStorage =>', keys, ':', wx.getStorageSync(keys))
-    callback()
-  }else{
-    console.log('getStorage =>',keys,'fail')
+const storageMethod = {
+  get:(keys, key)=>{
+    var tempkey = wx.getStorageSync(key)
+    if(tempkey){
+      keys = tempkey
+      console.log('获取缓存成功:getStorage=>', key)
+    }else{
+      console.log('获取缓存失败:getStorage=>', key)
+    }
+  },
+  set:(key,data) => {
+    wx.setStorageSync(key, data)
+    console.log('setStorage=>',key,data)
   }
 }
+
 module.exports = {
   formatTime: formatTime,
   showModalWithNotice: showModalWithNotice,
-  getStorage: getStorage
+  storageMethod: storageMethod
 }

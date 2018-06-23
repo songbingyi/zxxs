@@ -1,41 +1,24 @@
 //app.js
-let loginWithWechat = require("service/index-login-http.service.js");
+const doLogin = require('utils/wx.login.js')
 
 App({
   
   onLaunch: function() {
-
+    wx.showLoading({
+      title: '加载中',
+    })
     //检查本地是否存在token
     var token = wx.getStorageSync('token');
-    if (token) {
-     console.log(token)
-    }else{//缓存里没有token，发起wx.login
-      this.doLogin()
-      console.log('缓存里没有token',token)
-    }
+   if (token) {
+     console.log('首次打开小程序检测:缓存里已经有token')
+   }else{//缓存里没有token，发起wx.login
+     console.log('首次打开小程序检测：缓存里没有token,发起doLogin')
+      doLogin()
+     // wx.hideLoading()
+   }
   },
-  
-  /** @name wx.login 获取code */
-  doLogin: () => {
-    wx.login({
-      success: (res) => {
-        var code = res.code;
-        var passCode = {code:code}
-        if (code) {
-          //发送code给后端，获取token和member_id
-          loginWithWechat.loginWithWechat({ wechat_code: code},(d)=> {
-            //本地存储token和member_id
-            wx.setStorageSync('token', d);
-          })
 
-        } else {
-          wx.showToast({
-            title: '获取用户信息失败' + res.errMsg,
-          })
-        }
-      }
-    })
-  },
+  /** @name wx.login 获取code */
 
   globalData: {
     userphoneInfo: null,

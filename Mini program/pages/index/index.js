@@ -1,7 +1,7 @@
 //index.js
 //获取应用实例
 let app = getApp()
-
+let util = require('../../utils/util.js')
 
 Page({
   data: {
@@ -13,7 +13,8 @@ Page({
     //判断用户是否已经同意获取信息
     wx.getSetting({
       success: (res) => {
-        var userInfo = wx.getStorageSync('userInfo');
+        var userInfo;
+        util.storageMethod.get(userInfo,'userInfo')
         if (res.authSetting['scope.userInfo']) { //如果已经同意过授权
           if (userInfo) { //如果缓存里有userInfo，读取userInfo，设置到view层
             this.setData({
@@ -47,18 +48,7 @@ Page({
   },
   onReady: function() {
     wx.hideLoading()
-    // setTimeout(function () {
-    //   wx.hideLoading()
-    // }, 1000)
-    // wx.getUserInfo({
-    //   success: res => {
-    //     app.globalData.userInfo = res.userInfo
-    //     this.setData({
-    //       userInfo: res.userInfo,
-    //       hasUserInfo: true
-    //     })
-    //   }
-    // })
+
   },
   //首页扫码功能
   goAuthorize: function() {

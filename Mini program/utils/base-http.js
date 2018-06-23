@@ -24,33 +24,32 @@ function BaseHttp() {};
 BaseHttp.post = function(route, params, callback) {
   let self = this;
 
+  //从缓存里获取token，如果存在，赋值给commonParams.token
+  util.storageMethod.get(commonParams.token,'token')
 
-  wx.getStorage({
-    key: 'token',
-    success: function (res) {
-       commonParams.token = wx.getStorageSync('token');
-       console.log(res)
-       },
-  })
 
   commonParams.route = route;
   commonParams.jsonText = JSON.stringify(params);
   console.log('Request => ', commonParams);
-  wx.request({
+  let requestArray = [];
+  const requestTask = {
     url: API.serve_url + route, // + route 用于 easy-mock 测试，正常接口请求需要将route作为参数传入
     data: commonParams,
     header: {
       'content-type': 'application/x-www-form-urlencoded'
     },
     method: "POST",
-    success: function(d) {
+    success: function (d) {
       console.log('Result => ', JSON.stringify(d.data));
       self.handleResult(d.data, callback);
     },
-    fail: function(e) {
+    fail: function (e) {
       util.showModalWithNotice('提示', '请求失败:' + JSON.stringify(e));
     }
-  });
+  };
+  requestArray.push(requestTask);
+  wx.request(requestTask);
+  console.log(requestArray);
 }
 
 /** 返回数据解析 */
@@ -69,6 +68,9 @@ BaseHttp.handleResult = function(d, callback) {
      */
     if (d.status.succeed == '0') {
       callback(d, false);
+    }
+    if (d.status.error_code == '0001') {
+      //发起wx.login获取code
     }
   } else {
     //返回的数据不是json或者不是按照接口规则返回的
