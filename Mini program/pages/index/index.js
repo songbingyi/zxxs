@@ -2,6 +2,7 @@
 //获取应用实例
 let app = getApp()
 let util = require('../../utils/util.js')
+let getMemberAuthInfo = require('../../service/getMemberAuthInfo-http-service.js')
 
 Page({
   data: {
@@ -11,12 +12,14 @@ Page({
   },
   onLoad: function() {
     //判断用户是否已经同意获取信息
+
+
     wx.getSetting({
       success: (res) => {
-        var userInfo;
-        util.storageMethod.get(userInfo,'userInfo')
+        let userInfo = util.storageMethod.get( 'userInfo')
         if (res.authSetting['scope.userInfo']) { //如果已经同意过授权
           if (userInfo) { //如果缓存里有userInfo，读取userInfo，设置到view层
+
             this.setData({
               hasUserInfo: true,
               userInfo: userInfo
@@ -52,6 +55,7 @@ Page({
   },
   //首页扫码功能
   goAuthorize: function() {
+    //getMemberAuthInfo.getMemberAuthInfo((d))
     if (app.globalData.userPayStatus) {
       wx.scanCode({
         onlyFromCamera: true,

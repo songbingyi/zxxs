@@ -4,7 +4,7 @@ const util = require('../utils/util.js')
 const API = require('../utils/API.js')
 
 /** @name 公共请求参数 */
-const commonParams = {
+var commonParams = {
   device_type: '10',
   device_version: '1.0',
   version_code: '1',
@@ -23,16 +23,14 @@ function BaseHttp() {};
 
 BaseHttp.post = function(route, params, callback) {
   let self = this;
-
   //从缓存里获取token，如果存在，赋值给commonParams.token
-  util.storageMethod.get(commonParams.token,'token')
-
+  commonParams.token =util.storageMethod.get('token')
+  //commonParams.token = wx.getStorageSync('token')
 
   commonParams.route = route;
   commonParams.jsonText = JSON.stringify(params);
   console.log('Request => ', commonParams);
-  let requestArray = [];
-  const requestTask = {
+  wx.request({
     url: API.serve_url + route, // + route 用于 easy-mock 测试，正常接口请求需要将route作为参数传入
     data: commonParams,
     header: {
@@ -46,10 +44,7 @@ BaseHttp.post = function(route, params, callback) {
     fail: function (e) {
       util.showModalWithNotice('提示', '请求失败:' + JSON.stringify(e));
     }
-  };
-  requestArray.push(requestTask);
-  wx.request(requestTask);
-  console.log(requestArray);
+  });
 }
 
 /** 返回数据解析 */

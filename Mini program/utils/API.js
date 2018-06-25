@@ -18,8 +18,14 @@ module.exports = {
   /**@name 用户-订单-以往订单信息 */
   getUserOrderList: 'userOrderList',
 
-  /**@name 会员-微信登录-获取token和会员id */
+  /**@name 02会员-微信登录-获取token和会员id */
   loginWithWechat: 'member/thirdpart_wx/loginWithWechat',
+
+  /**@name 03会员-获取会员认证信息 */
+  getMemberAuthInfo: 'member/member/getMemberAuthInfo',
+
+  /**@name 04会员-会员-记录登录状态 */
+  loginWithToken: 'member/member/loginWithToken',
 
 
 

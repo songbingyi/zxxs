@@ -29,25 +29,34 @@ const showModalWithNotice = (title, content) => {
 }
 
 
-/** @name storageMethod缓存方法
- *  @function get(keys|缓存赋值对象,key|请求缓存的key) 获取缓存
- *  @function set(key|缓存key,data|缓存数据) 存储缓存
+/** 
+ * @name storage基类方法对象
+ * @function storageMethod.get(key|希望获取缓存的键)
  */
-const storageMethod = {
-  get:(keys, key)=>{
-    var tempkey = wx.getStorageSync(key)
-    if(tempkey){
-      keys = tempkey
-      console.log('获取缓存成功:getStorage=>', key)
-    }else{
-      console.log('获取缓存失败:getStorage=>', key)
-    }
-  },
-  set:(key,data) => {
-    wx.setStorageSync(key, data)
-    console.log('setStorage=>',key,data)
+function storageMethod(){};
+storageMethod.get = function (key){
+  if (wx.getStorageSync(key)){
+    console.log('读取缓存 =>缓存里存在',key)
+    return wx.getStorageSync(key)
+  }else{
+    console.log('读取缓存 =>缓存里没有', key)}
   }
-}
+// let storageMethod = {
+//   get:(keys, key)=>{
+//     var tempkey = wx.getStorageSync(key)
+//     if(tempkey){
+//       keys = tempkey;
+//       return keys;
+//       console.log('获取缓存成功:getStorage=>', key,':',keys)
+//     }else{
+//       console.log('获取缓存失败:getStorage=>', key)
+//     }
+//   },
+//   set:(key,data) => {
+//     wx.setStorageSync(key, data)
+//     console.log('setStorage=>',key,data)
+//   }
+// }
 
 module.exports = {
   formatTime: formatTime,
