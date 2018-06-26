@@ -13,6 +13,6 @@
     "navigationBarTextStyle": "#fff"
   },
   "networkTimeout": {
-    "request": 3000
+    "request": 8000
   }
 }

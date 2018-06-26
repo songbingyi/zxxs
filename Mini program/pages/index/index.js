@@ -14,7 +14,7 @@ Page({
     //判断用户是否已经同意获取信息
     wx.getSetting({
       success: (res) => {
-        let userInfo = util.storageMethod.get( 'userInfo')
+        let userInfo = util.storageMethod.get('userInfo')
         if (res.authSetting['scope.userInfo']) { //如果已经同意过授权
           if (userInfo) { //如果缓存里有userInfo，读取userInfo，设置到view层
             this.setData({
@@ -50,41 +50,38 @@ Page({
     wx.hideLoading()
 
   },
-  //首页扫码功能
+  //首页点击扫码
   goAuthorize: function() {
-    getMemberAuthInfo.getMemberAuthInfo((d)=>{
-        console.log(d)
-    })
-    if (app.globalData.userPayStatus) {
-      wx.scanCode({
-        onlyFromCamera: true,
-        success: (result) => {
-          console.log(result)
-          // wx.navigateTo({
-          //   url: '../orders/orders'
-          // })
-        },
-        fail: (res) => {
-          // wx.navigateTo({
-          //   url: '../orders/orders'
-          // })
-          wx.showModal({
-            title: '提示',
-            showCancel: false,
-            content: '请扫描正确的二维码',
-            success: function(res) {
-              if (res.confirm) {
-                console.log('点击了确定')
+    getMemberAuthInfo.getMemberAuthInfo((d) => {
+      app.globalData.memberAuthStatus = d;
+      if (d.member_auth_status == 1) { //如果授权总状态为1，打开相机进行扫描
+        wx.scanCode({
+          onlyFromCamera: true,
+          success: (result) => { //打印扫码成功后返回的数据
+            console.log(result)
+          },
+          fail: (res) => {
+            // wx.navigateTo({
+            //   url: '../orders/orders'
+            // })
+            wx.showModal({
+              title: '提示',
+              showCancel: false,
+              content: '请扫描正确的二维码',
+              success: function(res) {
+                if (res.confirm) {
+                  console.log('点击了确定')
+                }
               }
-            }
-          })
-        }
-      })
-    } else {
-      wx.navigateTo({
-        url: '../authorize/authorize'
-      })
-    }
+            })
+          }
+        })
+      } else { //总授权状态不为1
+       wx.navigateTo({
+         url: '../authorize/authorize'
+        })
+      }
+    })
   },
   goUser: function() {
     wx.navigateTo({
@@ -104,10 +101,14 @@ Page({
         title: '加载中...',
         duration: 600,
       })
-      app.globalData.userInfo = e.detail.userInfo
-      wx.setStorage({
+      app.globalData.userInfo = e.detail.userInfo//头像和ID存入缓存
+      wx.setStorage({//头像和ID渲染视图层
         key: 'userInfo',
         data: e.detail.userInfo,
+      })
+    }else{
+      this.setData({
+        hasUserInfo: true,
       })
     }
   }

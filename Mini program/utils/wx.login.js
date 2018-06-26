@@ -1,5 +1,5 @@
 const loginWithWechat = require('../service/loginWithWechat-http.service.js')
-var doLogin = function() {
+var wechatLogin = function() {
   wx.login({
     success: (res) => {
       var code = res.code;
@@ -21,4 +21,4 @@ var doLogin = function() {
   })
 }
 
-module.exports = doLogin;
+module.exports = wechatLogin;

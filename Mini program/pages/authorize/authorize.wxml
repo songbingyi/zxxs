@@ -11,13 +11,19 @@
       <!-- <text class="des">获取你的公开信息（昵称，头像等）</text> -->
       <text class="des">获取你的身份信息（手机号）用来登录</text>
     </view>
-    <button type="primary" size="default" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" disabled="{{phoneNumberBtnDisabled}}"><text class="list-num">1</text>{{authorizeStatus}}</button>
+    <button type="primary" size="default" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" disabled="{{phoneNumberBtnDisabled}}">
+      <text class="list-num">1</text>{{authorizeStatus}}</button>
     <view class="des-text">
       <text class="title">开通免密支付</text>
       <text class="des">下单更便捷（开通后才能使用坐享小食）</text>
     </view>
-    <!-- <button type="primary" size="default" disabled="{{payBtnDisabled}}" bindtap='getPayInfo'><text class="list-num">2</text>立即开通</button> -->
-    <navigator app-id="wxbd687630cd02ce1d" open-type='navigate' target="miniProgram"
-    extraData="{{extraData}}" hover-class="none" path="pages/index/index" class="{{phoneNumberBtnDisabled?'':'disabled'}}"><text class="list-num">2</text>立即开通</navigator>
+    <!--如果电话已经授权，免密支付按钮亮起。如果电话没被授权，免密支付按钮disbale>-->
+    <button wx:if="{{!phoneNumberBtnDisabled}}" type="primary" size="default" disabled="{{true}}">
+      <text class="list-num">2</text>立即开通button</button>
+    <block wx:else>
+      <navigator app-id="wxbd687630cd02ce1d" open-type='navigate' target="miniProgram" extraData="{{extraData}}" hover-class="none" path="pages/index/index">
+        <text class="list-num">2</text>立即开通navi</navigator>
+    </block>
+
   </view>
 </view>

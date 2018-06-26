@@ -14,7 +14,6 @@ App({
      console.log('首次打开小程序检测:缓存里已经有token')
      tokenLogin.loginWithToken({ member_id: member_id},(d)=>{
         //登录状态检测：如果本地token非法，发起wechatLogin()获得新的token
-        
      })
    }else{//缓存里没有token，发起wx.login
      console.log('首次打开小程序检测：缓存里没有token,发起wechatLogin')
@@ -25,6 +24,7 @@ App({
   /** @name wx.login 获取code */
 
   globalData: {
+    memberAuthStatus:{},
     userphoneInfo: null,
     userPayStatus: false,
     orderList: [],

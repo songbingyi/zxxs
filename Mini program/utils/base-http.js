@@ -2,6 +2,7 @@
 
 const util = require('../utils/util.js')
 const API = require('../utils/API.js')
+//const wechatLogin = require('wx.login.js');
 
 /** @name 公共请求参数 */
 var commonParams = {
@@ -52,9 +53,9 @@ BaseHttp.handleResult = function(d, callback) {
   if (d && d.status) {
     if (d.status.succeed == '1') {
       if (d.paginated) { //是否分页
-        callback(d.data == null ? "" : d.data, true, d.paginated);
+        callback(d.data == null ? "" : d.data, true, d.paginated);//d.data
       } else {
-        callback(d.data == null ? "" : d.data, true);
+        callback(d.data == null ? "" : d.data, true);//d.data
       }
     }
     /**
@@ -64,9 +65,7 @@ BaseHttp.handleResult = function(d, callback) {
     if (d.status.succeed == '0') {
       callback(d, false);
     }
-    if (d.status.error_code == '0001') {
-      //发起wx.login获取code
-    }
+
   } else {
     //返回的数据不是json或者不是按照接口规则返回的
     util.showModalWithNotice('提示', '请求失败:' + JSON.stringify(d));

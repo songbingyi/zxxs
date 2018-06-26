@@ -14,12 +14,13 @@
 <view class="wrap">
   <view class="page-title">
     <text class="zuoxiang brand">坐享小食</text>
-    <block wx:if="{{!hasUserInfo}}" class="avatar">
-            <view class="default">
+    <!--根据头像是否存在决定渲染>-->
+    <block wx:if="{{!userInfo.avatarUrl}}" class="avatar">
+            <view class="default" bindtap="goUser">
               <icon class="zuoxiang icon-avatar"></icon>
             </view>
     </block>  
-    <view  wx:if="{{hasUserInfo}}" class="user-avatar" bindtap="goUser">
+    <view  wx:if="{{userInfo.avatarUrl}}" class="user-avatar" bindtap="goUser">
       <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}"></image>
     </view> 
   </view>
@@ -33,7 +34,6 @@
       <view class="circle"></view>
     </view>
 
-    <!-- <button type="primary" size="default" open-type='getUserInfo' >立即开通</button> -->
 
   </view>
 </view>
