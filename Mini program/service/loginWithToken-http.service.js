@@ -8,10 +8,10 @@ const loginWithToken = (para) => {
   BaseHttp.post(API.loginWithToken, para, (d, status) => {
     console.log(d,status)
 
-    if (status) {
+    if (status) {//如果status为真，把新的token和id存入缓存
       wx.setStorageSync('token', d.token);
       wx.setStorageSync('member_id', d.member_id);}
-    else { wechatLogin()}
+    else { wechatLogin()}//如果status为假，发起wechatLogin重新登录
   });
 }
 module.exports = {

@@ -11,7 +11,7 @@ Page({
     indexLogo: "http://218.244.158.175/static/zuoxiang/images/logo_indexbg.png",
   },
   onLoad: function() {
-    //判断用户是否已经同意获取信息
+    //判断用户是否已经同意获取头像信息
     wx.getSetting({
       success: (res) => {
         let userInfo = util.storageMethod.get('userInfo')
@@ -53,8 +53,10 @@ Page({
   //首页点击扫码
   goAuthorize: function() {
     getMemberAuthInfo.getMemberAuthInfo((d) => {
-      app.globalData.memberAuthStatus = d;
-      if (d.member_auth_status == 1) { //如果授权总状态为1，打开相机进行扫描
+      //util.storageMethod.set(memberAuthStatus,d)
+      console.log(d)
+      app.globalData.memberAuthStatus = d.member_auth_info;//授权信息传给全局变量，给跳转页面使用
+      if (d.member_auth_info.member_auth_status == 1) { //如果授权总状态为1，打开相机进行扫描
         wx.scanCode({
           onlyFromCamera: true,
           success: (result) => { //打印扫码成功后返回的数据
@@ -77,6 +79,7 @@ Page({
           }
         })
       } else { //总授权状态不为1
+     
        wx.navigateTo({
          url: '../authorize/authorize'
         })
@@ -102,6 +105,7 @@ Page({
         duration: 600,
       })
       app.globalData.userInfo = e.detail.userInfo//头像和ID存入缓存
+      util.storageMethod.set(userInfo, e.detail.userInfo)
       wx.setStorage({//头像和ID渲染视图层
         key: 'userInfo',
         data: e.detail.userInfo,

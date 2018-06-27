@@ -24,10 +24,11 @@ module.exports = {
   /**@name 03会员-获取会员认证信息 */
   getMemberAuthInfo: 'member/member/getMemberAuthInfo',
 
-  /**@name 04会员-会员-记录登录状态 */
+  /**@name 04会员-记录登录状态 */
   loginWithToken: 'member/member/loginWithToken',
 
-
+  /**@name 05会员-获取会员详情- */
+  getMemberDetail: 'member/member/getMemberDetail',
 
   serve_url: serve_url
 }

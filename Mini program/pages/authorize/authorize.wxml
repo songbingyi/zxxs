@@ -12,7 +12,7 @@
       <text class="des">获取你的身份信息（手机号）用来登录</text>
     </view>
     <button type="primary" size="default" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" disabled="{{phoneNumberBtnDisabled}}">
-      <text class="list-num">1</text>{{authorizeStatus}}</button>
+      <text class="list-num">1</text>{{phoneNumberBtnDisabled?"已授权":"授权登录"}}</button>
     <view class="des-text">
       <text class="title">开通免密支付</text>
       <text class="des">下单更便捷（开通后才能使用坐享小食）</text>

@@ -8,10 +8,9 @@ Page({
     authorizeStatus:'授权登录',
   },
   onLoad:function(){
-    let authstatus = app.globalData.memberAuthStatus
+    let authstatus = app.globalData.memberAuthStatus//从全局变量里获取授权信息
     this.setData({
       phoneNumberBtnDisabled:authstatus.member_mobile_auth_status,
-      contactAuthStatus: authstatus.member_deduct_contract_auth_status
     })
   },
   //授权登录按钮功能:

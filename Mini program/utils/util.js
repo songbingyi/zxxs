@@ -40,23 +40,11 @@ storageMethod.get = function (key){
     return wx.getStorageSync(key)
   }else{
     console.log('读取缓存 =>缓存里没有', key)}
-  }
-// let storageMethod = {
-//   get:(keys, key)=>{
-//     var tempkey = wx.getStorageSync(key)
-//     if(tempkey){
-//       keys = tempkey;
-//       return keys;
-//       console.log('获取缓存成功:getStorage=>', key,':',keys)
-//     }else{
-//       console.log('获取缓存失败:getStorage=>', key)
-//     }
-//   },
-//   set:(key,data) => {
-//     wx.setStorageSync(key, data)
-//     console.log('setStorage=>',key,data)
-//   }
-// }
+  };
+storageMethod.set = function(key,keys){
+  wx.setStorageSync(key, keys)
+}
+
 
 module.exports = {
   formatTime: formatTime,

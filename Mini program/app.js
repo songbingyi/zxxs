@@ -20,8 +20,9 @@ App({
      wechatLogin()
    }
   },
-
-  /** @name wx.login 获取code */
+  onShow:function(){
+    wx.hideLoading()
+  },
 
   globalData: {
     memberAuthStatus:{},
