@@ -1,4 +1,4 @@
-const loginWithWechat = require('../service/loginWithWechat-http.service.js')
+const memberHttp = require('../service/member-http.service.js')
 var wechatLogin = function() {
   wx.login({
     success: (res) => {
@@ -6,7 +6,7 @@ var wechatLogin = function() {
       var passCode = { code: code }
       if (code) {
         //发送code给后端，获取token和member_id
-        loginWithWechat.loginWithWechat({ wechat_code: code }, (d) => {
+        memberHttp.loginWithWechat({ wechat_code: code }, (d) => {
           //本地存储token和member_id
           console.log('WechatLogin结束，获取新的token')
           wx.setStorageSync('token', d.token);

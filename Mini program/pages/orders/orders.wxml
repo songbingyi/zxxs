@@ -6,17 +6,17 @@
     <view class="content">
       <view class="order-list">
 
-        <view class="order-item" wx:for="{{carts}}" wx:key="{{index}}">
+        <view class="order-item" wx:for="{{productList}}" wx:key="{{index}}">
 
-          <text class="item-title">{{item.title}}</text>
+          <text class="item-title">{{item.product_name}}</text>
           <view class="counter-box">
             <text class="unit-price">单价：￥<text class="price">{{item.price}}</text></text>
             <view class="counter">
 
               <button class="btn add" plain="true" bindtap="addCount" data-index="{{index}}">+</button>
-              <text class="counter-num">{{item.num}}</text>
+              <text class="counter-num">{{item.defNum}}</text>
 
-              <block  wx:if="{{item.num !== 0}}">
+              <block  wx:if="{{item.defNum !== 0}}">
                 <button class="btn minus" plain="true" bindtap="minusCount"  data-index="{{index}}">-</button>
               </block>
             </view>

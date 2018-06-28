@@ -2,8 +2,8 @@
   "pages": [
     "pages/orders/orders",
     "pages/index/index",
-    "pages/user/user",
     "pages/user/orderlist/orderlist",
+    "pages/user/user",
     "pages/authorize/authorize"
   ],
   "window": {

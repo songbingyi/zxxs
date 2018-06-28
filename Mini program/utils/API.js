@@ -30,5 +30,8 @@ module.exports = {
   /**@name 05会员-获取会员详情- */
   getMemberDetail: 'member/member/getMemberDetail',
 
+  /**@name 11订单-获取仓库商品列表- */
+  getWareHouseProductList: 'order/warehouse/getWareHouseProductList',
+
   serve_url: serve_url
 }

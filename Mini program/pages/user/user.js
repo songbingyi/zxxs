@@ -1,8 +1,7 @@
 // pages/user/user.js
 let app = getApp()
-let getMemberDetail = require('../../service/getMemberDetail-http-service.js')
+let memberHttp = require('../../service/member-http.service.js')
 let util = require('../../utils/util.js')
-let getMemberAuthInfo = require('../../service/getMemberAuthInfo-http-service.js')
 Page({
   data: {
     userInfo: {},
@@ -20,7 +19,7 @@ Page({
     wx.getSetting({//载入时进行userInfo鉴权
       success: (res)=>{
         if (res.authSetting['scope.userInfo']){//如果头像同意过授权，从接口获取用头像url
-          getMemberDetail.getMemberDetail( (d)=>{
+          memberHttp.getMemberDetail( (d)=>{
             this.setData({
               userInfo:d.member_info,
               hasIconImage:true
@@ -31,9 +30,9 @@ Page({
       }
     })
     //载入时进行电话号码鉴权
-    getMemberAuthInfo.getMemberAuthInfo((d)=>{
+    memberHttp.getMemberAuthInfo((d)=>{
       if (d.member_auth_info.member_mobile_auth_status){//如果已经授权，从后台拉取电话号码并显示
-        getMemberDetail.getMemberDetail((e) => {
+        memberHttp.getMemberDetail((e) => {
           this.setData({
             phoneNumber:e.member_info.mobile
           })
@@ -52,7 +51,7 @@ Page({
   },
   agreeGetUser(e) { //点击授权按钮
     if (e.detail.userInfo) { //用户点击同意授权,从后端拉取memberInfo，渲染V层
-      getMemberDetail.getMemberDetail((d) => {
+      memberHttp.getMemberDetail((d) => {
         this.setData({
           userInfo: d.member_info,
           hasUserInfo: false,
@@ -71,7 +70,7 @@ Page({
   },
   getPhoneNumber(e){
     if(e.detail.iv){
-      getMemberDetail.getMemberDetail((d)=>{
+      memberHttp.getMemberDetail((d)=>{
         this.setData({
           phoneNumber: d.member_info.mobile
         })

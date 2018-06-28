@@ -2,7 +2,7 @@
 //获取应用实例
 let app = getApp()
 let util = require('../../utils/util.js')
-let getMemberAuthInfo = require('../../service/getMemberAuthInfo-http-service.js')
+let memberHttp = require('../../service/member-http.service.js')
 
 Page({
   data: {
@@ -52,7 +52,7 @@ Page({
   },
   //首页点击扫码
   goAuthorize: function() {
-    getMemberAuthInfo.getMemberAuthInfo((d) => {
+    memberHttp.getMemberAuthInfo((d) => {
       //util.storageMethod.set(memberAuthStatus,d)
       console.log(d)
       app.globalData.memberAuthStatus = d.member_auth_info;//授权信息传给全局变量，给跳转页面使用
