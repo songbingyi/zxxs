@@ -22,7 +22,8 @@ Page({
       productList[0].defNum = 1;//设置第一个商品的初始化数量为1；
       console.log(productList)
       this.setData({
-        productList: productList
+        productList: productList,
+        totalPrice: productList[0].price
       })
     })
   },
@@ -31,8 +32,7 @@ Page({
     const index = e.currentTarget.dataset.index;
     let productList = this.data.productList;
     let defNum = productList[index].defNum;
-    let quantity = productList[index].quantity;
-    if (defNum >= quantity) {
+    if (defNum >= productList[index].quantity) {
       wx.showModal({
         title: '提示',
         content: '没有那么多库存，不能再添加啦',
@@ -98,19 +98,22 @@ Page({
   },
   
   //点击支付按钮后发起支付行为
-  goOrder(){
-    console.log(this.data.productList)
-    wx.requestPayment({
-      'timeStamp': '',
-      'nonceStr': '',
-      'package': '',
-      'signType': 'MD5',
-      'paySign': '',
-      'success': function (res) {
-      },
-      'fail': function (res) {
-      }
+  clickPayBtn(){
+
+    orderHttp.checkoutMemberOrder({},(d)=>{
+        console.log(d)
     })
+    // wx.requestPayment({
+    //   'timeStamp': '',
+    //   'nonceStr': '',
+    //   'package': '',
+    //   'signType': 'MD5',
+    //   'paySign': '',
+    //   'success': function (res) {
+    //   },
+    //   'fail': function (res) {
+    //   }
+    // })
   }
 
 })

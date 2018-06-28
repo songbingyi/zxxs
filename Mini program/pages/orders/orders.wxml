@@ -33,6 +33,6 @@
           <text>应支付：</text><text class="count-price">￥<text class="count">{{totalPrice}}</text></text>
         </view>
       </view>
-      <button type="primary" disabled="{{disabled}}" size="default" bindtap="goOrder">{{orderPayBtn}}</button>
+      <button type="primary" disabled="{{disabled}}" size="default" bindtap="clickPayBtn">{{orderPayBtn}}</button>
     </view>
 </view>

@@ -6,6 +6,7 @@ const serve_url = 'https://easy-mock.com/mock/5b224b06fcfce63e92dc3e06/zxxs/';
 // const serve_url = '';
 
 module.exports = {
+    serve_url: serve_url,
   /** @name 会员-获取个人信息详情 */
   getMemberDetail: 'member/member/getMemberDetail',
 
@@ -32,6 +33,7 @@ module.exports = {
 
   /**@name 11订单-获取仓库商品列表- */
   getWareHouseProductList: 'order/warehouse/getWareHouseProductList',
+    /**@name 12订单-订单结算 */
+  checkoutMemberOrder: 'order/member_order/checkoutMemberOrder',
 
-  serve_url: serve_url
 }
