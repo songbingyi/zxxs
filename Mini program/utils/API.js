@@ -31,9 +31,19 @@ module.exports = {
   /**@name 05会员-获取会员详情- */
   getMemberDetail: 'member/member/getMemberDetail',
 
+  /**@name 07货柜-获取货柜详情 */
+  getContainerDetail: 'container/container/getContainerDetail',
+
+  /**@name 08货柜-获取货柜详情 */
+  addMemberOrder: 'order/member_order/addMemberOrder',
+
   /**@name 11订单-获取仓库商品列表- */
   getWareHouseProductList: 'order/warehouse/getWareHouseProductList',
-    /**@name 12订单-订单结算 */
+
+  /**@name 12订单-订单结算 */
   checkoutMemberOrder: 'order/member_order/checkoutMemberOrder',
+
+  /**@name 16订单-订单结算 */
+  getMemberOrderList: 'order/member_order/getMemberOrderList',
 
 }

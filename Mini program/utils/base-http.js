@@ -10,7 +10,7 @@ var commonParams = {
   device_version: '1.0',
   version_code: '1',
   channel: '20001_website',
-  token: '',
+  TOKEN: '',
   route: '',
   jsonText: {}
 };

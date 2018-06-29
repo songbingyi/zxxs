@@ -8,16 +8,16 @@
       <view class="order-item" wx:for="{{hisOrderList}}" wx:key="{{index}}">
         <view class="order-num">    
           <view class="title-num">
-            <text class="item-num">订单编号：{{item.orderNum}}</text>
-            <text class="item-time">{{item.orderTime}}</text>
+            <text class="item-num">订单编号：{{item.member_order_no}}</text>
+            <text class="item-time">{{item.member_order_create_date}}</text>
           </view>
         </view>
 
         <view class="order-con">
-          <view class='orderlist' wx:for='{{item.orderCarts}}' wx:key='{{index}}'>
-            <text class="orderlist-title">{{item.title}}</text>
+          <view class='orderlist' wx:for='{{item.order_product_list}}' wx:key='{{index}}'>
+            <text class="orderlist-title">{{item.product_name}}</text>
             <view class='price-num'>
-            <text class="orderlist-counter">X{{item.num}}</text>
+            <text class="orderlist-counter">X{{item.quantity}}</text>
             <text class="iorderlist-price">￥{{item.price}}</text>
             </view>
           </view>
@@ -25,10 +25,10 @@
         </view>
         <view class="state-total">
           <view class="item-state">
-            <text>{{item.orderStatus}}</text>
+            <text>{{item.member_order_status_name}}</text>
           </view>
           <view class="item-total">
-            <text>共{{item.orderTotalNum}}份，合计<text class="price-total">￥{{item.orderTotalPrice}}</text></text>
+            <text>共{{item.orderTotalNum}}份，合计<text class="price-total">￥{{item.total}}</text></text>
           </view>
         </view>
       </view>

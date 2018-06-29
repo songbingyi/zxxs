@@ -9,7 +9,6 @@ const getUserOrderList = (callback) => {
         else util.showModalWithNotice('提示', '请求失败:' + JSON.stringify(d));
     });
 }
-
 module.exports = {
     getUserOrderList: getUserOrderList
 }

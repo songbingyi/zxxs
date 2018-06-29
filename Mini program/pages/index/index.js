@@ -1,8 +1,10 @@
 //index.js
 //获取应用实例
-let app = getApp()
-let util = require('../../utils/util.js')
-let memberHttp = require('../../service/member-http.service.js')
+let app = getApp();
+let util = require('../../utils/util.js');
+let memberHttp = require('../../service/member-http.service.js');
+let orderHttp = require('../../service/order-http.service.js');
+let containerHttp = require('../../service/container-http.service.js');
 
 Page({
   data: {
@@ -39,16 +41,11 @@ Page({
         }
       }
     })
-
-
   },
   onShow: function() {
-
-
   },
   onReady: function() {
     wx.hideLoading()
-
   },
   //首页点击扫码
   goAuthorize: function() {
@@ -60,7 +57,12 @@ Page({
         wx.scanCode({
           onlyFromCamera: true,
           success: (result) => { //打印扫码成功后返回的数据
-            console.log(result)
+            console.log(result);
+            containerHttp.getContainerDetail("container_no",(d)=>{//向后台传递货柜编号,返回仓库类型，判断仓库类型进入不同页面
+            })
+            orderHttp.addMemberOrder("container_no",(d)=>{//向后台传递货柜编号，开门
+
+            })
           },
           fail: (res) => {
             // wx.navigateTo({

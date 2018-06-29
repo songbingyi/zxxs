@@ -1,6 +1,6 @@
 // pages/user/orderlist/orderlist.js
 const app = getApp()
-const orderListService = require('../../../service/user-order-http.service.js')
+const orderHttp = require('../../../service/order-http.service.js')
 Page({
   /**
    * 页面的初始数据
@@ -22,11 +22,16 @@ Page({
         })
       },
     })
-    orderListService.getUserOrderList((d) => {
-        
+    orderHttp.getMemberOrderList(1,(d,p)=>{//首次载入页面获取page1数据
+      console.log(d,p)
+      if(p.total == 0){//如果数据总数为0
+
+      }else{
         this.setData({
-          hisOrderList:d.orderList
+          hisOrderList: d.member_order_list
         })
+      }
+
     })
   },
 

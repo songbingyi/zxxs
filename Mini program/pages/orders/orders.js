@@ -23,12 +23,32 @@ Page({
       console.log(productList)
       this.setData({
         productList: productList,
-        totalPrice: productList[0].price
+        totalPrice: productList[0].price //设置首次载入的应支付为第一个商品的单价。
       })
     })
   },
 
-  addCount:function(e) {
+  //点击支付按钮后发起支付行为
+  clickPayBtn() {
+
+    orderHttp.checkoutMemberOrder({}, (d) => {//发起订单结算，
+ 
+      console.log(d)
+    })
+    // wx.requestPayment({
+    //   'timeStamp': '',
+    //   'nonceStr': '',
+    //   'package': '',
+    //   'signType': 'MD5',
+    //   'paySign': '',
+    //   'success': function (res) {
+    //   },
+    //   'fail': function (res) {
+    //   }
+    // })
+  },
+
+  addCount:function(e) {//点击加号
     const index = e.currentTarget.dataset.index;
     let productList = this.data.productList;
     let defNum = productList[index].defNum;
@@ -54,18 +74,16 @@ Page({
     this.getTotalPrice();
   },
 
-  minusCount(e) {
+  minusCount(e) {//点击减号
     const index = e.currentTarget.dataset.index;
     let productList = this.data.productList;
 
-    //获取当前点击按钮的数量
-    let defNum = productList[index].defNum;
 
      //初始化list里的num总数
     let totalNum = 0;   
 
     //选择数量num减少1，并传回data
-    productList[index].defNum = defNum -1;
+    productList[index].defNum = productList[index].defNum -1;
     this.setData({
       productList: productList
     });
@@ -85,7 +103,7 @@ Page({
     this.getTotalPrice();
   },
 
-  getTotalPrice() {
+  getTotalPrice() { //计算应支付总价，只显示，不发送后端
     let productList = this.data.productList;
     let total = 0;
     for (let i = 0; i < productList.length; i++) {
@@ -97,23 +115,6 @@ Page({
     });
   },
   
-  //点击支付按钮后发起支付行为
-  clickPayBtn(){
-
-    orderHttp.checkoutMemberOrder({},(d)=>{
-        console.log(d)
-    })
-    // wx.requestPayment({
-    //   'timeStamp': '',
-    //   'nonceStr': '',
-    //   'package': '',
-    //   'signType': 'MD5',
-    //   'paySign': '',
-    //   'success': function (res) {
-    //   },
-    //   'fail': function (res) {
-    //   }
-    // })
-  }
+  
 
 })
