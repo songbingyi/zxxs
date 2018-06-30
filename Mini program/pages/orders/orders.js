@@ -51,7 +51,7 @@ Page({
   addCount:function(e) {//点击加号
     const index = e.currentTarget.dataset.index;
     let productList = this.data.productList;
-    let defNum = productList[index].defNum;
+    let defNum = productList[index].defNum;//获取当前点击商品的数量值
     if (defNum >= productList[index].quantity) {
       wx.showModal({
         title: '提示',
@@ -61,7 +61,7 @@ Page({
       return false;
     }
     defNum = defNum + 1;
-    if (this.data.disabled){
+    if (this.data.disabled){//只要点击加号，如果支付按钮是disabled:true状态，则改为disabled:false
       this.setData({
         disabled: false,
         orderPayBtn: '确认支付'

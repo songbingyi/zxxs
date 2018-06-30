@@ -25,7 +25,7 @@
         </view>
         <view class="state-total">
           <view class="item-state">
-            <text>{{item.member_order_status_name}}</text>
+            <text>{{item.member_order_status_info.member_order_status_name}}</text>
           </view>
           <view class="item-total">
             <text>共{{item.orderTotalNum}}份，合计<text class="price-total">￥{{item.total}}</text></text>
@@ -34,7 +34,7 @@
       </view>
 
     </view>
-    <view class='more'>
+    <view class='more' wx:if="{{hisOrderList}}">
       <text>加载更多</text>
     </view>
   </scroll-view>

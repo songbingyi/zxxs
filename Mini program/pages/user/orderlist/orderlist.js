@@ -6,8 +6,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    hisOrderList: [],
-    height:''
+    hisOrderList: null,
+    height:'',
+    page:1
   },
 
   /**
@@ -22,25 +23,29 @@ Page({
         })
       },
     })
-    orderHttp.getMemberOrderList(1,(d,p)=>{//首次载入页面获取page1数据
+    orderHttp.getMemberOrderList(1,(d,p)=>{//每次载入页面获取page1数据
       console.log(d,p)
-      if(p.total == 0){//如果数据总数为0
-
+      if(!p.more){//如果paginated.more为0，"加载更多"不显示
+        this.setData({
+          hisOrderList: null
+        })
       }else{
         this.setData({
-          hisOrderList: d.member_order_list
+          hisOrderList: d.member_order_list,
         })
       }
-
     })
   },
 
   lower(){
-    orderListService.getUserOrderList((d) => {
-      console.log(d.orderList.concat(d.orderList))
+    var page = this.data.page+1;//触发一次滑动到底，page页数+1
+    orderHttp.getMemberOrderList(page,(d) => {
       this.setData({
-        hisOrderList: d.orderList.concat(d.orderList)
+        hisOrderList: d.member_order_list.concat(this.data.hisOrderList)
       })
+    })
+    this.setData({
+      page:page
     })
   },
   /**
