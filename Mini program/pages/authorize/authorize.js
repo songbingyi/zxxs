@@ -26,7 +26,7 @@ Page({
     }
   }, 
   getPayInfo: () => {
-    app.globalData.userPayStatus = true
+    //app.globalData.userPayStatus = true
     
     //跳转回首页
     // wx.navigateBack({

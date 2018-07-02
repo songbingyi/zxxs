@@ -2,6 +2,7 @@ let BaseHttp = require("../utils/base-http.js");
 let API = require("../utils/API.js");
 let util = require('../utils/util.js');
 
+
 /** @name 02-会员-微信登录-换取token */
 const loginWithWechat = (para,callback) => {
   BaseHttp.post(API.loginWithWechat, para, (d, status) => {
@@ -23,14 +24,12 @@ const getMemberAuthInfo = (callback) => {
 
 
 /** @name 04-会员-记录登录状态-获取token-token获取token */
-const loginWithToken = (para) => {
+const loginWithToken = (callback) => {
+  var para = {
+    member_id1: util.storageMethod.get('member_id')
+  }
   BaseHttp.post(API.loginWithToken, para, (d, status) => {
-
-    if (status) {//如果status为真，把新的token和id存入缓存
-      wx.setStorageSync('token', d.token);
-      wx.setStorageSync('member_id', d.member_id);
-    }
-    else { wechatLogin() }//如果status为假，发起wechatLogin重新登录
+    callback(d,status)
   });
 }
 

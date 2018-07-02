@@ -18,6 +18,7 @@ Page({
      //获取windowHeight 
     wx.getSystemInfo({
       success: (res) => {
+        console.log(res)
         this.setData({
           height: res.windowHeight * 2-160
         })
