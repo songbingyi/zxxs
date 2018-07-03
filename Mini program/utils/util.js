@@ -45,6 +45,10 @@ storageMethod.set = function(key,keys){
   wx.setStorageSync(key, keys)
 }
 
+/** 
+ * @name 防止连续触发
+ */
+
 
 module.exports = {
   formatTime: formatTime,

@@ -1,9 +1,9 @@
 <!--pages/user/orderlist/orderlist.wxml-->
 <view class="wrap">
-  <view class="page-title">
+  <view class="page-title" id='page-title'>
     <text class="title">订单</text>
   </view>
-  <scroll-view class="content" bindscrolltolower="lower" style="height: {{height}}rpx;" scroll-y='true' lower-threshold='10'>
+  <scroll-view class="content" bindscrolltolower="lower" style="height:{{scrollHeight}}px;" scroll-y='true' lower-threshold='5'>
     <view class="user-order-list">
       <view class="order-item" wx:for="{{hisOrderList}}" wx:key="{{index}}">
         <view class="order-num">    
@@ -16,7 +16,7 @@
         <view class="order-con">
           <view class='orderlist' wx:for='{{item.order_product_list}}' wx:key='{{index}}'>
             <text class="orderlist-title">{{item.product_name}}</text>
-            <view class='price-num'>
+            <view s='price-num'>
             <text class="orderlist-counter">X{{item.quantity}}</text>
             <text class="iorderlist-price">￥{{item.price}}</text>
             </view>
@@ -34,7 +34,7 @@
       </view>
 
     </view>
-    <view class='more' wx:if="{{hisOrderList}}">
+    <view class='more' wx:if="{{hasMore}}">
       <text>加载更多</text>
     </view>
   </scroll-view>
