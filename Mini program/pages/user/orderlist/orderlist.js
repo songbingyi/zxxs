@@ -1,6 +1,7 @@
 // pages/user/orderlist/orderlist.js
 const app = getApp()
 const orderHttp = require('../../../service/order-http.service.js')
+const util = require('../../../utils/util.js')
 Page({
   /**
    * 页面的初始数据
@@ -11,30 +12,25 @@ Page({
     hasMore: false,
     hasTouched: 0,
     titleHeight: 0,
-    scrollHeight: 0
-  },
+    scrollHeight: 0,
 
+  },
   /**
    * 生命周期函数--监听页面加载
    */
 
-
-
-
   onLoad: function(options) {
     var that = this;
-    wx.createSelectorQuery().select('#page-title').boundingClientRect(function (rect) {  // title盒子的高度
-      that.setData({ titleHeight :rect.height})
- 
+    wx.createSelectorQuery().select('#page-title').boundingClientRect(function(rect) { // 获取title盒子的高度，单位px
+      that.setData({
+        titleHeight: rect.height
+      })
     }).exec()
 
-
-
-    
-    orderHttp.getMemberOrderList(1, (d, p) => { //初次加载页面获取page1数据
+    orderHttp.getProductOrderList(1, (d, p) => { //初次加载页面获取page1数据
       if (p.total) { //如果条目总数为真
         this.setData({
-          hisOrderList: d.member_order_list //渲染后台数据
+          hisOrderList: d.product_order_list //渲染后台数据
         })
       } else { //如果条目总数为0
 
@@ -46,34 +42,32 @@ Page({
     })
   },
 
-  onReady: function(){
+  onReady: function() {
     // 获取windowHeight 
     wx.getSystemInfo({
       success: (res) => {
         console.log(res)
         this.setData({
-          scrollHeight: res.windowHeight - this.data.titleHeight
+          scrollHeight: res.windowHeight - this.data.titleHeight //滚动区域的高度等于窗口高度减去title高度
         })
       }
     })
-    console.log(this.data.titleHeight)
   },
   lower() {
-    if(!this.data.hasTouched){//如果没有在请求中，发送请求
-    this.setData({
-      hasTouched: 1 //正在请求中，设置为1
-    })
+    if (!this.data.hasTouched) { //如果没有在请求中，发送请求
+      util.hasTouched(500, this) //间隔时间内不能再次出发
+
       var page = this.data.page + 1; //触发一次滑动到底，page页数+1
-      orderHttp.getMemberOrderList(page, (d) => {
+      orderHttp.getProductOrderList(page, (d) => {
+
         this.setData({
-          hisOrderList: d.member_order_list.concat(this.data.hisOrderList),
+          hisOrderList: d.product_order_list.concat(this.data.hisOrderList), //把新得到的订单推到现有数组里
           page: page,
-          hasTouched: 0//设置状态为没有在请求中
         })
       })
-  }else{
-    console.log('刷新过于频繁，请求不发送')
-  }
+    } else {
+      console.log('刷新过于频繁，请求不发送')
+    }
   },
   /**
    * 用户点击右上角分享

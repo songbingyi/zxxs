@@ -47,11 +47,22 @@ storageMethod.set = function(key,keys){
 
 /** 
  * @name 防止连续触发
+ * @name function hasTouched(t|间隔时间，self|this当前对象)
  */
-
+function hasTouched(t,self){
+  self.setData({
+    hasTouched: 1 //正在请求中，设置为1
+  })
+  setTimeout(()=>{
+    self.setData({
+      hasTouched: 0 //请求结束，设置为0
+    })
+  },t)
+}
 
 module.exports = {
   formatTime: formatTime,
   showModalWithNotice: showModalWithNotice,
-  storageMethod: storageMethod
+  storageMethod: storageMethod,
+  hasTouched:hasTouched
 }

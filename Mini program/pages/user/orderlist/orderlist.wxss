@@ -4,16 +4,11 @@ page{
   background-color: #f8f8f8;
 
 }
-.page-title{
-  margin-bottom: 40rpx;
-  position: fixed;
-  z-index: 2;
-}
-.content {
-  padding-top: 160rpx;
-  z-index: 1；
-}
 
+
+.user-order-list {
+  margin-top: 20rpx
+}
 .user-order-list .order-item{
   margin-bottom: 20rpx;
   background-color: #fff;

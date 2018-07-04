@@ -99,3 +99,8 @@
 button[type="primary"]{
   margin: 40rpx;
 }
+.page-title{
+  height: 140rpx;
+  position: fixed; 
+  z-index: 2;
+}

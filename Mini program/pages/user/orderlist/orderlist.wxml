@@ -3,7 +3,8 @@
   <view class="page-title" id='page-title'>
     <text class="title">订单</text>
   </view>
-  <scroll-view class="content" bindscrolltolower="lower" style="height:{{scrollHeight}}px;" scroll-y='true' lower-threshold='5'>
+  <!--滚动到底加载更多，距离底部20PX的时候触发-->
+  <scroll-view  bindscrolltolower="lower" style="height:{{scrollHeight}}px;" scroll-y='true' lower-threshold='20'>
     <view class="user-order-list">
       <view class="order-item" wx:for="{{hisOrderList}}" wx:key="{{index}}">
         <view class="order-num">    
@@ -16,7 +17,7 @@
         <view class="order-con">
           <view class='orderlist' wx:for='{{item.order_product_list}}' wx:key='{{index}}'>
             <text class="orderlist-title">{{item.product_name}}</text>
-            <view s='price-num'>
+            <view class='price-num'>
             <text class="orderlist-counter">X{{item.quantity}}</text>
             <text class="iorderlist-price">￥{{item.price}}</text>
             </view>

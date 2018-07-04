@@ -6,7 +6,7 @@ const API = require('../utils/API.js')
 
 /** @name 公共请求参数 */
 var commonParams = {
-  device_type: '10',
+  device_type: '50',
   device_version: '1.0',
   version_code: '1',
   channel: '20001_website',

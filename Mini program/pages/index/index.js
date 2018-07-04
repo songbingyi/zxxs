@@ -49,6 +49,8 @@ Page({
           success: (result) => { //打印扫码成功后返回的数据
             console.log(result);
             containerHttp.getContainerDetail("container_no",(d)=>{//向后台传递货柜编号,返回仓库类型，判断仓库类型进入不同页面
+            //判断货柜分类
+            //判断货柜开门状态
             })
             orderHttp.addMemberOrder("container_no",(d)=>{// ((()))待处理 向后台传递货柜编号，开门
 

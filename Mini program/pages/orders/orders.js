@@ -119,9 +119,11 @@ Page({
       }
     orderHttp.checkoutMemberOrder(order_info, (d) => {
       console.log(d)
+      if (d.member_order_info.total){
       this.setData({
         totalPrice: d.member_order_info.total
       })
+      }
     })
 
 

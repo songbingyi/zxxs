@@ -1,6 +1,6 @@
 
 <view class="wrap">
-    <view class="page-title">
+    <view class="page-title" id='page-title'>
       <text class="title">结算</text>
     </view>
     <view class="content">

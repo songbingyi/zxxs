@@ -3,7 +3,7 @@ let API = require("../utils/API.js");
 let util = require('../utils/util.js');
 
 /** @name 08-订单-扫码开门
- *  @function getWareHouseProductList(container_no |货柜编号, callback|回调函数)
+ *  @function addMemberOrder(container_no |货柜编号, callback|回调函数)
  */
 const addMemberOrder = (container_no, callback) => {
   var para = {
@@ -37,7 +37,7 @@ const getWareHouseProductList = (page, callback) => {
 }
 
 /** @name 12-订单-结算
- *  @function getWareHouseProductList(order_info |需要发送的商品订单结算信息, callback|回调函数)
+ *  @function checkoutMemberOrder(order_info |需要发送的商品订单结算信息, callback|回调函数)
  */
 const checkoutMemberOrder = (order_info,callback) => {
     var para = {
@@ -52,17 +52,17 @@ const checkoutMemberOrder = (order_info,callback) => {
 }
 
 /** @name 16-订单-获取历史订单列表
- *  @function getWareHouseProductList(page |请求页数, callback|回调函数)
+ *  @function getProductOrderList(page |请求页数, callback|回调函数)
  */
-const getMemberOrderList = (page, callback) => {
+const getProductOrderList = (page, callback) => {
   var para = {
     member_id: util.storageMethod.get('member_id'),
     pagination: {
       page: page, //请求页数
-      count: 3 //getApp().globalData.pageCount //请求数量
+      count: getApp().globalData.pageCount //请求数量
     }
   }
-  BaseHttp.post(API.getMemberOrderList, para, (d, status, p) => {//d:data,status:状态,p:分页信息
+  BaseHttp.post(API.getProductOrderList, para, (d, status, p) => {//d:data,status:状态,p:分页信息
     if (status) { callback(d, p) }
     else util.showModalWithNotice('提示', '请求失败:' + JSON.stringify(d));
   });
@@ -72,5 +72,5 @@ module.exports = {
   getWareHouseProductList: getWareHouseProductList,
   checkoutMemberOrder: checkoutMemberOrder,
   addMemberOrder: addMemberOrder,
-  getMemberOrderList: getMemberOrderList
+  getProductOrderList: getProductOrderList
 }

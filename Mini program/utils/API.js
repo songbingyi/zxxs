@@ -34,7 +34,7 @@ module.exports = {
   /**@name 07货柜-获取货柜详情 */
   getContainerDetail: 'container/container/getContainerDetail',
 
-  /**@name 08货柜-获取货柜详情 */
+  /**@name 08货柜-获取订单（扫码开柜） */
   addMemberOrder: 'order/member_order/addMemberOrder',
 
   /**@name 11订单-获取仓库商品列表- */
@@ -43,7 +43,7 @@ module.exports = {
   /**@name 12订单-订单结算 */
   checkoutMemberOrder: 'order/member_order/checkoutMemberOrder',
 
-  /**@name 16订单-订单结算 */
-  getMemberOrderList: 'order/member_order/getMemberOrderList',
+  /**@name 16订单-历史订单记录 */
+  getProductOrderList: 'order/Product_order/getProductOrderList',
 
 }
