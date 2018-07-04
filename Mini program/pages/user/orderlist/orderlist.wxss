@@ -5,7 +5,6 @@ page{
 
 }
 
-
 .user-order-list {
   margin-top: 20rpx
 }

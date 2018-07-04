@@ -10,14 +10,6 @@ module.exports = {
   /** @name 会员-获取个人信息详情 */
   getMemberDetail: 'member/member/getMemberDetail',
 
-  /** @name 获取信息数据 */
-  getDataInfo: 'about/info/getDataInfo',
-
-  /** @name 订单-获取菜品信息数据 */
-  getOrderInfo: 'orderDatas',
-
-  /**@name 用户-订单-以往订单信息 */
-  getUserOrderList: 'userOrderList',
 
   /**@name 02会员-微信登录-获取token和会员id */
   loginWithWechat: 'member/thirdpart_wx/loginWithWechat',
@@ -35,13 +27,13 @@ module.exports = {
   getContainerDetail: 'container/container/getContainerDetail',
 
   /**@name 08货柜-获取订单（扫码开柜） */
-  addMemberOrder: 'order/member_order/addMemberOrder',
+  addProductOrder: 'order/product_order/addProductOrder',
 
   /**@name 11订单-获取仓库商品列表- */
   getWareHouseProductList: 'order/warehouse/getWareHouseProductList',
 
   /**@name 12订单-订单结算 */
-  checkoutMemberOrder: 'order/member_order/checkoutMemberOrder',
+  checkoutProductOrder: 'order/product_order/checkoutProductOrder',
 
   /**@name 16订单-历史订单记录 */
   getProductOrderList: 'order/Product_order/getProductOrderList',

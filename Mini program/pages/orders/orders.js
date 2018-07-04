@@ -30,7 +30,7 @@ Page({
   //点击支付按钮后发起支付行为
   clickPayBtn() {
 
-    orderHttp.checkoutMemberOrder({}, (d) => { //发起订单结算，
+    orderHttp.checkoutProductOrder({}, (d) => { //发起订单结算，
 
       console.log(d)
     })
@@ -70,7 +70,7 @@ Page({
     this.setData({
       productList: productList
     });
-    this.checkoutMemberOrder();
+    this.checkoutProductOrder();
   },
 
   minusCount(e) { //点击减号
@@ -99,10 +99,10 @@ Page({
       })
     }
 
-    this.checkoutMemberOrder();
+    this.checkoutProductOrder();
   },
 
-  checkoutMemberOrder() { //拼装order_info参数，发送后端，获得结算结果，不包括支付
+  checkoutProductOrder() { //拼装order_info参数，发送后端，获得结算结果，不包括支付
     let productList = this.data.productList,
       product_list = [],
       pLL = productList.length;
@@ -117,11 +117,11 @@ Page({
       product_list: product_list,
       payment_code_info: app.globalData.payment_code_info
       }
-    orderHttp.checkoutMemberOrder(order_info, (d) => {
+    orderHttp.checkoutProductOrder(order_info, (d) => {
       console.log(d)
-      if (d.member_order_info.total){
+      if (d.product_order_info.total){
       this.setData({
-        totalPrice: d.member_order_info.total
+        totalPrice: d.product_order_info.total
       })
       }
     })
