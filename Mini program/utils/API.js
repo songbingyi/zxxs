@@ -23,6 +23,9 @@ module.exports = {
   /**@name 05会员-获取会员详情- */
   getMemberDetail: 'member/member/getMemberDetail',
 
+  /**@name 06会员-申请免密支付权限 ##### */
+  submitDeductContract: 'member/member_deduct_contract/submitDeductContract',
+
   /**@name 07货柜-获取货柜详情 */
   getContainerDetail: 'container/container/getContainerDetail',
 
@@ -35,7 +38,14 @@ module.exports = {
   /**@name 12订单-订单结算 */
   checkoutProductOrder: 'order/product_order/checkoutProductOrder',
 
+  /**@name 13订单-支付订单（免密支付）##### */
+  payProductOrderUseDeductContract: 'order/product_order/payProductOrderUseDeductContract',
+
   /**@name 16订单-历史订单记录 */
   getProductOrderList: 'order/Product_order/getProductOrderList',
+
+  /**@name 18会员-获取微信用户绑定的手机号 */
+  getPhoneNumber: 'member/thirdpart_wx/getPhoneNumber',
+
 
 }

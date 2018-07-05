@@ -1,10 +1,10 @@
 {
   "pages": [
-    "pages/orders/orders",
-    "pages/user/orderlist/orderlist",
     "pages/index/index",
-    "pages/user/user",
-    "pages/authorize/authorize"
+    "pages/orders/orders",
+    "pages/authorize/authorize",
+    "pages/user/orderlist/orderlist",
+    "pages/user/user"
   ],
   "window": {
     "backgroundTextStyle": "#fff",

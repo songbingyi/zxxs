@@ -11,14 +11,22 @@ Page({
   },
   makePhoneCall: function () {
     wx.makePhoneCall({
-      // phoneNumber: '02968201798'
       phoneNumber: '02968201798'
     })
   },
   onLoad: function () {
+    wx.getStorage({//如果缓存里有电话号码，设置到V层
+      key: 'userPhoneNum',
+      success: (res)=> {
+        this.setData({
+          phoneNumber: res.data
+        })
+      },
+    //是否需要考虑缓存里有电话号码，但是没有授权的状况
+    })
     wx.getSetting({//载入时进行userInfo鉴权
       success: (res)=>{
-        if (res.authSetting['scope.userInfo']){//如果头像同意过授权，从接口获取用头像url
+        if (res.authSetting['scope.userInfo']){//如果头像同意过授权，从后端获取用头像url
           memberHttp.getMemberDetail( (d)=>{
             this.setData({
               userInfo:d.member_info,
@@ -37,7 +45,7 @@ Page({
             phoneNumber:e.member_info.mobile
           })
         })
-      }else{//如果没有授权,显示请登录
+      }else{//如果没有授权,头像下的文字显示请登录
         
       }
     })
@@ -49,8 +57,8 @@ Page({
       hasUserInfo: true,
     })
   },
-  agreeGetUser(e) { //点击授权按钮
-    if (e.detail.userInfo) { //用户点击同意授权,从后端拉取memberInfo，渲染V层
+  agreeGetUser(e) { //点击头像授权按钮
+    if (e.detail.userInfo) { //用户点击同意授权,从后端获取memberInfo，设置到视图层
       memberHttp.getMemberDetail((d) => {
         this.setData({
           userInfo: d.member_info,
@@ -68,14 +76,24 @@ Page({
       })
     }
   },
-  getPhoneNumber(e){
-    if(e.detail.iv){
-      memberHttp.getMemberDetail((d)=>{
-        this.setData({
-          phoneNumber: d.member_info.mobile
-        })
+  getPhoneNumber(res){
+    if(res.detail.iv){//如果用户点击同意授权电话信息
+    wx.showLoading({
+      title: '加载中...',
+    })
+      let submitInfo = {
+        iv: res.detail.iv,
+        encrypted_data: res.detail.encryptedData
+      }//拼接电话加密信息参数
+      memberHttp.getPhoneNumber(submitInfo, () => {//把返回的电话加密信息传给后端
+        memberHttp.getMemberDetail((d)=>{//从后端获取电话号码，设置到视图层
+            this.setData({
+              phoneNumber:d.member_info.mobile
+            })
+          wx.hideLoading()
+          }
+        )
       })
-
     }
   }
 })

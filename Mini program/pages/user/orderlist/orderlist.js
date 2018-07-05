@@ -20,12 +20,22 @@ Page({
    */
 
   onLoad: function(options) {
-    var that = this;
-    wx.createSelectorQuery().select('#page-title').boundingClientRect(function(rect) { // 获取title盒子的高度，单位px
-      that.setData({
-        titleHeight: rect.height
-      })
-    }).exec()
+
+    // 获取当前设备windowHeight 
+    wx.getSystemInfo({
+      success: (res) => {
+
+        wx.createSelectorQuery().select('#page-title').boundingClientRect((rect) => {
+          // 获取page-title盒子的高度，单位px
+          console.log(rect)
+          this.setData({
+            scrollHeight: res.windowHeight - rect.height //设置滚动区域的高度，单位px
+          })
+
+        }).exec()
+
+      }
+    })
 
     orderHttp.getProductOrderList(1, (d, p) => { //初次加载页面获取page1数据
       if (p.total) { //如果条目总数为真
@@ -33,25 +43,16 @@ Page({
           hisOrderList: d.product_order_list //渲染后台数据
         })
       } else { //如果条目总数为0
-
       }
       this.setData({
         hasMore: p.more ? true : false //如果paginated.more为0，底部"加载更多"不显示,反之则显示
       })
-
     })
   },
 
   onReady: function() {
-    // 获取windowHeight 
-    wx.getSystemInfo({
-      success: (res) => {
-        console.log(res)
-        this.setData({
-          scrollHeight: res.windowHeight - this.data.titleHeight //滚动区域的高度等于窗口高度减去title高度
-        })
-      }
-    })
+
+
   },
   lower() {
     if (!this.data.hasTouched) { //如果没有在请求中，发送请求

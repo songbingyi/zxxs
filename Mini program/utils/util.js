@@ -34,7 +34,7 @@ const showModalWithNotice = (title, content) => {
  * @function storageMethod.get(key|希望获取缓存的键)
  */
 function storageMethod(){};
-storageMethod.get = function (key){
+storageMethod.get = function (key,callback1,callback2){
   if (wx.getStorageSync(key)){
     console.log('读取缓存 =>缓存里存在',key)
     return wx.getStorageSync(key)
@@ -43,6 +43,8 @@ storageMethod.get = function (key){
   };
 storageMethod.set = function(key,keys){
   wx.setStorageSync(key, keys)
+  console.log('存储缓存 =>', key,keys)
+
 }
 
 /** 

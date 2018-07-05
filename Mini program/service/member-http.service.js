@@ -34,21 +34,42 @@ const loginWithToken = (callback) => {
 }
 
 
-/** @name 05-会员-获取会员详情- */
+/** @name 05-会员-获取会员详情 */
 const getMemberDetail = (callback) => {
   var para = {
     member_id: util.storageMethod.get('member_id')
   }
   BaseHttp.post(API.getMemberDetail, para, (d, status) => {
     if (status) callback(d);
+    else {
+      wx.hideLoading()
+      util.showModalWithNotice('提示', '请求失败:' + JSON.stringify(d))
+      }
+  });
+}
+
+/** 
+ * @name 18-会员-获取用户绑定的手机号
+ * @param submitInfo:{iv:'',encrypted_data:''}
+ * @param callback callback回调
+ */
+const getPhoneNumber = (submitInfo,callback) => {
+  var para = {
+    member_id: util.storageMethod.get('member_id'),
+    submit_phone_number: submitInfo
+  }
+  BaseHttp.post(API.getPhoneNumber, para, (d, status) => {
+    if (status) callback(d);
     else util.showModalWithNotice('提示', '请求失败:' + JSON.stringify(d));
   });
 }
+
 
 
 module.exports = {
   loginWithWechat: loginWithWechat,
   getMemberAuthInfo: getMemberAuthInfo,
   loginWithToken: loginWithToken,
-  getMemberDetail: getMemberDetail
+  getMemberDetail: getMemberDetail,
+  getPhoneNumber: getPhoneNumber
 }

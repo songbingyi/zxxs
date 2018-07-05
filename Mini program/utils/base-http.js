@@ -10,7 +10,7 @@ var commonParams = {
   device_version: '1.0',
   version_code: '1',
   channel: '20001_website',
-  TOKEN: '',
+  token: '',
   route: '',
   jsonText: {}
 };
@@ -25,7 +25,7 @@ function BaseHttp() {};
 BaseHttp.post = function(route, params, callback) {
   let self = this;
   //从缓存里获取token，如果存在，赋值给commonParams.token
-  commonParams.token =util.storageMethod.get('token')
+  commonParams.token = util.storageMethod.get('token')
   //commonParams.token = wx.getStorageSync('token')
 
   commonParams.route = route;
@@ -38,18 +38,18 @@ BaseHttp.post = function(route, params, callback) {
       'content-type': 'application/x-www-form-urlencoded'
     },
     method: "POST",
-    success: function (d) {
+    success: function(d) {
       console.log('Result => ', JSON.stringify(d.data));
       self.handleResult(d.data, callback);
     },
-    fail: function (e) {
+    fail: function(e) {
       util.showModalWithNotice('提示', '请求失败:' + JSON.stringify(e));
     }
   });
 }
 
 /** 返回数据解析 */
-BaseHttp.handleResult = function(d, callback) {//如果有分页，分页信息用第三个参数传出
+BaseHttp.handleResult = function(d, callback) { //如果有分页，分页信息用第三个参数传出
   if (d && d.status) {
     if (d.status.succeed == '1') {
       if (d.paginated) { //是否分页
