@@ -20,10 +20,9 @@
     <!--如果电话已经授权，免密支付按钮亮起。如果电话没被授权，免密支付按钮disbale>-->
     <button wx:if="{{!phoneNumberBtnDisabled}}" type="primary" size="default" disabled="{{true}}">
       <text class="list-num">2</text>立即开通button</button>
-    <block wx:else>
-      <navigator app-id="wxbd687630cd02ce1d" open-type='navigate' target="miniProgram" extraData="{{extraData}}" hover-class="none" path="pages/index/index">
+
+      <navigator wx:else app-id="wxbd687630cd02ce1d" open-type='navigate' target="miniProgram" extraData="{{extraData}}" hover-class="none" path="pages/index/index" bindtap='getContractData'>
         <text class="list-num">2</text>立即开通navi</navigator>
-    </block>
 
   </view>
 </view>

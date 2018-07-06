@@ -48,6 +48,21 @@ const getMemberDetail = (callback) => {
   });
 }
 
+/** @name 06-会员-申请免密支付 */
+const submitDeductContract = (callback) => {
+  var para = {
+    member_id: util.storageMethod.get('member_id')
+  }
+  BaseHttp.post(API.submitDeductContract, para, (d, status) => {
+    if (status) callback(d);
+    else {
+      wx.hideLoading()
+      util.showModalWithNotice('提示', '请求失败:' + JSON.stringify(d))
+    }
+  });
+}
+
+
 /** 
  * @name 18-会员-获取用户绑定的手机号
  * @param submitInfo:{iv:'',encrypted_data:''}
@@ -59,8 +74,10 @@ const getPhoneNumber = (submitInfo,callback) => {
     submit_phone_number: submitInfo
   }
   BaseHttp.post(API.getPhoneNumber, para, (d, status) => {
-    if (status) callback(d);
-    else util.showModalWithNotice('提示', '请求失败:' + JSON.stringify(d));
+    if (status){callback(d)}
+    else{util.showModalWithNotice('提示', '请求失败:' + JSON.stringify(d))
+      wx.hideLoading()
+    }
   });
 }
 
@@ -71,5 +88,6 @@ module.exports = {
   getMemberAuthInfo: getMemberAuthInfo,
   loginWithToken: loginWithToken,
   getMemberDetail: getMemberDetail,
-  getPhoneNumber: getPhoneNumber
+  getPhoneNumber: getPhoneNumber,
+  submitDeductContract: submitDeductContract
 }

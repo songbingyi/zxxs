@@ -10,7 +10,6 @@ module.exports = {
   /** @name 会员-获取个人信息详情 */
   getMemberDetail: 'member/member/getMemberDetail',
 
-
   /**@name 02会员-微信登录-获取token和会员id */
   loginWithWechat: 'member/thirdpart_wx/loginWithWechat',
 
@@ -32,6 +31,12 @@ module.exports = {
   /**@name 08货柜-获取订单（扫码开柜） */
   addProductOrder: 'order/product_order/addProductOrder',
 
+  /**@name 09基本-获取仓库分类列表 */
+  getWarehouseCategoryList: 'base/warehouse_category/getWarehouseCategoryList',
+
+  /**@name 10基本-获取支付方式列表*/
+  getPaymentCodeList: 'base/payment_code/getPaymentCodeList',
+
   /**@name 11订单-获取仓库商品列表- */
   getWareHouseProductList: 'order/warehouse/getWareHouseProductList',
 
@@ -41,10 +46,13 @@ module.exports = {
   /**@name 13订单-支付订单（免密支付）##### */
   payProductOrderUseDeductContract: 'order/product_order/payProductOrderUseDeductContract',
 
+  /**@name 15基本-获取订单状态列表 */
+  getProductOrderStatusList:'base/product_order_status/getProductOrderStatusList',
+
   /**@name 16订单-历史订单记录 */
   getProductOrderList: 'order/Product_order/getProductOrderList',
 
-  /**@name 18会员-获取微信用户绑定的手机号 */
+  /**@name 18会员-向后台发送电话号码加密信息 */
   getPhoneNumber: 'member/thirdpart_wx/getPhoneNumber',
 
 

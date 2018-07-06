@@ -15,16 +15,16 @@ Page({
     })
   },
   onLoad: function () {
-    wx.getStorage({//如果缓存里有电话号码，设置到V层
+    wx.getStorage({//载入页面前先判断缓存里有没有电话号码，设置到V层
       key: 'userPhoneNum',
       success: (res)=> {
         this.setData({
           phoneNumber: res.data
         })
       },
-    //是否需要考虑缓存里有电话号码，但是没有授权的状况
+    // TODO 是否需要考虑缓存里有电话号码，但是没有授权的状况
     })
-    wx.getSetting({//载入时进行userInfo鉴权
+    wx.getSetting({//载入时在前端进行userInfo鉴权
       success: (res)=>{
         if (res.authSetting['scope.userInfo']){//如果头像同意过授权，从后端获取用头像url
           memberHttp.getMemberDetail( (d)=>{
@@ -37,7 +37,7 @@ Page({
         }
       }
     })
-    //载入时进行电话号码鉴权
+    //载入时从后端进行电话号码鉴权
     memberHttp.getMemberAuthInfo((d)=>{
       if (d.member_auth_info.member_mobile_auth_status){//如果已经授权，从后台拉取电话号码并显示
         memberHttp.getMemberDetail((e) => {
@@ -46,7 +46,10 @@ Page({
           })
         })
       }else{//如果没有授权,头像下的文字显示请登录
-        
+        this.setData({
+          phoneNumber: ''
+        })
+        util.storageMethod.set('userPhoneNum','')
       }
     })
 
@@ -86,13 +89,15 @@ Page({
         encrypted_data: res.detail.encryptedData
       }//拼接电话加密信息参数
       memberHttp.getPhoneNumber(submitInfo, () => {//把返回的电话加密信息传给后端
-        memberHttp.getMemberDetail((d)=>{//从后端获取电话号码，设置到视图层
+        memberHttp.getMemberDetail((d)=>{//从后端获取解密后的电话号码，设置到视图层
             this.setData({
               phoneNumber:d.member_info.mobile
             })
-          wx.hideLoading()
+            util.storageMethod.set('userPhoneNum',d.member_info.mobile)//把电话号码存到缓存中
+ 
           }
         )
+        wx.hideLoading()
       })
     }
   }

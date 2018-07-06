@@ -31,10 +31,12 @@ const showModalWithNotice = (title, content) => {
 
 /** 
  * @name storage基类方法对象
- * @function storageMethod.get(key|希望获取缓存的键)
+ * @function storageMethod.get(key|希望获取缓存的键) 同步读取缓存
+ * @function storageMethod.set(key|希望存储的键，key|希望存储的值) 同步存储缓存
  */
 function storageMethod(){};
-storageMethod.get = function (key,callback1,callback2){
+
+storageMethod.get = function (key){
   if (wx.getStorageSync(key)){
     console.log('读取缓存 =>缓存里存在',key)
     return wx.getStorageSync(key)
@@ -44,12 +46,11 @@ storageMethod.get = function (key,callback1,callback2){
 storageMethod.set = function(key,keys){
   wx.setStorageSync(key, keys)
   console.log('存储缓存 =>', key,keys)
-
 }
 
 /** 
  * @name 防止连续触发
- * @name function hasTouched(t|间隔时间，self|this当前对象)
+ * @function hasTouched(t|间隔时间，self|this当前对象)
  */
 function hasTouched(t,self){
   self.setData({
