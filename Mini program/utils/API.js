@@ -1,5 +1,5 @@
 /** @name 接口请求路径-测试环境 */
-// const serve_url = 'http://218.244.158.175/lex_server/api_client/index.php';
+// const serve_url = 'http://218.244.158.175/zxxs_server/api_client/index.php/';
 const serve_url = 'https://easy-mock.com/mock/5b224b06fcfce63e92dc3e06/zxxs/';
 
 /** @name 接口请求路径-生产环境 */
@@ -7,6 +7,11 @@ const serve_url = 'https://easy-mock.com/mock/5b224b06fcfce63e92dc3e06/zxxs/';
 
 module.exports = {
     serve_url: serve_url,
+
+
+  /**@name 测试后端测试环境 */
+  testBack: 'base/client_config/getClientig',
+  
   /** @name 会员-获取个人信息详情 */
   getMemberDetail: 'member/member/getMemberDetail',
 
@@ -54,6 +59,9 @@ module.exports = {
 
   /**@name 18会员-向后台发送电话号码加密信息 */
   getPhoneNumber: 'member/thirdpart_wx/getPhoneNumber',
+
+
+
 
 
 }

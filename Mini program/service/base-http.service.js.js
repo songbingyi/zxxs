@@ -12,7 +12,7 @@ const getWarehouseCategoryList = (callback) => {
 }
 /** @name 10-基本-获取支付方式列表 */
 const getPaymentCodeList = (callback) => {
-  var para = '父类ID';
+  var para = {parent_id: '父类ID'}
   BaseHttp.post(API.getPaymentCodeList, para, (d, status) => {
     if (status) callback(d);
     else util.showModalWithNotice('提示', '请求失败:' + JSON.stringify(d));
@@ -21,9 +21,22 @@ const getPaymentCodeList = (callback) => {
 
 /** @name 15-基本-获取订单状态列表 */
 const getProductOrderStatusList = (callback) => {
-  var para = '父类ID';
+  var para = { parent_id: '父类ID' }
   BaseHttp.post(API.getProductOrderStatusList, para, (d, status) => {
     if (status) callback(d);
     else util.showModalWithNotice('提示', '请求失败:' + JSON.stringify(d));
   });
+}
+
+/** @name 测试-测试后端路由 */
+const testBack = (callback) => {
+  var para = "";
+  BaseHttp.post(API.testBack, para, (d, status) => {
+    if (status) callback(d);
+    else util.showModalWithNotice('提示', '请求失败:' + JSON.stringify(d));
+  });
+}
+
+module.exports = {
+  testBack:testBack
 }
