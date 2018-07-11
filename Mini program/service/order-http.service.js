@@ -8,13 +8,13 @@ let util = require('../utils/util.js');
 const addProductOrder = (container_no, callback) => {
   var para = {
     member_id: util.storageMethod.get('member_id'),
-    product_order_id: '1123123',//商品订单ID
     container_no: container_no
     //坐标？
   }
   BaseHttp.post(API.addProductOrder, para, (d, status) => {//d:data,status:状态,p:分页信息
-    if (status) { callback(d) }
-    else util.showModalWithNotice('提示', '请求失败:' + JSON.stringify(d));
+    // if (status) { callback(d) }
+    // else util.showModalWithNotice('提示', '请求失败:' + JSON.stringify(d));
+    callback(d,status)
   });
 }
 

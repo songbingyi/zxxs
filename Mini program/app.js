@@ -32,6 +32,7 @@ App({
   },
 
   globalData: {
+    productOrderId:'',
     //memberAuthStatus:{},
     //userphoneInfo: null,
     //userPayStatus: false,

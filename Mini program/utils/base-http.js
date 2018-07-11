@@ -49,11 +49,11 @@ BaseHttp.post = function(route, params, callback) {
 }
 
 /** 返回数据解析 */
-BaseHttp.handleResult = function(d, callback) { //如果有分页，分页信息用第三个参数传出
+BaseHttp.handleResult = function(d, callback) { 
   if (d && d.status) {
     if (d.status.succeed == '1') {
       if (d.paginated) { //是否分页
-        callback(d.data == null ? "" : d.data, true, d.paginated);
+        callback(d.data == null ? "" : d.data, true, d.paginated);//如果有分页，分页信息用第三个参数传出
       } else {
         callback(d.data == null ? "" : d.data, true);
       }

@@ -65,38 +65,42 @@ Page({
   goAuthorize: function() {
     memberHttp.getMemberAuthInfo((d) => { //从后台获取授权信息
       console.log(d)
-      if (
-        d.member_auth_info.member_auth_status
-
-      ) { //如果授权总状态为1，打开相机进行扫描
+      if (d.member_auth_info.member_auth_status) { //如果授权总状态为1，打开相机进行扫描
         wx.scanCode({
           onlyFromCamera: true,
           success: (result) => {
             console.log(result); //打印扫码成功后返回的数据
             var containerNo = '货柜编号';
-            containerHttp.getContainerDetail(containerNo, (d) => { //向后台传递货柜编号,返回container_info，判断开门状态、判断仓库类型进入不同页面
-              var categoryId = d.container_info.warehouse_info.warehouse_category_info.warehouse_category_id; //仓库ID
-              if ('关门状态') { // 货柜状态判断————如果是关门状态
-                orderHttp.getWareHouseProductList(1, (d, p) => { //获取货柜内商品信息
-                  if (p.total) { //商品信息数量判断————如果商品信息数量不为0
-                    orderHttp.addProductOrder(containerNo, (d) => {
-                      console.log(d.product_order_id) //TODO 货柜开门，并返回商品订单id
+            orderHttp.addProductOrder(containerNo, (d, status) => { //给后端传递货柜编号，获取订单编号ID，申请开门
+              console.log(d, status)
+              if (status) { //判断是否开门成功————如果开门
+                orderHttp.getContainerDetail(containerNo, (d) => { //获取仓库分类
+                  var categoryId = d.container_info.warehouse_info.warehouse_category_info.warehouse_category_id
+                  if (categoryId == 1) { //判断仓库类型————如果是普通仓库，跳转order页面
+                    wx.navigateTo({
+                      url: '../orders/orders'
                     })
-                    if (categoryId == 1) //货柜类型判断————如果是普通货柜,进入order页面
-                    {
-                      // TODO
-                    } else if (categoryId == 2) { //货柜类型判断————如果是重力感应货柜
-                      // TODO
-                    }
-
-                  }else{//商品信息数量判断————如果商品信息数量为0
-                    wx.showModal({
-                          title: 'TODO 提示',
-                          content: 'TODO 暂时没有餐',
-                          showCancel: false
-                        })
+                  } else if(categoryId == 2) { //判断仓库类型————如果是重力感应仓库，跳转####页面
                   }
-                })
+                }) //获取仓库分类结束
+              } else {//判断是否开门成功————如果开门失败
+                var errorCode = d.status.error_code
+                  console.log(errorCode)
+                  switch(errorCode){
+                    //如果没有餐
+                    case '0001':wx.showModal({
+                      title: '提示TODO',
+                      content: '暂时没有餐TODO',
+                      showCancel:false
+                    });break;
+                    //如果门是开的
+                    case '0002': wx.showModal({
+                      title: '提示TODO',
+                      content: '请关门后再扫码TODO',
+                      showCancel: false
+                    }); break;
+                    default:console.log(123);
+                  }
               }
             })
           },
