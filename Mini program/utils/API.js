@@ -1,6 +1,6 @@
 /** @name 接口请求路径-测试环境 */
-// const serve_url = 'http://218.244.158.175/zxxs_server/api_client/index.php/';
-const serve_url = 'https://easy-mock.com/mock/5b224b06fcfce63e92dc3e06/zxxs/';
+const serve_url = 'http://218.244.158.175/zxxs_server/api_client/index.php/';
+//const serve_url = 'https://easy-mock.com/mock/5b224b06fcfce63e92dc3e06/zxxs/';
 
 /** @name 接口请求路径-生产环境 */
 // const serve_url = '';
@@ -55,7 +55,7 @@ module.exports = {
   getProductOrderStatusList:'base/product_order_status/getProductOrderStatusList',
 
   /**@name 16订单-历史订单记录 */
-  getProductOrderList: 'order/Product_order/getProductOrderList',
+  getProductOrderList: 'order/product_order/getProductOrderList',
 
   /**@name 18会员-向后台发送电话号码加密信息 */
   getPhoneNumber: 'member/thirdpart_wx/getPhoneNumber',

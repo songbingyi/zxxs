@@ -7,25 +7,44 @@ App({
     wx.showLoading({
       title: '加载中',
     })
-    //检查本地是否存在token
-    var token = wx.getStorageSync('token'),
-      member_id = wx.getStorageSync('member_id');
-    if (token) { //如果本地token存在,发起登录状态检测
-      console.log('首次打开小程序检测:缓存里已经有token')
-      memberHttp.loginWithToken((d, status) => {
-        if (status) { //如果status为真，服务器端token没有过过期，把新的token和id存入缓存
-          console.log("用token获取新的token完成，")
-          wx.setStorageSync('token', d.token);
-          wx.setStorageSync('member_id', d.member_id);
-        } else {//如果status为假，token已经过期，发起wechatLogin重新登录
-          console.log("token已经过期，发起wechatlgoin")
+      wx.getStorage({
+        key: "token",
+        success: (res)=> {//如果缓存里有token
+          console.log('首次打开小程序检测:缓存里已经有token')
+          memberHttp.loginWithToken((d, status) => {//把token和member_id传给后端
+            if (status) { //判断本地TOKEN是否可用————如果status为真，服务器端token可用，把新的token和id存入缓存
+              console.log("用token获取新的token完成，")
+              wx.setStorageSync('token', d.token);
+              wx.setStorageSync('member_id', d.member_id);
+            } else {//判断本地TOKEN是否可用————如果status为假，token已经过期，发起wechatLogin重新登录
+              console.log("token已经过期，发起wechatlgoin")
+              wechatLogin()
+            }
+          })
+        },
+        fail:()=>{//如果缓存里没有token
+          console.log('首次打开小程序检测：缓存里没有token,发起wechatLogin')
           wechatLogin()
-        } 
+        }
       })
-    } else { //缓存里没有token，发起wx.login
-      console.log('首次打开小程序检测：缓存里没有token,发起wechatLogin')
-      wechatLogin()
-    }
+
+
+    // if (token) { //判断缓存是否存在TOKEN————如果本地token存在,发起登录状态检测
+    //   console.log('首次打开小程序检测:缓存里已经有token')
+    //   memberHttp.loginWithToken((d, status) => {
+    //     if (status) { //判断本地TOKEN是否可用————如果status为真，服务器端token没有过过期，把新的token和id存入缓存
+    //       console.log("用token获取新的token完成，")
+    //       wx.setStorageSync('token', d.token);
+    //       wx.setStorageSync('member_id', d.member_id);
+    //     } else {//判断本地TOKEN是否可用————如果status为假，token已经过期，发起wechatLogin重新登录
+    //       console.log("token已经过期，发起wechatlgoin")
+    //       wechatLogin()
+    //     } 
+    //   })
+    // } else { //判断缓存是否存在TOKEN————缓存里没有token，发起wx.login
+    //   console.log('首次打开小程序检测：缓存里没有token,发起wechatLogin')
+    //   wechatLogin()
+    // }
   },
   onShow: function() {
     wx.hideLoading()

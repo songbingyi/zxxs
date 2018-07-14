@@ -49,7 +49,7 @@ Page({
         this.setData({
           phoneNumber: ''
         })
-        util.storageMethod.set('userPhoneNum','')
+        util.storageMethod.getSync('userPhoneNum','')
       }
     })
 

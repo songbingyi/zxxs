@@ -41,8 +41,9 @@ Page({
     //     version_code: '1',
     //     channel: '1001', //20001_website
     //     token: '',
-    //     route: 'base/client_config/getClientConfig',
-    //     jsonText: {}
+    //     route: 'base/product_order_status/getProductOrderStatusList',
+    //     jsonText: {
+    //       "parent_id":""}
     //   },
     //   header: {
     //     'content-type': 'application/x-www-form-urlencoded'
@@ -70,23 +71,23 @@ Page({
           onlyFromCamera: true,
           success: (result) => {
             console.log(result); //打印扫码成功后返回的数据
-            var containerNo = '货柜编号';
+            var containerNo = 'CB7IIRVPT';//保存货柜编号TODO
             orderHttp.addProductOrder(containerNo, (d, status) => { //给后端传递货柜编号，获取订单编号ID，申请开门
               console.log(d, status)
               if (status) { //判断是否开门成功————如果开门
                 orderHttp.getContainerDetail(containerNo, (d) => { //获取仓库分类
                   var categoryId = d.container_info.warehouse_info.warehouse_category_info.warehouse_category_id
-                  if (categoryId == 1) { //判断仓库类型————如果是普通仓库，跳转order页面
+                  if (categoryId == 1) { //判断仓库类型————如果是普通仓库，跳转order页面TODO
                     wx.navigateTo({
                       url: '../orders/orders'
                     })
-                  } else if(categoryId == 2) { //判断仓库类型————如果是重力感应仓库，跳转####页面
+                  } else if(categoryId == 2) { //判断仓库类型————如果是重力感应仓库，跳转####页面TODO
                   }
                 }) //获取仓库分类结束
               } else {//判断是否开门成功————如果开门失败
                 var errorCode = d.status.error_code
                   console.log(errorCode)
-                  switch(errorCode){
+                  switch(errorCode){//检测失败代码
                     //如果没有餐
                     case '0001':wx.showModal({
                       title: '提示TODO',
@@ -100,7 +101,7 @@ Page({
                       showCancel: false
                     }); break;
                     default:console.log(123);
-                  }
+                  }//检测失败代码结束
               }
             })
           },

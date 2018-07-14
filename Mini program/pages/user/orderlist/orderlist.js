@@ -31,9 +31,7 @@ Page({
           this.setData({
             scrollHeight: res.windowHeight - rect.height //设置滚动区域的高度，单位px
           })
-
         }).exec()
-
       }
     })
 

@@ -7,7 +7,7 @@ let util = require('../utils/util.js');
  */
 const getContainerDetail = (containerNo, callback) => {
   var para = {
-    member_id: util.storageMethod.get('member_id'),//会员ID
+    member_id: util.storageMethod.getSync('member_id'),//会员ID
     container_no: containerNo //货柜编号
   }
   BaseHttp.post(API.getContainerDetail, para, (d, status) => {//d:data,status:状态,

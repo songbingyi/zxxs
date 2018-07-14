@@ -7,7 +7,7 @@ let util = require('../utils/util.js');
  */
 const addProductOrder = (container_no, callback) => {
   var para = {
-    member_id: util.storageMethod.get('member_id'),
+    member_id: util.storageMethod.getSync('member_id'),
     container_no: container_no
     //坐标？
   }
@@ -24,7 +24,7 @@ const addProductOrder = (container_no, callback) => {
  */
 const getWareHouseProductList = (page, callback) => {
   var para = {
-    member_id: util.storageMethod.get('member_id'),//会员ID
+    member_id: util.storageMethod.getSync('member_id'),//会员ID
     product_order_id: '1123123',//商品订单ID
     pagination: {//分页参数
       page: page,//请求的页数
@@ -42,7 +42,7 @@ const getWareHouseProductList = (page, callback) => {
  */
 const checkoutProductOrder = (order_info,callback) => {
     var para = {
-        member_id: util.storageMethod.get('member_id'),//会员ID
+      member_id: util.storageMethod.getSync('member_id'),//会员ID
         product_order_id: '1123123',//商品订单ID
         submit_product_order_info: order_info //传入商品信息和支付信息，应包括product_list和payment_code_info
     }
@@ -57,7 +57,7 @@ const checkoutProductOrder = (order_info,callback) => {
  */
 const getProductOrderList = (page, callback) => {
   var para = {
-    member_id: util.storageMethod.get('member_id'),
+    member_id: util.storageMethod.getSync('member_id'),
     pagination: {
       page: page, //请求页数
       count: getApp().globalData.pageCount //请求数量

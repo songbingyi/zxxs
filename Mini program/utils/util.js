@@ -36,13 +36,16 @@ const showModalWithNotice = (title, content) => {
  */
 function storageMethod(){};
 
-storageMethod.get = function (key){
+storageMethod.getSync = function (key){
   if (wx.getStorageSync(key)){
     console.log('读取缓存 =>缓存里存在',key)
     return wx.getStorageSync(key)
   }else{
     console.log('读取缓存 =>缓存里没有', key)}
   };
+
+
+
 storageMethod.set = function(key,keys){
   wx.setStorageSync(key, keys)
   console.log('存储缓存 =>', key,keys)

@@ -25,14 +25,14 @@ function BaseHttp() {};
 BaseHttp.post = function(route, params, callback) {
   let self = this;
   //从缓存里获取token，如果存在，赋值给commonParams.token
-  commonParams.token = util.storageMethod.get('token')
+  commonParams.token = util.storageMethod.getSync('token')
   //commonParams.token = wx.getStorageSync('token')
 
   commonParams.route = route;
   commonParams.jsonText = JSON.stringify(params);
   console.log('Request => ', commonParams);
   wx.request({
-    url: API.serve_url + route, // + route 用于 easy-mock 测试，正常接口请求需要将route作为参数传入
+    url: API.serve_url, // + route 用于 easy-mock 测试，正常接口请求需要将route作为参数传入
     data: commonParams,
     header: {
       'content-type': 'application/x-www-form-urlencoded'
