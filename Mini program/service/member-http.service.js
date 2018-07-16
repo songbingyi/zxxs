@@ -68,14 +68,34 @@ const submitDeductContract = (callback) => {
  * @param submitInfo:{iv:'',encrypted_data:''}
  * @param callback callback回调
  */
-const getPhoneNumber = (submitInfo,callback) => {
+const setPhoneNumber = (submitInfo,callback) => {
   var para = {
     member_id: util.storageMethod.getSync('member_id'),
     submit_phone_number: submitInfo
   }
-  BaseHttp.post(API.getPhoneNumber, para, (d, status) => {
+  BaseHttp.post(API.setPhoneNumber, para, (d, status) => {
     if (status){callback(d)}
     else{util.showModalWithNotice('提示', '请求失败:' + JSON.stringify(d))
+      wx.hideLoading()
+    }
+  });
+}
+
+/** 
+ * @name 19-会员-会员-获取小程序微信会员信息
+ * @param submitInfo:{iv:'',encrypted_data:'',signature,raw_data
+}
+ * @param callback callback回调
+ */
+const setWechatMiniProgramMemberInfo = (submitInfo, callback) => {
+  var para = {
+    member_id: util.storageMethod.getSync('member_id'),
+    submit_mini_program_member_info: submitInfo
+  }
+  BaseHttp.post(API.setWechatMiniProgramMemberInfo, para, (d, status) => {
+    if (status) { callback(d) }
+    else {
+      util.showModalWithNotice('提示', '请求失败:' + JSON.stringify(d))
       wx.hideLoading()
     }
   });
@@ -88,6 +108,7 @@ module.exports = {
   getMemberAuthInfo: getMemberAuthInfo,
   loginWithToken: loginWithToken,
   getMemberDetail: getMemberDetail,
-  getPhoneNumber: getPhoneNumber,
-  submitDeductContract: submitDeductContract
+  setPhoneNumber: setPhoneNumber,
+  submitDeductContract: submitDeductContract,
+  setWechatMiniProgramMemberInfo: setWechatMiniProgramMemberInfo
 }

@@ -22,7 +22,7 @@ Page({
           phoneNumber: res.data
         })
       },
-    // TODO 是否需要考虑缓存里有电话号码，但是没有授权的状况
+    // TODO 是否需要考虑缓存里有电话号码，但是没有授权的状况:只要授权 
     })
     wx.getSetting({//载入时在前端进行userInfo鉴权
       success: (res)=>{
@@ -39,6 +39,7 @@ Page({
     })
     //载入时从后端进行电话号码鉴权
     memberHttp.getMemberAuthInfo((d)=>{
+
       if (d.member_auth_info.member_mobile_auth_status){//如果已经授权，从后台拉取电话号码并显示
         memberHttp.getMemberDetail((e) => {
           this.setData({
@@ -62,13 +63,33 @@ Page({
   },
   agreeGetUser(e) { //点击头像授权按钮
     if (e.detail.userInfo) { //用户点击同意授权,从后端获取memberInfo，设置到视图层
-      memberHttp.getMemberDetail((d) => {
-        this.setData({
-          userInfo: d.member_info,
-          hasUserInfo: false,
-          hasIconImage:true
+
+      var submitInfo = {
+        iv: e.detail.iv,
+        encrypted_data: e.detail.encryptedData,
+        signature: e.detail.rawData,
+        raw_data: e.detail.rawData
+      }
+      memberHttp.setWechatMiniProgramMemberInfo(submitInfo, () => {
+        memberHttp.getMemberDetail((d) => {
+
+          this.setData({
+            userInfo: d.member_info,
+            hasUserInfo: false,
+            hasIconImage: true,
+          })
+          
         })
       })
+
+
+      // memberHttp.getMemberDetail((d) => {
+      //   this.setData({
+      //     userInfo: d.member_info,
+      //     hasUserInfo: false,
+      //     hasIconImage:true
+      //   })
+      // })
       wx.showLoading({
         title: '加载中...',
         duration: 600,
@@ -80,6 +101,7 @@ Page({
     }
   },
   getPhoneNumber(res){
+    console.log("电话号码解密信息",res)
     if(res.detail.iv){//如果用户点击同意授权电话信息
     wx.showLoading({
       title: '加载中...',
@@ -88,7 +110,7 @@ Page({
         iv: res.detail.iv,
         encrypted_data: res.detail.encryptedData
       }//拼接电话加密信息参数
-      memberHttp.getPhoneNumber(submitInfo, () => {//把返回的电话加密信息传给后端
+      memberHttp.setPhoneNumber(submitInfo, () => {//把返回的电话加密信息传给后端
         memberHttp.getMemberDetail((d)=>{//从后端获取解密后的电话号码，设置到视图层
             this.setData({
               phoneNumber:d.member_info.mobile

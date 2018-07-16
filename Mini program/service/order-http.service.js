@@ -8,8 +8,8 @@ let util = require('../utils/util.js');
 const addProductOrder = (container_no, callback) => {
   var para = {
     member_id: util.storageMethod.getSync('member_id'),
-    container_no: container_no
-    //坐标？
+    container_no: container_no,
+    //坐标TODO？
   }
   BaseHttp.post(API.addProductOrder, para, (d, status) => {//d:data,status:状态,p:分页信息
     // if (status) { callback(d) }

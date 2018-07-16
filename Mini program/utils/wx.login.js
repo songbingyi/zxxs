@@ -2,6 +2,7 @@ const memberHttp = require('../service/member-http.service.js')
 var wechatLogin = function() {
   wx.login({
     success: (res) => {
+      console.log(res)
       var code = res.code;
       var passCode = { code: code }
       if (code) {
@@ -14,7 +15,7 @@ var wechatLogin = function() {
         })
       } else {
         wx.showToast({
-          title: '获取用户信息失败' + res.errMsg,
+          title: '登录失败，请关闭小程序重新登录' + res.errMsg,
         })
       }
     }

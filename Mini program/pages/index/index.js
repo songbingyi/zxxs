@@ -32,6 +32,7 @@ Page({
         }
       }
     })
+
     //测试后端接口
     // wx.request({
     //   url: 'http://218.244.158.175/zxxs_server/api_client/index.php/',
@@ -57,6 +58,7 @@ Page({
     //     console.loh('提示', '请求失败:' + JSON.stringify(e));
     //   }
     // });
+
   },
   onShow: function() {},
   onReady: function() {
@@ -66,7 +68,7 @@ Page({
   goAuthorize: function() {
     memberHttp.getMemberAuthInfo((d) => { //从后台获取授权信息
       console.log(d)
-      if (d.member_auth_info.member_auth_status) { //如果授权总状态为1，打开相机进行扫描
+      if (d.member_auth_info.member_auth_status === "1") { //如果授权总状态为1，打开相机进行扫描
         wx.scanCode({
           onlyFromCamera: true,
           success: (result) => {
@@ -75,13 +77,13 @@ Page({
             orderHttp.addProductOrder(containerNo, (d, status) => { //给后端传递货柜编号，获取订单编号ID，申请开门
               console.log(d, status)
               if (status) { //判断是否开门成功————如果开门
-                orderHttp.getContainerDetail(containerNo, (d) => { //获取仓库分类
+                containerHttp.getContainerDetail(containerNo, (d) => { //获取仓库分类
                   var categoryId = d.container_info.warehouse_info.warehouse_category_info.warehouse_category_id
-                  if (categoryId == 1) { //判断仓库类型————如果是普通仓库，跳转order页面TODO
+                  if (categoryId == "2001") { //判断仓库类型————如果是普通仓库，跳转order页面TODO
                     wx.navigateTo({
                       url: '../orders/orders'
                     })
-                  } else if(categoryId == 2) { //判断仓库类型————如果是重力感应仓库，跳转####页面TODO
+                  } else if(categoryId == "2002") { //判断仓库类型————如果是重力感应仓库，跳转####页面TODO
                   }
                 }) //获取仓库分类结束
               } else {//判断是否开门成功————如果开门失败
@@ -137,19 +139,29 @@ Page({
 
 
   agreeGetUser(e) { //点击授权按钮
-    if (e.detail.userInfo) { //用户点击同意授权之后，先渲染授权返回的头像，然后从后端拉取头像,点击拒绝后授权弹窗消失
+    if (e.detail.userInfo) { //用户点击同意授权之后，先渲染授权返回的头像，然后给后端发送加密信息，然后从后端拉取头像,点击拒绝后授权弹窗消失
+    console.log("按钮",e)
       this.setData({
         hasUserInfo: true,
         avatarUrl: e.detail.userInfo.avatarUrl
       })
-
-      memberHttp.getMemberDetail((d) => {
-        if (d.member_info.icon_image.thumb) {
-          this.setData({
-            avatarUrl: d.member_info.icon_image.thumb,
-          })
-        }
+      var submitInfo = {
+        iv:e.detail.iv,
+        encrypted_data: e.detail.encryptedData,
+        signature: e.detail.rawData,
+        raw_data: e.detail.rawData
+      }
+      memberHttp.setWechatMiniProgramMemberInfo(submitInfo,()=>{
+        memberHttp.getMemberDetail((d) => {
+          if (d.member_info.icon_image.thumb) {
+            this.setData({
+              avatarUrl: d.member_info.icon_image.thumb,
+            })
+          }
+        })
       })
+      
+
       wx.showLoading({
         title: '加载中...',
         duration: 600,

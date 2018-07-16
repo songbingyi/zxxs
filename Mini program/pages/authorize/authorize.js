@@ -10,8 +10,9 @@ Page({
   },
   onLoad:function(){
     let authstatus = app.globalData.memberAuthStatus//从全局变量里获取授权信息
+    console.log(authstatus.member_mobile_auth_status == "0")//判断按钮值真假TODO
     this.setData({
-      phoneNumberBtnDisabled:authstatus.member_mobile_auth_status//决定按钮的激活和关闭
+      phoneNumberBtnDisabled:authstatus.member_mobile_auth_status == "1"?true:false//决定按钮的激活和关闭
     })
   },
   //电话信息授权登录按钮功能:
@@ -33,6 +34,8 @@ Page({
       })
     }
   }, 
+
+  //免密支付 TODO
   getContractData: () => {
     memberHttp.submitDeductContract(//获取免密支付参数
       (d)=> {

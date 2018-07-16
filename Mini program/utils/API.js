@@ -58,8 +58,10 @@ module.exports = {
   getProductOrderList: 'order/product_order/getProductOrderList',
 
   /**@name 18会员-向后台发送电话号码加密信息 */
-  getPhoneNumber: 'member/thirdpart_wx/getPhoneNumber',
+  setPhoneNumber: 'member/thirdpart_wx/setPhoneNumber',
 
+  /**@name 19会员-向后台发送电话号码加密信息 */
+  setWechatMiniProgramMemberInfo: 'member/thirdpart_wx/setWechatMiniProgramMemberInfo',
 
 
 

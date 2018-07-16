@@ -41,10 +41,11 @@ Page({
           hisOrderList: d.product_order_list //渲染后台数据
         })
       } else { //如果条目总数为0
-      }
+      
       this.setData({
         hasMore: p.more ? true : false //如果paginated.more为0，底部"加载更多"不显示,反之则显示
       })
+      }
     })
   },
 
