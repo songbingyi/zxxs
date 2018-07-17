@@ -17,12 +17,28 @@ Page({
   onLoad: function () {
     wx.getStorage({//载入页面前先判断缓存里有没有电话号码，设置到V层
       key: 'userPhoneNum',
-      success: (res)=> {
+      success: (res)=> {//缓存里有电话号码
         this.setData({
           phoneNumber: res.data
         })
       },
-    // TODO 是否需要考虑缓存里有电话号码，但是没有授权的状况:只要授权 
+      fail: ()=>{//如果缓存没有电话号码
+        memberHttp.getMemberAuthInfo((d) => {//询问后台是否授权
+
+          if (d.member_auth_info.member_mobile_auth_status) {//如果已经授权，从后台拉取电话号码并显示
+            memberHttp.getMemberDetail((e) => {
+              this.setData({
+                phoneNumber: e.member_info.mobile
+              })
+            })
+          } else {//如果没有授权,头像下的文字显示请登录，并且可以点击登录
+            this.setData({
+              phoneNumber: ''
+            })
+            util.storageMethod.getSync('userPhoneNum', '')
+          }
+        })
+      }
     })
     wx.getSetting({//载入时在前端进行userInfo鉴权
       success: (res)=>{
@@ -32,27 +48,14 @@ Page({
               userInfo:d.member_info,
               hasIconImage:true
             })
+            app.globalData.avatarUrl = d.member_info.icon_image.thumb //把更新后的头像传给全局变量
           })
-        }else{//如果没有userinfo授权,头像显示默认头像
+        }else{//如果没有userinfo授权,头像显示默认头像，默认头像可以通过点击发起授权界面
         }
       }
     })
     //载入时从后端进行电话号码鉴权
-    memberHttp.getMemberAuthInfo((d)=>{
 
-      if (d.member_auth_info.member_mobile_auth_status){//如果已经授权，从后台拉取电话号码并显示
-        memberHttp.getMemberDetail((e) => {
-          this.setData({
-            phoneNumber:e.member_info.mobile
-          })
-        })
-      }else{//如果没有授权,头像下的文字显示请登录
-        this.setData({
-          phoneNumber: ''
-        })
-        util.storageMethod.getSync('userPhoneNum','')
-      }
-    })
 
    
   },
@@ -64,32 +67,24 @@ Page({
   agreeGetUser(e) { //点击头像授权按钮
     if (e.detail.userInfo) { //用户点击同意授权,从后端获取memberInfo，设置到视图层
 
-      var submitInfo = {
+      var submitInfo = {//拼接userInfo请求参数
         iv: e.detail.iv,
         encrypted_data: e.detail.encryptedData,
         signature: e.detail.rawData,
         raw_data: e.detail.rawData
       }
-      memberHttp.setWechatMiniProgramMemberInfo(submitInfo, () => {
-        memberHttp.getMemberDetail((d) => {
+      memberHttp.setWechatMiniProgramMemberInfo(submitInfo, () => {//将userinfo加密信息发给后端以解密
+        memberHttp.getMemberDetail((d) => {//从后端获取userinfo
 
           this.setData({
             userInfo: d.member_info,
             hasUserInfo: false,
             hasIconImage: true,
           })
-          
+          app.globalData.avatarUrl = d.member_info.icon_image.thumb //把更新后的头像传给全局变量
         })
       })
 
-
-      // memberHttp.getMemberDetail((d) => {
-      //   this.setData({
-      //     userInfo: d.member_info,
-      //     hasUserInfo: false,
-      //     hasIconImage:true
-      //   })
-      // })
       wx.showLoading({
         title: '加载中...',
         duration: 600,
@@ -101,6 +96,7 @@ Page({
     }
   },
   getPhoneNumber(res){
+  
     console.log("电话号码解密信息",res)
     if(res.detail.iv){//如果用户点击同意授权电话信息
     wx.showLoading({
@@ -112,10 +108,11 @@ Page({
       }//拼接电话加密信息参数
       memberHttp.setPhoneNumber(submitInfo, () => {//把返回的电话加密信息传给后端
         memberHttp.getMemberDetail((d)=>{//从后端获取解密后的电话号码，设置到视图层
+          var phoneNumber = util.phoneNumSub(d.member_info.mobile)//将电话号码中间五位加密
             this.setData({
-              phoneNumber:d.member_info.mobile
+              phoneNumber: phoneNumber
             })
-            util.storageMethod.set('userPhoneNum',d.member_info.mobile)//把电话号码存到缓存中
+            util.storageMethod.set('userPhoneNum', phoneNumber)//把电话号码存到缓存中
  
           }
         )

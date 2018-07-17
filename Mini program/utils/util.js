@@ -44,15 +44,13 @@ storageMethod.getSync = function (key){
     console.log('读取缓存 =>缓存里没有', key)}
   };
 
-
-
 storageMethod.set = function(key,keys){
   wx.setStorageSync(key, keys)
   console.log('存储缓存 =>', key,keys)
 }
 
 /** 
- * @name 防止连续触发
+ * @name 下拉刷新防止连续触发
  * @function hasTouched(t|间隔时间，self|this当前对象)
  */
 function hasTouched(t,self){
@@ -66,9 +64,19 @@ function hasTouched(t,self){
   },t)
 }
 
+/** 
+ * @name 电话号码中间五位加密
+ */
+function phoneNumSub(num) {
+  return (num.substr(0,3)+'*****'+num.substr(7))
+}
+
+
+
 module.exports = {
   formatTime: formatTime,
   showModalWithNotice: showModalWithNotice,
   storageMethod: storageMethod,
-  hasTouched:hasTouched
+  hasTouched:hasTouched,
+  phoneNumSub: phoneNumSub,
 }

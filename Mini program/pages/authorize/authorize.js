@@ -10,7 +10,6 @@ Page({
   },
   onLoad:function(){
     let authstatus = app.globalData.memberAuthStatus//从全局变量里获取授权信息
-    console.log(authstatus.member_mobile_auth_status == "0")//判断按钮值真假TODO
     this.setData({
       phoneNumberBtnDisabled:authstatus.member_mobile_auth_status == "1"?true:false//决定按钮的激活和关闭
     })
@@ -22,20 +21,20 @@ Page({
         iv:res.detail.iv,
         encrypted_data: res.detail.encryptedData
         }//拼接电话加密信息作为参数
-      memberHttp.getPhoneNumber(submitInfo,()=>{//电话加密信息传给后端
-        memberHttp.getMemberDetail((d) => {//从后端获取电话号码，设置到视图层
-          util.storageMethod.set('userPhoneNum', d.member_info.mobile) //电话号码存储到缓存
+      memberHttp.setPhoneNumber(submitInfo,()=>{//电话加密信息传给后端
+        memberHttp.getMemberDetail((d) => {//从后端获取电话号码
+          var phoneNumber = util.phoneNumSub(d.member_info.mobile)//将电话号码中间五位加密
+          util.storageMethod.set('userPhoneNum', phoneNumber) //加密后的电话号码存储到缓存
         })
       })
       this.setData({
-       
         phoneNumberBtnDisabled: true, //1号按钮变暗，2号按钮变亮
         authorizeStatus:'  已授权  ' //1号按钮文字改变
       })
     }
   }, 
 
-  //免密支付 TODO
+  //签约免密支付 TODO
   getContractData: () => {
     memberHttp.submitDeductContract(//获取免密支付参数
       (d)=> {
