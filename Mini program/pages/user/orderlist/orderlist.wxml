@@ -22,14 +22,20 @@
             <text class="iorderlist-price">￥{{item.price}}</text>
             </view>
           </view>
-
         </view>
         <view class="state-total">
           <view class="item-state">
             <text>{{item.product_order_status_info.product_order_status_name}}</text>
           </view>
+          
+          <!--测试按钮开始><-->
+          <button bindtap='testPayBtn'>测试支付按钮
+          </button>
+          <!--测试按钮结束><-->
+          
           <view class="item-total">
-            <text>共{{item.orderTotalNum}}份，合计<text class="price-total">￥{{item.total}}</text></text>
+            <text>共{{item.product_total_count
+}}份，合计<text class="price-total">￥{{item.total}}</text></text>
           </view>
         </view>
       </view>

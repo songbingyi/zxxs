@@ -12,6 +12,7 @@ Page({
 
   //onReady navigate返回后可以继续保持数据
   onReady() {
+    //获取仓库商品列表
     orderHttp.getWareHouseProductList(1, (d, p) => { //首次载入，请求第一页数据;p:分页信息
       var productList = d.product_list,
         pLL = productList.length;
@@ -29,22 +30,46 @@ Page({
 
   //点击支付按钮后发起支付行为
   clickPayBtn() {
+    //拼装结算接口入参product_list
+    let productList = this.data.productList,
+      product_list = [],
+      pLL = productList.length;
+    for (let i = 0; i < pLL; i++) {//把product_id和quantity推入数组
+      let oProductInfo = {
+        product_id: productList[i].product_id,
+        quantity: productList[i].defNum
+      }
+      product_list.push(oProductInfo)
+    }
+    let order_info = {
+      product_list: product_list,
+      payment_code_info: app.globalData.payment_code_info
+    }
 
-    orderHttp.checkoutProductOrder({}, (d) => { //发起订单结算，
-
-      console.log(d)
+    //测试20号接口
+    
+    orderHttp.checkoutProductOrder(order_info, (d) => { //发起订单结算，
+      console.log("订单结算结果", d)
+      if (d.payment_order_info || d.status.error_code == '4008'){
+        orderHttp.payProductOrder((d) => {//向后端请求支付所需参数
+          console.log(d)
+          let paymentParam = JSON.parse(d.payment_order_info.payment_order_param);
+          console.log(paymentParam)
+          wx.requestPayment(
+            {
+              'timeStamp': paymentParam.timeStamp,
+              'nonceStr': paymentParam.nonceStr,
+              'package': paymentParam.package,
+              'signType': paymentParam.signType,
+              'paySign': paymentParam.paySign,
+              'success': function (res) { },
+              'fail': function (res) { },
+              'complete': function (res) { }
+            })
+        })
+      }
     })
-    // wx.requestPayment({
-    //   'timeStamp': '',
-    //   'nonceStr': '',
-    //   'package': '',
-    //   'signType': 'MD5',
-    //   'paySign': '',
-    //   'success': function (res) {
-    //   },
-    //   'fail': function (res) {
-    //   }
-    // })
+   // wx.requestPayment({})
   },
 
   addCount: function(e) { //点击加号
@@ -70,7 +95,7 @@ Page({
     this.setData({
       productList: productList
     });
-    this.checkoutProductOrder();
+    this.getTotalPrice() //获取显示的总价
   },
 
   minusCount(e) { //点击减号
@@ -99,45 +124,46 @@ Page({
       })
     }
 
-    this.checkoutProductOrder();
+    //this.checkoutProductOrder();
+    this.getTotalPrice()//获取应显示的总价
   },
+  //订单结算
+  // checkoutProductOrder() { //拼装order_info参数，发送后端，获得结算结果，不包括支付
+  //   let productList = this.data.productList,
+  //     product_list = [],
+  //     pLL = productList.length;
+  //   for (let i = 0; i < pLL; i++) {//把product_id和quantity推入数组
+  //     let oProductInfo = {
+  //       product_id:productList[i].product_id,
+  //       quantity:productList[i].defNum
+  //     }
+  //     product_list.push(oProductInfo)
+  //   }
+  //   let order_info = { 
+  //     product_list: product_list,
+  //     payment_code_info: app.globalData.payment_code_info
+  //     }
+  //   orderHttp.checkoutProductOrder(order_info, (d) => {//
+  //     console.log(d)
+  //     if (d.product_order_info.total){
+  //     this.setData({
+  //       totalPrice: d.product_order_info.total
+  //     })
+  //     }
+  //   })
+  // },
 
-  checkoutProductOrder() { //拼装order_info参数，发送后端，获得结算结果，不包括支付
-    let productList = this.data.productList,
-      product_list = [],
-      pLL = productList.length;
-    for (let i = 0; i < pLL; i++) {//把product_id和quantity推入数组
-      let oProductInfo = {
-        product_id:productList[i].product_id,
-        quantity:productList[i].defNum
-      }
-      product_list.push(oProductInfo)
+  //获取当前总价
+  getTotalPrice() { //计算应支付总价，只显示，不发送后端
+    let productList = this.data.productList;
+    let total = 0;
+    for (let i = 0; i < productList.length; i++) {
+      total += productList[i].defNum * productList[i].price;
     }
-    let order_info = { 
-      product_list: product_list,
-      payment_code_info: app.globalData.payment_code_info
-      }
-    orderHttp.checkoutProductOrder(order_info, (d) => {
-      console.log(d)
-      if (d.product_order_info.total){
-      this.setData({
-        totalPrice: d.product_order_info.total
-      })
-      }
-    })
-
-
-    // let productList = this.data.productList;
-    // let total = 0;
-    // for (let i = 0; i < productList.length; i++) {
-    //   total += productList[i].defNum * productList[i].price;
-    // }
-    // this.setData({
-    //   productList: productList,
-    //   totalPrice: total.toFixed(2)
-    // });
+    this.setData({
+      productList: productList,
+      totalPrice: total.toFixed(2)
+    });
   },
-
-
 
 })

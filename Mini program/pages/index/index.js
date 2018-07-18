@@ -85,6 +85,14 @@ Page({
   },
   onReady: function() {
     wx.hideLoading()
+    //测试--获取货柜详情
+    // containerHttp.getContainerDetail('CB7IIRVPT', (d) => { //获取仓库分类
+    // console.log(d)
+
+    // }) 
+    //测试--获取货柜详情结束
+
+
   },
   //首页点击扫码
   goAuthorize: function() {
@@ -116,12 +124,18 @@ Page({
                       showCancel:false
                     });break;
                     //如果门是开的
-                    case '0002': wx.showModal({
+                    case '3003': wx.showModal({
                       title: '提示TODO',
                       content: '请关门后再扫码TODO',
                       showCancel: false
                     }); break;
-                    default:console.log(123);
+                    //有订单等待支付
+                    case '3004': wx.showModal({
+                      title: '提示TODO',
+                      content: '有订单未支付TODO',
+                      showCancel: false
+                    }); break;
+
                   }//检测失败代码结束
               }
             })

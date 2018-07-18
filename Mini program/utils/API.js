@@ -63,7 +63,7 @@ module.exports = {
   /**@name 19会员-向后台发送电话号码加密信息 */
   setWechatMiniProgramMemberInfo: 'member/thirdpart_wx/setWechatMiniProgramMemberInfo',
 
-
-
+  /**@name 20订单-支付订单 */
+  payProductOrder: 'order/product_order/payProductOrder'
 
 }

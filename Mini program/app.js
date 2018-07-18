@@ -67,16 +67,13 @@ App({
         }
       }
     }
-
-
   },
-
   globalData: {
     productOrderId:'',
     orderList: [],
     pageCount: '10',
     payment_code_info: {
-      payment_code_id: "支付方式ID",
+      payment_code_id: "1",
       payment_code_name: "支付方式名称"
     },
     avatarUrl:''

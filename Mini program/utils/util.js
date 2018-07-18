@@ -41,7 +41,10 @@ storageMethod.getSync = function (key){
     console.log('读取缓存 =>缓存里存在',key)
     return wx.getStorageSync(key)
   }else{
-    console.log('读取缓存 =>缓存里没有', key)}
+    console.log('读取缓存 =>缓存里没有', key)
+    return ''
+    
+    }
   };
 
 storageMethod.set = function(key,keys){

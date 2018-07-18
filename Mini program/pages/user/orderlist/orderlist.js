@@ -69,10 +69,10 @@ Page({
       console.log('刷新过于频繁，请求不发送')
     }
   },
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
 
+  testPayBtn:()=>{
+    orderHttp.payProductOrder((d)=>{
+      console.log('测试--支付订单',d)
+    })
   }
 })
