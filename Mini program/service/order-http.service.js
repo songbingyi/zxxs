@@ -25,7 +25,7 @@ const addProductOrder = (container_no, callback) => {
 const getWareHouseProductList = (page, callback) => {
   var para = {
     member_id: util.storageMethod.getSync('member_id'),//会员ID
-    product_order_id: '1',//商品订单ID
+    product_order_id: util.storageMethod.getSync('productOrderId'),//商品订单ID
     pagination: {//分页参数
       page: page,//请求的页数
       count: getApp().globalData.pageCount //请求的数量
@@ -43,7 +43,7 @@ const getWareHouseProductList = (page, callback) => {
 const checkoutProductOrder = (order_info,callback) => {
     var para = {
       member_id: util.storageMethod.getSync('member_id'),//会员ID
-        product_order_id: '1',//商品订单ID
+      product_order_id: util.storageMethod.getSync('productOrderId'),//商品订单ID
         submit_product_order_info: order_info //传入商品信息和支付信息，应包括product_list和payment_code_info
     }
     BaseHttp.post(API.checkoutProductOrder, para, (d, status) => {//d:data,status:状态
@@ -77,7 +77,7 @@ const getProductOrderList = (page, callback) => {
 const payProductOrder = ( callback) => {
   var para = {
     member_id: util.storageMethod.getSync('member_id'),
-    product_order_id: '1',
+    product_order_id: util.storageMethod.getSync('productOrderId'),
 
   }
   BaseHttp.post(API.payProductOrder, para, (d, status) => {//d:data,status:状态

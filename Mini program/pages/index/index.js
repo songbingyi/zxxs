@@ -102,8 +102,9 @@ Page({
       if (d.member_auth_info.member_auth_status === "0") { //如果授权总状态为1，打开相机进行扫描
         var containerNo = 'CB7IIRVPT';//保存货柜编号
         orderHttp.addProductOrder(containerNo, (d, status) => { //给后端传递货柜编号，获取订单编号ID，申请开门
-              console.log(d, status)
+
               if (status) { //判断是否开门成功————如果开门
+                  util.storageMethod.set('productOrderId',d.product_order_id)
                 containerHttp.getContainerDetail(containerNo, (d) => { //获取仓库分类
                   var categoryId = d.container_info.warehouse_info.warehouse_category_info.warehouse_category_id
                   if (categoryId == "2001") { //判断仓库类型————如果是普通仓库，跳转order页面TODO
@@ -114,34 +115,31 @@ Page({
                   }
                 }) //获取仓库分类结束
               } else {//判断是否开门成功————如果开门失败
-                var errorCode = d.status.error_code
-                  console.log(errorCode)
+                let errorCode = d.status.error_code,//错误代码
+                errorMsg = d.status.error_desc;//错误提示
                   switch(errorCode){//检测失败代码
                     //如果没有餐
                     case '0001':wx.showModal({
-                      title: '提示TODO',
-                      content: '暂时没有餐TODO',
+                      title: '提示',
+                      content: errorMsg,
                       showCancel:false
                     });break;
                     //如果门是开的
                     case '3003': wx.showModal({
-                      title: '提示TODO',
-                      content: '请关门后再扫码TODO',
+                      title: '提示',
+                      content: errorMsg,
                       showCancel: false
                     }); break;
                     //有订单等待支付
                     case '3004': wx.showModal({
-                      title: '提示TODO',
-                      content: '有订单未支付TODO',
+                      title: '提示',
+                      content: errorMsg,
                       showCancel: false
                     }); break;
 
                   }//检测失败代码结束
               }
             })
-
-
-
 
       //模拟电商流程结束
 
