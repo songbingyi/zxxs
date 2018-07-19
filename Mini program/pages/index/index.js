@@ -100,11 +100,11 @@ Page({
     
     //模拟电商流程开始
       if (d.member_auth_info.member_auth_status === "0") { //如果授权总状态为1，打开相机进行扫描
-        var containerNo = 'CB7IIRVPT';//保存货柜编号
+        var containerNo = 'CB7IIRVPT';//保存货柜编号 TODO：后期改为硬件动态获取
         orderHttp.addProductOrder(containerNo, (d, status) => { //给后端传递货柜编号，获取订单编号ID，申请开门
 
               if (status) { //判断是否开门成功————如果开门
-                  util.storageMethod.set('productOrderId',d.product_order_id)
+                  util.storageMethod.set('productOrderId',d.product_order_id)//订单编号ID存到缓存
                 containerHttp.getContainerDetail(containerNo, (d) => { //获取仓库分类
                   var categoryId = d.container_info.warehouse_info.warehouse_category_info.warehouse_category_id
                   if (categoryId == "2001") { //判断仓库类型————如果是普通仓库，跳转order页面TODO
@@ -118,7 +118,7 @@ Page({
                 let errorCode = d.status.error_code,//错误代码
                 errorMsg = d.status.error_desc;//错误提示
                   switch(errorCode){//检测失败代码
-                    //如果没有餐
+                    //如果没有商品
                     case '0001':wx.showModal({
                       title: '提示',
                       content: errorMsg,

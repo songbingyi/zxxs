@@ -51,6 +51,9 @@ module.exports = {
   /**@name 13订单-支付订单（免密支付）##### */
   payProductOrderUseDeductContract: 'order/product_order/payProductOrderUseDeductContract',
 
+  /**@name 14订单-获取订单详情 */
+  getProductOrderDetail: 'order/product_order/getProductOrderDetail',
+
   /**@name 15基本-获取订单状态列表 */
   getProductOrderStatusList:'base/product_order_status/getProductOrderStatusList',
 

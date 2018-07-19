@@ -53,6 +53,23 @@ const checkoutProductOrder = (order_info,callback) => {
     });
 }
 
+
+/** @name 14-订单-获取订单详情
+ *  @function getProductOrderDetail(order_info |需要发送的商品订单结算信息, callback|回调函数)
+ */
+const getProductOrderDetail = (callback) => {
+  var para = {
+    member_id: util.storageMethod.getSync('member_id'),//会员ID
+    product_order_id: util.storageMethod.getSync('productOrderId'),//商品订单ID
+  }
+  BaseHttp.post(API.getProductOrderDetail, para, (d, status) => {//d:data,status:状态
+     if (status) { callback(d) }
+    else util.showModalWithNotice('提示', '请求失败:' + JSON.stringify(d));
+  });
+}
+
+
+
 /** @name 16-订单-获取历史订单列表
  *  @function getProductOrderList(page |请求页数, callback|回调函数)
  */
@@ -93,5 +110,6 @@ module.exports = {
   checkoutProductOrder: checkoutProductOrder,
   addProductOrder: addProductOrder,
   getProductOrderList: getProductOrderList,
-  payProductOrder: payProductOrder
+  payProductOrder: payProductOrder,
+  getProductOrderDetail: getProductOrderDetail
 }
