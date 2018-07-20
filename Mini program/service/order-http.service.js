@@ -44,12 +44,12 @@ const checkoutProductOrder = (order_info,callback) => {
     var para = {
       member_id: util.storageMethod.getSync('member_id'),//会员ID
       product_order_id: util.storageMethod.getSync('productOrderId'),//商品订单ID
-        submit_product_order_info: order_info //传入商品信息和支付信息，应包括product_list和payment_code_info
+      submit_product_order_info: order_info //传入商品信息和支付信息，应包括product_list和payment_code_info
     }
     BaseHttp.post(API.checkoutProductOrder, para, (d, status) => {//d:data,status:状态
-      callback(d)
+      callback(d,status)
         // if (status) { callback(d) }
-        //else util.showModalWithNotice('提示', '请求失败:' + JSON.stringify(d));
+       // else util.showModalWithNotice('提示', '请求失败:' + JSON.stringify(d));
     });
 }
 

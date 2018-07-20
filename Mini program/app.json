@@ -1,9 +1,9 @@
 {
   "pages": [
     "pages/orders/orders",
+    "pages/user/user",
     "pages/index/index",
     "pages/user/orderlist/orderlist",
-    "pages/user/user",
     "pages/authorize/authorize"
   ],
   "window": {
@@ -13,6 +13,6 @@
     "navigationBarTextStyle": "#fff"
   },
   "networkTimeout": {
-    "request": 8000
+    "request": 16000
   }
 }

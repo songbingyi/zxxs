@@ -13,11 +13,11 @@
             <text class="unit-price">单价：￥<text class="price">{{item.price}}</text></text>
             <view class="counter">
 
-              <button class="btn add" plain="true" bindtap="addCount" data-product-id="{{item.product_id}}">+</button>
+              <button class="btn add" plain="true" bindtap="addCount" data-count='1' data-product-id="{{item.product_id}}">+</button>
               <text class="counter-num">{{item.quantity}}</text>
 
               <block  wx:if="{{item.quantity !== '0'}}">
-                <button class="btn minus" plain="true" bindtap="minusCount"  data-product-id="{{item.product_id}}">-</button>
+                <button class="btn minus" plain="true" bindtap="addCount" data-count='0' data-product-id="{{item.product_id}}">-</button>
               </block>
             </view>
           </view>
