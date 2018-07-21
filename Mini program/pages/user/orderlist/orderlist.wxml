@@ -29,7 +29,7 @@
           </view>
           
           <!--测试按钮开始><-->
-          <button bindtap='testPayBtn'>测试支付按钮
+          <button  bindtap='clickPayBtn'>测试支付按钮
           </button>
           <!--测试按钮结束><-->
           

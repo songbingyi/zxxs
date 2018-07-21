@@ -66,8 +66,11 @@ Page({
     //请求base类接口
     // baseHttp.getWarehouseCategoryList((d) => {
     // })
-    // baseHttp.getPaymentCodeList((d) => {
-    // })
+     baseHttp.getPaymentCodeList((d) => {
+       this.setData({
+         payment_code_list: d.payment_code_list
+       })
+     })
     // baseHttp.getProductOrderStatusList((d) => {
     // })
     //请求base类接口结束
@@ -97,12 +100,20 @@ Page({
   //首页点击扫码
   goAuthorize: function() {
     memberHttp.getMemberAuthInfo((d) => { //从后台获取授权信息
+
+        if (d.member_auth_info.member_deduct_contract_auth_status == '0') {
+          app.globalData.payment_code_info = this.data.payment_code_list[0]
+        }
     
     //模拟电商流程开始
-      if (d.member_auth_info.member_auth_status === "0") { //如果授权总状态为1，打开相机进行扫描
+      if (d.member_auth_info.member_auth_status === "1") { //如果授权总状态为1，打开相机进行扫描
+
+        if (d.member_auth_info.member_deduct_contract_auth_status == '0'){
+          app.globalData.payment_code_info = this.data.payment_code_list[0]
+        }
+        console.log('111',app.globalData.payment_code_info)
         var containerNo = 'CB7IIRVPT';//保存货柜编号 TODO：后期改为硬件动态获取
         orderHttp.addProductOrder(containerNo, (d, status) => { //给后端传递货柜编号，获取订单编号ID，申请开门
-
               if (status) { //判断是否开门成功————如果开门
                   util.storageMethod.set('productOrderId',d.product_order_id)//订单编号ID存到缓存
                 containerHttp.getContainerDetail(containerNo, (d) => { //获取仓库分类

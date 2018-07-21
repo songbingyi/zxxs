@@ -27,8 +27,9 @@ Page({
 
           if (d.member_auth_info.member_mobile_auth_status) {//如果已经授权，从后台拉取电话号码并显示
             memberHttp.getMemberDetail((e) => {
+              let phoneNumber = util.phoneNumSub(e.member_info.mobile)//将电话号码中间五位加密
               this.setData({
-                phoneNumber: e.member_info.mobile
+                phoneNumber: phoneNumber
               })
             })
           } else {//如果没有授权,头像下的文字显示请登录，并且可以点击登录

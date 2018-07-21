@@ -70,7 +70,7 @@ Page({
     }
   },
 
-  testPayBtn:()=>{
+  clickPayBtn:()=>{
     orderHttp.payProductOrder((d)=>{
       console.log('测试--支付订单',d)
     })

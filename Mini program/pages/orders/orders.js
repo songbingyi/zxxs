@@ -1,242 +1,198 @@
 // page/component/new-pages/cart/cart.js
 let app = getApp()
 let orderHttp = require('../../service/order-http.service.js')
+let memberHttp = require('../../service/member-http.service.js')
+let baseHttp = require('../../service/base-http.service.js.js');
 Page({
-    data: {
-        productList: [],
-        numList: [],
-        minusNum: false,
-        totalPrice: 0,
-        disabled: false,
-        orderPayBtn: '确认支付'
-    },
+  data: {
+    productList: [],
+    minusNum: false,
+    totalPrice: 0,
+    disabled: false,
+    orderPayBtn: '确认支付'
+  },
 
-    //onReady navigate返回后可以继续保持数据 TODO 应该不存在返回状态 暂时改为lunch
-    onLoad() {
-        //获取仓库商品列表
-        // wx.showLoading({
-        //   title: '载入中',
-        // })
-        orderHttp.getWareHouseProductList(1, (d, p) => { //首次载入，查询仓库商品列表,请求第一页数据;p:分页信息
-            //获取仓库列表返回的商品列表
-            let productList = d.product_list;
-            let plength = productList.length,
-                order_info = { //拼装商结算的参数
-                    product_list: [{
-                        product_id: productList[0].product_id, //id是第一件商品的ID
-                        quantity: '1' //数量为1
-                    }],
-                    payment_code_info: app.globalData.payment_code_info
-                };
-            // for (let i = 0; i < plength; i++) {
-            //     productList[i].quantity = '0'
-            // }
-            let numList = [];
-            for (let i = 0; i < plength; i++) {
-                let oNumObj = {
-                    product_id: productList[i].product_id,
-                    quantity: '0'
-                }
-                numList.push(oNumObj)
-            }
+  //onReady navigate返回后可以继续保持数据 TODO 应该不存在返回状态 暂时改为lunch
+  onLoad() {
+    wx.showLoading({
+      title: '载入中',
+    })
+    orderHttp.getWareHouseProductList(1, (d, p) => { //首次载入，查询仓库商品列表,请求第一页数据;p:分页信息
+      //获取仓库列表返回的商品列表
+
+      let productList = d.product_list;
+      let plength = productList.length,
+        order_info = { //拼装商结算的参数
+          product_list: [{
+            product_id: productList[0].product_id, //id是第一件商品的ID
+            //product_id: '2',
+            quantity: '1' //数量为1
+          }],
+          payment_code_info: app.globalData.payment_code_info
+        };
+      console.log(app.globalData.payment_code_info)
+      for (let i = 0; i < plength; i++) {
+        productList[i].quantity = '0' //每个仓库商品数量设置为0
+      }
+      let numList = [];
+
+      this.setData({
+        productList: productList, //设置商品名称
+      })
+
+      orderHttp.checkoutProductOrder(order_info, (d, status) => {
+        if (status) {
+          orderHttp.getProductOrderDetail((d) => {
+            let changedProduct = d.product_order_info.order_product_list[0];
             this.setData({
-                productList: productList, //设置商品名称
-                numList: numList
+              'productList[0].quantity': changedProduct.quantity,
+              totalPrice: d.product_order_info.total
             })
-            orderHttp.checkoutProductOrder(order_info, (d, status) => {
-                if (status) {
-                    orderHttp.getProductOrderDetail((d) => {
-
-                    })
-                }
-            })
-            // orderHttp.checkoutProductOrder(order_info, (d, status) => { //把仓库商品列表的内容第一个商品数量设置为1，进行商品结算
-            //   // orderHttp.getProductOrderDetail((d) => { //向后端查询订单详情
-            //   //   let changedProduct = d.product_order_info.order_product_list; //服务器传回来的商品订单详情
-
-            //   //   console.log("111", productList)
-            //   //   console.log('changedProduct:', changedProduct)
-            //   //   for (let i = 0; i < productList.length; i++) { //更新对比服务器传回来的订单详情
-            //   //     if (productList[i].product_id == changedProduct[0].product_id) {
-            //   //       productList[i].quantity = changedProduct[0].quantity
-            //   //     }
-            //   //   }
-            //   //   this.setData({
-            //   //     productList: productList, //V层渲染第一个商品数量为1的商品列表
-            //   //     totalPrice: d.product_order_info.total
-            //   //   })
-            //   //   wx.hideLoading()
-            //   // })
-            // })
-        })
-    },
-
-    //点击支付按钮后发起支付行为
-    clickPayBtn() {
-        //拼装结算接口入参product_list
-        let productList = this.data.productList,
-            product_list = [],
-            pLL = productList.length;
-        for (let i = 0; i < pLL; i++) { //把product_id和quantity推入数组
-            // let oProductInfo = {
-            //   product_id: productList[i].product_id,
-            //   quantity: productList[i].quantity
-            // }
-            product_list.push({
-                product_id: productList[i].product_id,
-                quantity: productList[i].quantity
-            })
+          })
         }
-        let order_info = {
-            product_list: product_list,
-            payment_code_info: app.globalData.payment_code_info
-        }
+      })
+      wx.hideLoading()
+    })
+    //根据授权状态决定支付方式
+  },
 
+  //点击支付按钮后发起支付行为
+  clickPayBtn() {
+    //拼装结算接口入参product_list
+    let productList = this.data.productList,
+      product_list = [],
+      pLL = productList.length;
+    for (let i = 0; i < pLL; i++) { //把product_id和quantity推入数组
+      // let oProductInfo = {
+      //   product_id: productList[i].product_id,
+      //   quantity: productList[i].quantity
+      // }
+      product_list.push({
+        product_id: productList[i].product_id,
+        quantity: productList[i].quantity
+      })
+    }
+    let order_info = {
+      product_list: product_list,
+      payment_code_info: app.globalData.payment_code_info
+    }
+    memberHttp.getMemberAuthInfo((d) => {//检查支付授权状态
+      if (d.member_auth_info.member_deduct_contract_auth_status == '0') {
         //发起支付
-
         orderHttp.payProductOrder((d) => { //向后端请求支付所需参数
-            let paymentParam = JSON.parse(d.payment_order_info.payment_order_param);
-            console.log(paymentParam)
-            wx.requestPayment( //向微信发起支付求情
-                {
-                    'timeStamp': paymentParam.timeStamp,
-                    'nonceStr': paymentParam.nonceStr,
-                    'package': paymentParam.package,
-                    'signType': paymentParam.signType,
-                    'paySign': paymentParam.paySign,
-                    'success': function(res) {},
-                    'fail': function(res) {},
-                    'complete': function(res) {}
+          let paymentParam = JSON.parse(d.payment_order_info.payment_order_param);
+          console.log(paymentParam)
+          wx.requestPayment( //向微信发起支付求情
+            {
+              'timeStamp': paymentParam.timeStamp,
+              'nonceStr': paymentParam.nonceStr,
+              'package': paymentParam.package,
+              'signType': paymentParam.signType,
+              'paySign': paymentParam.paySign,
+              'success': function (res) { 
+                console.log('支付成功')
+                wx.redirectTo({
+                  url: '../index/index'
                 })
-        })
-        //支付结束
-    },
-    //点击加减号之后的方法
-    addCount: function(e) {
-        let productId = e.currentTarget.dataset.productId,
-            count = e.currentTarget.dataset.count; //用来判断是加法还是减法
-        orderHttp.getProductOrderDetail((d) => { //查询订单详情
-            //拼装订单结算参数
-            let productList = d.product_order_info.order_product_list,
-                pLL = productList.length;
-            for (let i = 0; i < pLL; i++) {
-                if (productList[i].product_id == productId) { //如果点击商品的ID和订单详情里有ID相同
-                    if (count == '1') {
-                        productList[i].quantity++
-                    } else if (count == '0') {
-                        productList[i].quantity--
-                    }
-                } else {
-                    productList.push({
-                        product_id: productId,
-                        quantity: '1'
-                    })
-                }
-            }
-            var order_info = {
-                product_list: productList,
-                payment_code_info: app.globalData.payment_code_info
-            }
-
-            console.log(order_info)
-            orderHttp.checkoutProductOrder(order_info, (d, status) => { //发起订单结算，选中商品quantity+-1
-                if (status) {
-                    orderHttp.getProductOrderDetail((d) => { //结算完成后发起订单详情查询
-                        let vProductList = this.data.productList, //V层的数组
-                            sProductList = d.product_order_info.order_product_list //后端返回的订单详情数组
-                        for (let i = 0; i < vProductList.length; i++) {
-                            let vId = vProductList[i].product_id;
-                            for (let j = 0; j < sProductList.length; j++) {
-                                if (vId == sProductList[j].product_id) {
-                                    vProductList[i].quantity = sProductList[j].quantity
-                                }
-                            }
-                        }
-                        this.setData({ //设置新的商品列表到页面
-                            productList: vProductList, //商品名称和商品单价和商品数量
-                            totalPrice: d.product_order_info.total //应支付总价
-                        })
-                    })
-                } else {
-                    wx.showModal({
-                        title: '提示',
-                        content: d.status.error_desc,
-                        showCancel: false
-                    })
-                }
+              },
+              'fail': function (res) {
+                console.log('支付失败')
+                wx.redirectTo({
+                  url: '../index/index'
+                })
+              },
+              'complete': function (res) {
+                console.log('支付完成')
+                wx.redirectTo({
+                  url: '../index/index'
+                })
+              }
             })
+        })
+    //支付结束
+      }
+    })
 
-
-
-        }) //查询订单详情结束
-
-
-    },
-
-    // minusCount(e) { //点击减号
-    //   const index = e.currentTarget.dataset.index;
-    //   let productList = this.data.productList;
-    //   //初始化list里的num总数
-    //   let totalNum = 0;
-
-    //   //选择数量num减少1，并传回data
-    //   productList[index].defNum = productList[index].defNum - 1;
-    //   this.setData({
-    //     productList: productList
-    //   });
-
-    //   //获取list里的num总数
-    //   for (var i = 0; i < productList.length; i++) {
-    //     totalNum = productList[i].defNum + totalNum
-    //   }
-    //   //如果总数为0，按钮disabled
-    //   if (totalNum == 0) {
-    //     this.setData({
-    //       disabled: true,
-    //       orderPayBtn: '请至少选择一份'
-    //     })
-    //   }
-
-    //   //this.checkoutProductOrder();
-    //   this.getTotalPrice() //获取应显示的总价
-    // },
-    //订单结算
-    // checkoutProductOrder() { //拼装order_info参数，发送后端，获得结算结果，不包括支付
-    //   let productList = this.data.productList,
-    //     product_list = [],
-    //     pLL = productList.length;
-    //   for (let i = 0; i < pLL; i++) { //把product_id和quantity推入数组
-    //     let oProductInfo = {
-    //       product_id: productList[i].product_id,
-    //       quantity: productList[i].defNum
-    //     }
-    //     product_list.push(oProductInfo)
-    //   }
-    //   let order_info = {
-    //     product_list: product_list,
-    //     payment_code_info: app.globalData.payment_code_info
-    //   }
-    //   orderHttp.checkoutProductOrder(order_info, (d) => { //
-    //     console.log(d)
-    //     if (d.product_order_info.total) {
-    //       this.setData({
-    //         totalPrice: d.product_order_info.total
-    //       })
-    //     }
-    //   })
-    // },
-
-    //获取当前总价
-    //   getTotalPrice() { //计算应支付总价，只显示，不发送后端
-    //     let productList = this.data.productList;
-    //     let total = 0;
-    //     for (let i = 0; i < productList.length; i++) {
-    //       total += productList[i].defNum * productList[i].price;
-    //     }
-    //     this.setData({
-    //       productList: productList,
-    //       totalPrice: total.toFixed(2)
-    //     });
-    //   },
+  },
+  //点击加减号之后的方法
+  addCount: function(e) {
+    let clickProductId = e.currentTarget.dataset.productId, //被点击商品的ID
+      count = e.currentTarget.dataset.count, //用来判断是加法还是减法
+      productList = this.data.productList, //点击前的商品列表，有0
+      pLL = productList.length, //点击前商品列表的length
+      param_product_list = [], //结算参数 [{product_id:'1',quantity:'1'}]
+      productObj = {};
+    console.log('productList', productList)
+    for (let i = 0; i < pLL; i++) {
+      productObj = { //仓库里所有商品的ID和对应数量
+        product_id: productList[i].product_id,
+        quantity: productList[i].quantity
+      }
+      if (productObj.product_id == clickProductId) { //点击商品增减1
+        if (count == '1') {
+          let tempNum = parseInt(productObj.quantity) + 1;
+          productObj.quantity = tempNum.toString()
+        } else if (count == '0') {
+          let tempNum = parseInt(productObj.quantity) - 1;
+          productObj.quantity = tempNum.toString()
+        }
+      }
+      if (productObj.quantity !== '0') { //把不为0的商品ID和数量推入数组
+        param_product_list.push(productObj)
+      }
+    }
+    console.log('checkout的参数:', param_product_list)
+    let order_info = { //checkout的参数拼装完成
+      product_list: param_product_list,
+      payment_code_info: app.globalData.payment_code_info
+    }
+    //发起点击加减号后的checkout
+    orderHttp.checkoutProductOrder(order_info, (d, status) => {
+      if (status) {
+        orderHttp.getProductOrderDetail((d) => {
+          let cIndex = '',
+            dIndex = '',
+            dProductList = d.product_order_info.order_product_list,
+            dLL = d.product_order_info.order_product_list.length,
+            newQuantity = '';
+          for (let i = 0; i < pLL; i++) {
+            if (productList[i].product_id == clickProductId) { //获取仓库商品列表被点击ID的下标
+              cIndex = i
+            }
+          }
+          if (dLL > 0) { //如果返回的detail有商品内容，对比ID，确定数量
+            for (let i = 0; i < dLL; i++) {
+              if (dProductList[i].product_id == clickProductId) { //获取订单详情被点击商品的ID的下标
+                dIndex = i;
+                newQuantity = dProductList[dIndex].quantity;
+                break; //如果匹配到ID 结束循环
+              } else {
+                newQuantity = '0' //如果没有匹配到ID，数量为0
+              }
+            }
+            this.setData({ //
+              disabled: false //如果返回的detail有内容，支付按钮亮
+            })
+          } else { //如果返回的detail没有商品内容，对比ID，点击的商品为0,支付按钮灭
+            newQuantity = '0'
+            this.setData({
+              disabled: true
+            })
+          }
+          let tempArrayProduct = 'productList[' + cIndex + '].quantity';
+          this.setData({
+            [tempArrayProduct]: newQuantity,
+            totalPrice: d.product_order_info.total
+          })
+        })
+      } else { //checkout错误提示
+        wx.showModal({
+          title: '提示',
+          content: d.status.error_desc,
+          showCancel: false
+        })
+      }
+    })
+  },
 
 })
