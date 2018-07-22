@@ -1,9 +1,9 @@
 {
   "pages": [
+    "pages/user/orderlist/orderlist",
     "pages/index/index",
     "pages/orders/orders",
     "pages/user/user",
-    "pages/user/orderlist/orderlist",
     "pages/authorize/authorize"
   ],
   "window": {
