@@ -1,55 +1,44 @@
 <view class="wrap">
-  <view class="page-title" id='page-title'>
-    <text class="title">结算</text>
-  </view>
-  <view class="content">
-
-    <!-- <scroll-view bindscrolltolower="lower" style="height:{{scrollHeight}}px;" scroll-y='true' lower-threshold='20'> -->
-    <scroll-view bindscrolltolower="lower" style="height:400px;" scroll-y='true' lower-threshold='20'>
-
-      <view class="order-list">
-        <view class="order-item" wx:for="{{productList}}" wx:key="{{index}}">
-          <text class="item-title">{{item.product_name}}</text>
-          <view class="counter-box">
-            <text class="unit-price">单价：￥<text class="price">{{item.price}}</text></text>
-            <view class="counter">
-
-              <button class="btn add" plain="true" bindtap="addCount" data-count='1' data-product-id="{{item.product_id}}">+</button>
-              <text class="counter-num">{{item.quantity}}</text>
-
-              <block wx:if="{{item.quantity !== '0'}}">
-                <button class="btn minus" plain="true" bindtap="addCount" data-count='0' data-product-id="{{item.product_id}}">-</button>
-              </block>
-            </view>
-          </view>
-        </view>
-      </view>
-      <view class='more' wx:if="{{hasMore}}">
-        <text>加载更多</text>
-      </view>
-    </scroll-view>
-
-    <view class="pay-count-box">
-
-      <view class="count-box">
-        <text>应支付：</text>
-        <text class="count-price">￥<text class="count">{{totalPrice}}</text></text>
-      </view>
-
-      <view class="weixin-pay">
-        <!-- <icon class="zuoxiang icon-weixin"></icon>
-        <text>微信支付</text> -->
-        <button calss="weixin-pay-btn"  disabled="{{disabled}}"  bindtap="clickPayBtn" style='border-radius:0;background-color: #1AAD19;'>
-          <icon class="zuoxiang icon-weixin"></icon>
-          <text>微信支付</text>
-        </button>
-      </view>
-
-
+    <view class="page-title" id='page-title'>
+        <text class="title">结算</text>
     </view>
-    <button type="primary" disabled="{{disabled}}" size="default" bindtap="clickPayBtn">
-      <icon class="zuoxiang icon-weixin"></icon>
-      <text>微信支付</text>
-    </button>
-  </view>
+    <view class="content">
+        <scroll-view bindscrolltolower="lower" style="height:{{scrollHeight}}px;" scroll-y='true' lower-threshold='20'>
+        <!-- <scroll-view bindscrolltolower="lower" style="height:400px;" scroll-y='true' lower-threshold='20'> -->
+
+            <view class="order-list">
+                <view class="order-item" wx:for="{{productList}}" wx:key="{{index}}">
+                    <text class="item-title">{{item.product_name}}</text>
+                    <view class="counter-box">
+                        <text class="unit-price">单价：￥<text class="price">{{item.price}}</text></text>
+                        <view class="counter">
+
+                            <button class="btn add" plain="true" bindtap="addCount" data-count='1' data-product-id="{{item.product_id}}">+</button>
+                            <text class="counter-num">{{item.quantity}}</text>
+
+                            <block wx:if="{{item.quantity !== '0'}}">
+                                <button class="btn minus" plain="true" bindtap="addCount" data-count='0' data-product-id="{{item.product_id}}">-</button>
+                            </block>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view class='more' wx:if="{{hasMore}}">
+                <text>加载更多</text>
+            </view>
+        </scroll-view>
+    </view>
+
+    <view class="pay-count-box" id='payBox'>
+        <view class="count-box">
+            <text>应支付：</text>
+            <text class="count-price">￥<text class="count">{{totalPrice}}</text></text>
+        </view>
+        <view class="weixin-pay">
+            <button calss="weixin-pay-btn" type="primary" disabled="{{disabled}}" bindtap="clickPayBtn" style='border-radius:0;height:100rpx'>
+                <icon class="zuoxiang icon-weixin"></icon>
+                <text>{{orderPayBtn}}</text>
+            </button>
+        </view>
+    </view>
 </view>
