@@ -18,7 +18,31 @@ Page({
     wx.getSetting({
       success: (res) => {
         //let userInfo = util.storageMethod.get('userInfo')
-        if (res.authSetting['scope.userInfo']) { //如果已经授权,从后台获取头像信息,设置到v层
+        if (res.authSetting['scope.userInfo']) { //如果已经授权,从微信获取加密信息,发送给后端
+          wx.getUserInfo({
+            success: (e) => {
+              console.log(e)
+
+              let submitInfo = {
+                iv: e.iv,
+                encrypted_data: e.encryptedData,
+                signature: e.rawData,
+                raw_data: e.rawData
+              }
+              memberHttp.setWechatMiniProgramMemberInfo(submitInfo, () => {
+                memberHttp.getMemberDetail((d) => {
+                  if (d.member_info.icon_image.thumb) {
+                    this.setData({
+                      avatarUrl: d.member_info.icon_image.thumb,
+                    })
+                  }
+                })
+              })
+
+            }
+          })
+
+
           memberHttp.getMemberDetail((d) => {
             this.setData({
               avatarUrl: d.member_info.icon_image.thumb,
@@ -66,19 +90,18 @@ Page({
     //请求base类接口
     // baseHttp.getWarehouseCategoryList((d) => {
     // })
-     baseHttp.getPaymentCodeList((d) => {
-       this.setData({
-         payment_code_list: d.payment_code_list
-       })
-     })
+    baseHttp.getPaymentCodeList((d) => {
+      this.setData({
+        payment_code_list: d.payment_code_list
+      })
+    })
     // baseHttp.getProductOrderStatusList((d) => {
     // })
     //请求base类接口结束
- 
 
   },
-  onShow: function() {//从其他界面返回index界面时，检测如果全局变量里有头像信息，并且this.data没有头像信息，就从全局变量里更新头像
-    if (app.globalData.avatarUrl && this.data.avatarUrl == ''){
+  onShow: function() { //从其他界面返回index界面时，检测如果全局变量里有头像信息，并且this.data没有头像信息，就从全局变量里更新头像
+    if (app.globalData.avatarUrl && this.data.avatarUrl == '') {
       this.setData({
         avatarUrl: app.globalData.avatarUrl
       })
@@ -95,64 +118,45 @@ Page({
     // }) 
     //测试--获取货柜详情结束
 
-
   },
   //首页点击扫码
   goAuthorize: function() {
     memberHttp.getMemberAuthInfo((d) => { //从后台获取授权信息
 
-        if (d.member_auth_info.member_deduct_contract_auth_status == '0') {
-          app.globalData.payment_code_info = this.data.payment_code_list[0]
-        }
-    
-    //模拟电商流程开始
+      if (d.member_auth_info.member_deduct_contract_auth_status == '0') {
+        app.globalData.payment_code_info = this.data.payment_code_list[0]
+      }
+
+      //模拟电商流程开始
       if (d.member_auth_info.member_auth_status === "1") { //如果授权总状态为1，打开相机进行扫描
 
-        if (d.member_auth_info.member_deduct_contract_auth_status == '0'){
+        if (d.member_auth_info.member_deduct_contract_auth_status == '0') { //如果没有签约代扣，支付方式全局变量设置为微信支付
           app.globalData.payment_code_info = this.data.payment_code_list[0]
         }
-        console.log('111',app.globalData.payment_code_info)
-        var containerNo = 'CB7IIRVPT';//保存货柜编号 TODO：后期改为硬件动态获取
+        console.log('111', app.globalData.payment_code_info)
+        var containerNo = 'CB7IIRVPT'; //保存货柜编号 TODO：后期改为硬件动态获取
         orderHttp.addProductOrder(containerNo, (d, status) => { //给后端传递货柜编号，获取订单编号ID，申请开门
-              if (status) { //判断是否开门成功————如果开门
-                  util.storageMethod.set('productOrderId',d.product_order_id)//订单编号ID存到缓存
-                containerHttp.getContainerDetail(containerNo, (d) => { //获取仓库分类
-                  var categoryId = d.container_info.warehouse_info.warehouse_category_info.warehouse_category_id
-                  if (categoryId == "2001") { //判断仓库类型————如果是普通仓库，跳转order页面TODO
-                    wx.navigateTo({
-                      url: '../orders/orders'
-                    })
-                  } else if(categoryId == "2002") { //判断仓库类型————如果是重力感应仓库，跳转####页面TODO
-                  }
-                }) //获取仓库分类结束
-              } else {//判断是否开门成功————如果开门失败
-                let errorCode = d.status.error_code,//错误代码
-                errorMsg = d.status.error_desc;//错误提示
-                  switch(errorCode){//检测失败代码
-                    //如果没有商品
-                    case '0001':wx.showModal({
-                      title: '提示',
-                      content: errorMsg,
-                      showCancel:false
-                    });break;
-                    //如果门是开的
-                    case '3003': wx.showModal({
-                      title: '提示',
-                      content: errorMsg,
-                      showCancel: false
-                    }); break;
-                    //有订单等待支付
-                    case '3004': wx.showModal({
-                      title: '提示',
-                      content: errorMsg,
-                      showCancel: false
-                    }); break;
-
-                  }//检测失败代码结束
+          if (status) { //判断是否开门成功————如果开门
+            util.storageMethod.set('productOrderId', d.product_order_id) //订单编号ID存到缓存
+            containerHttp.getContainerDetail(containerNo, (d) => { //获取仓库分类
+              var categoryId = d.container_info.warehouse_info.warehouse_category_info.warehouse_category_id
+              if (categoryId == "2001") { //判断仓库类型————如果是普通仓库，跳转order页面TODO
+                wx.navigateTo({
+                  url: '../orders/orders'
+                })
+              } else if (categoryId == "2002") { //判断仓库类型————如果是重力感应仓库，跳转####页面TODO
               }
+            }) //获取仓库分类结束
+          } else { //判断是否开门成功————如果开门失败
+            let errorMsg = d.status.error_desc; //错误提示
+            wx.showModal({
+              title: '提示',
+              content: errorMsg,
+              showCancel: false
             })
-
-      //模拟电商流程结束
+          }
+        })
+        //模拟电商流程结束
 
 
         //硬件扫码程序开始
@@ -228,18 +232,18 @@ Page({
 
   agreeGetUser(e) { //点击授权按钮
     if (e.detail.userInfo) { //用户点击同意授权之后，先渲染授权返回的头像，然后给后端发送加密信息，然后从后端拉取头像,点击拒绝后授权弹窗消失
-    console.log("按钮",e)
+      console.log("按钮", e)
       this.setData({
         hasUserInfo: true,
         avatarUrl: e.detail.userInfo.avatarUrl
       })
       var submitInfo = {
-        iv:e.detail.iv,
+        iv: e.detail.iv,
         encrypted_data: e.detail.encryptedData,
         signature: e.detail.rawData,
         raw_data: e.detail.rawData
       }
-      memberHttp.setWechatMiniProgramMemberInfo(submitInfo,()=>{
+      memberHttp.setWechatMiniProgramMemberInfo(submitInfo, () => {
         memberHttp.getMemberDetail((d) => {
           if (d.member_info.icon_image.thumb) {
             this.setData({
@@ -248,7 +252,7 @@ Page({
           }
         })
       })
-      
+
       wx.showLoading({
         title: '加载中...',
         duration: 600,

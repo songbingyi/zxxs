@@ -33,7 +33,10 @@ const getWareHouseProductList = (page, callback) => {
   }
   BaseHttp.post(API.getWareHouseProductList, para, (d, status,p) => {//d:data,status:状态,p:分页信息
     if (status) {callback(d,p)}
-    else util.showModalWithNotice('提示', '请求失败:' + JSON.stringify(d));
+    else{
+      wx.hideLoading()
+      util.showModalWithNotice('提示', '请求失败:' + JSON.stringify(d));
+      }
   });
 }
 

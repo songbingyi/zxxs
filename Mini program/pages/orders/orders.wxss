@@ -60,28 +60,31 @@
   color: #9B9B9B;
 }
 .pay-count-box{
+  border-top: 1px solid #eee;
   display: flex;
   justify-content: space-between;
-  padding: 40rpx;
-  padding-top: 0;
+  padding: 0rpx 0rpx 10rpx 40rpx;
   vertical-align: text-top;
   margin-bottom: 80rpx;
 }
 .weixin-pay{
-  height: 40rpx;
+  height: 100rpx;
   line-height: 40rpx;
+  width: 375rpx;
 }
 .weixin-pay icon{
-  color: #1AAD19;
-  font-size: 40rpx;
-  line-height: 40rpx;
-  margin-right: 16rpx;
+  /* color: #1AAD19; */
+  color:#f8f8f8;
+  font-size: 48rpx;
+  line-height: 48rpx;
+  margin-right: 30rpx;
   vertical-align: text-top;
 }
 .weixin-pay text{
-  font-size: 28rpx;
+  font-size: 32rpx;
   line-height: 40rpx;
   display: inline-block;
+  color: #f8f8f8
 }
 .count-box{
   margin-top: 12rpx;
@@ -98,4 +101,19 @@
 }
 button[type="primary"]{
   margin: 40rpx;
+}
+.more {
+    color: #9b9b9b;
+    text-align: center;
+    font-size: 24rpx;
+    line-height: 80rpx;
+}
+.weixin-pay-btn {
+  width: 100%;
+  margin:0;
+  background-color: #1AAD19;
+  color: #f8f8f8;
+}
+button::after {
+    border-radius: 0;
 }

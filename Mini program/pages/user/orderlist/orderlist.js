@@ -1,7 +1,9 @@
 // pages/user/orderlist/orderlist.js
 const app = getApp()
 const orderHttp = require('../../../service/order-http.service.js')
+const memberHttp = require('../../../service/member-http.service.js')
 const util = require('../../../utils/util.js')
+const wxPay = require('../../../utils/wx.pay.js')
 Page({
     /**
      * 页面的初始数据
@@ -11,7 +13,6 @@ Page({
         page: 1,
         hasMore: false,
         hasTouched: 0,
-        //titleHeight: 0,
         scrollHeight: 0,
     },
     /**
@@ -47,17 +48,17 @@ Page({
             }
         })
     },
-    onReady: function() {},
     lower() {
-        if (this.data.hasMore == '1') { //如果更多订单为1
+        if (this.data.hasMore == true) { //如果更多订单为1
             if (!this.data.hasTouched) { //如果没有在请求中，发送请求
                 util.hasTouched(500, this) //间隔时间内不能再次出发
                 let page = this.data.page + 1; //触发一次滑动到底，page页数+1
                 orderHttp.getProductOrderList(page, (d, p) => { //获取订单列表
+
                     this.setData({
-                        hisOrderList: d.product_order_list.concat(this.data.hisOrderList), //把新得到的订单推到现有数组里
+                      hisOrderList: this.data.hisOrderList.concat(d.product_order_list), //把新得到的订单推到现有数组里
                         page: page,
-                        hasMore: !!p.more
+                        hasMore: p.more=='1'?true:false
                     })
                 })
             } else {
@@ -67,10 +68,23 @@ Page({
             console.log('没有更多订单，不发起请求')
         }
     },
-
-    clickPayBtn: () => {
-        orderHttp.payProductOrder((d) => {
-            console.log('测试--支付订单', d)
-        })
+    clickPayBtn: (e) => {
+      let cProductId = e.currentTarget.dataset.productId;//获取点击订单的ID
+      util.storageMethod.set('productOrderId', cProductId)//订单编号ID存到缓存
+      memberHttp.getMemberAuthInfo((d)=>{//检测授权状态
+        if (d.member_auth_info.member_deduct_contract_auth_status == '0') {//如果签约状态为否
+        let successCallback = ()=>{
+          wx.redirectTo({
+            url: '../../index/index'//用户支付成功的回调:打开首页
+          })
+        };
+        let failCallback = ()=>{//用户关闭支付的回调:重新打开orderlist页面
+            wx.redirectTo({
+              url: 'orderlist'
+            })
+        };
+        wxPay(successCallback, failCallback)
+        }
+      })
     }
 })

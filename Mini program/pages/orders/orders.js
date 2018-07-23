@@ -2,45 +2,63 @@
 let app = getApp()
 let orderHttp = require('../../service/order-http.service.js')
 let memberHttp = require('../../service/member-http.service.js')
-let baseHttp = require('../../service/base-http.service.js.js');
+let wxPay = require('../../utils/wx.pay.js')
+
 Page({
   data: {
     productList: [],
     minusNum: false,
     totalPrice: 0,
     disabled: false,
-    orderPayBtn: '确认支付'
+    orderPayBtn: '确认支付',
+    page: 1,
+    hasMore: true,
+    hasTouched: 0,
+    scrollHeight: 200,
   },
 
-  //onReady navigate返回后可以继续保持数据 TODO 应该不存在返回状态 暂时改为lunch
+  //onReady navigate返回后可以继续保持数据 TODO 应该不存在返回状态 暂时改为onload
   onLoad() {
     wx.showLoading({
       title: '载入中',
     })
+    //获取设备的高度
+    wx.getSystemInfo({
+      success: (res) => {
+        wx.createSelectorQuery().select('#page-title').boundingClientRect((rect) => {
+          // 获取page-title盒子的高度，单位px
+          console.log(rect)
+          this.setData({
+            scrollHeight: res.windowHeight - rect.height //设置滚动区域的高度，单位px
+          })
+        }).exec()
+      }
+    })
+
+
+
+
+
     orderHttp.getWareHouseProductList(1, (d, p) => { //首次载入，查询仓库商品列表,请求第一页数据;p:分页信息
       //获取仓库列表返回的商品列表
-
       let productList = d.product_list;
       let plength = productList.length,
         order_info = { //拼装商结算的参数
           product_list: [{
             product_id: productList[0].product_id, //id是第一件商品的ID
-            //product_id: '2',
             quantity: '1' //数量为1
           }],
-          payment_code_info: app.globalData.payment_code_info
+          payment_code_info: app.globalData.payment_code_info //支付方式参数来自全局变量
         };
-      console.log(app.globalData.payment_code_info)
       for (let i = 0; i < plength; i++) {
         productList[i].quantity = '0' //每个仓库商品数量设置为0
       }
-      let numList = [];
 
       this.setData({
         productList: productList, //设置商品名称
       })
 
-      orderHttp.checkoutProductOrder(order_info, (d, status) => {
+      orderHttp.checkoutProductOrder(order_info, (d, status) => { //发起订单结算请求，首次载入页面第一个商品为1
         if (status) {
           orderHttp.getProductOrderDetail((d) => {
             let changedProduct = d.product_order_info.order_product_list[0];
@@ -58,58 +76,19 @@ Page({
 
   //点击支付按钮后发起支付行为
   clickPayBtn() {
-    //拼装结算接口入参product_list
-    let productList = this.data.productList,
-      product_list = [],
-      pLL = productList.length;
-    for (let i = 0; i < pLL; i++) { //把product_id和quantity推入数组
-      // let oProductInfo = {
-      //   product_id: productList[i].product_id,
-      //   quantity: productList[i].quantity
-      // }
-      product_list.push({
-        product_id: productList[i].product_id,
-        quantity: productList[i].quantity
-      })
-    }
-    let order_info = {
-      product_list: product_list,
-      payment_code_info: app.globalData.payment_code_info
-    }
-    memberHttp.getMemberAuthInfo((d) => {//检查支付授权状态
-      if (d.member_auth_info.member_deduct_contract_auth_status == '0') {
-        //发起支付
-        orderHttp.payProductOrder((d) => { //向后端请求支付所需参数
-          let paymentParam = JSON.parse(d.payment_order_info.payment_order_param);
-          console.log(paymentParam)
-          wx.requestPayment( //向微信发起支付求情
-            {
-              'timeStamp': paymentParam.timeStamp,
-              'nonceStr': paymentParam.nonceStr,
-              'package': paymentParam.package,
-              'signType': paymentParam.signType,
-              'paySign': paymentParam.paySign,
-              'success': function (res) { 
-                console.log('支付成功')
-                wx.redirectTo({
-                  url: '../index/index'
-                })
-              },
-              'fail': function (res) {
-                console.log('支付失败')
-                wx.redirectTo({
-                  url: '../index/index'
-                })
-              },
-              'complete': function (res) {
-                console.log('支付完成')
-                wx.redirectTo({
-                  url: '../index/index'
-                })
-              }
+    memberHttp.getMemberAuthInfo((d) => { //检查支付授权状态
+      if (d.member_auth_info.member_deduct_contract_auth_status == '0') { //如果签约状态为否
+        let successCallback = () => {
+            wx.redirectTo({//支付成功 跳转首页
+              url: '../index/index',
             })
-        })
-    //支付结束
+          },
+          failCallback = () => {
+            wx.redirectTo({//支付失败 跳转userlist
+              url: '../user/userlist/userlist'
+            })
+          };
+        wxPay(successCallback, failCallback)
       }
     })
 
@@ -146,15 +125,15 @@ Page({
       product_list: param_product_list,
       payment_code_info: app.globalData.payment_code_info
     }
-    //发起点击加减号后的checkout
+    //发起点击加减号后的checkout请求
     orderHttp.checkoutProductOrder(order_info, (d, status) => {
-      if (status) {
+      if (status) { //如果结算成功，发起查询订单详情请求，用渲染商品数量和总价
         orderHttp.getProductOrderDetail((d) => {
-          let cIndex = '',
-            dIndex = '',
-            dProductList = d.product_order_info.order_product_list,
-            dLL = d.product_order_info.order_product_list.length,
-            newQuantity = '';
+          let cIndex = '', //被点击商品的下标
+            dIndex = '', //返回商品的下标
+            dProductList = d.product_order_info.order_product_list, //返回商品详情列表
+            dLL = d.product_order_info.order_product_list.length, //返回商品详情的length
+            newQuantity = ''; //新的商品数量
           for (let i = 0; i < pLL; i++) {
             if (productList[i].product_id == clickProductId) { //获取仓库商品列表被点击ID的下标
               cIndex = i
@@ -171,12 +150,14 @@ Page({
               }
             }
             this.setData({ //
-              disabled: false //如果返回的detail有内容，支付按钮亮
+              disabled: false, //如果返回的detail有内容，支付按钮亮
+              orderPayBtn: '确认支付'
             })
           } else { //如果返回的detail没有商品内容，对比ID，点击的商品为0,支付按钮灭
             newQuantity = '0'
             this.setData({
-              disabled: true
+              disabled: true, //支付按钮不可用
+              orderPayBtn: '请至少选择一份'
             })
           }
           let tempArrayProduct = 'productList[' + cIndex + '].quantity';

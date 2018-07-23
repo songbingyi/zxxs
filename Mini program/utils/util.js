@@ -75,7 +75,6 @@ function phoneNumSub(num) {
 }
 
 
-
 module.exports = {
   formatTime: formatTime,
   showModalWithNotice: showModalWithNotice,
