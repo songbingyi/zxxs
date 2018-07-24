@@ -5,7 +5,6 @@
     <view class="content">
         <scroll-view bindscrolltolower="lower" style="height:{{scrollHeight}}px;" scroll-y='true' lower-threshold='20'>
         <!-- <scroll-view bindscrolltolower="lower" style="height:400px;" scroll-y='true' lower-threshold='20'> -->
-
             <view class="order-list">
                 <view class="order-item" wx:for="{{productList}}" wx:key="{{index}}">
                     <text class="item-title">{{item.product_name}}</text>

@@ -68,6 +68,21 @@ function hasTouched(t,self){
 }
 
 /** 
+ * @name 防止连续点击按钮
+ * @function hasTouched(t|间隔时间，self|this当前对象)
+ */
+function hasClicked(t, self) {
+  self.setData({
+    hasClicked: true //正在请求中，设置为1
+  })
+  setTimeout(() => {
+    self.setData({
+      hasClicked: false //请求结束，设置为0
+    })
+  }, t)
+}
+
+/** 
  * @name 电话号码中间五位加密
  */
 function phoneNumSub(num) {
@@ -80,5 +95,6 @@ module.exports = {
   showModalWithNotice: showModalWithNotice,
   storageMethod: storageMethod,
   hasTouched:hasTouched,
+  hasClicked: hasClicked,
   phoneNumSub: phoneNumSub,
 }

@@ -3,7 +3,8 @@ const wechatLogin = require('utils/wx.login.js');
 const memberHttp = require('service/member-http.service.js');
 
 App({
-  onLaunch: function() {
+  onLaunch: function(res) {
+    console.log('启动场景值',res)
     wx.showLoading({
       title: '加载中',
     })

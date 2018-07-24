@@ -23,7 +23,7 @@ Page({
         }//拼接电话加密信息作为参数
       memberHttp.setPhoneNumber(submitInfo,()=>{//电话加密信息传给后端
         memberHttp.getMemberDetail((d) => {//从后端获取电话号码
-          var phoneNumber = util.phoneNumSub(d.member_info.mobile)//将电话号码中间五位加密
+          let phoneNumber = util.phoneNumSub(d.member_info.mobile)//将电话号码中间五位加密
           util.storageMethod.set('userPhoneNum', phoneNumber) //加密后的电话号码存储到缓存
         })
       })

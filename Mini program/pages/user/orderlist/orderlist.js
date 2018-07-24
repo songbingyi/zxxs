@@ -12,7 +12,7 @@ Page({
         hisOrderList: {},
         page: 1,
         hasMore: false,
-        hasTouched: 0,
+        hasTouched: false,
         scrollHeight: 0,
     },
     /**
@@ -79,9 +79,9 @@ Page({
           })
         };
         let failCallback = ()=>{//用户关闭支付的回调:重新打开orderlist页面
-            wx.redirectTo({
-              url: 'orderlist'
-            })
+            // wx.redirectTo({
+            //   url: 'orderlist'
+            // })
         };
         wxPay(successCallback, failCallback)
         }

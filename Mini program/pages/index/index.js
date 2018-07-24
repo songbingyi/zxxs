@@ -12,6 +12,8 @@ Page({
     avatarUrl: '',
     hasUserInfo: true,
     indexLogo: "http://218.244.158.175/static/zuoxiang/images/logo_indexbg.png",
+    albumDisabled: true,
+    bindDisabled: false
   },
   onLoad: function() {
     //判断用户是否已经同意获取头像信息
@@ -21,21 +23,18 @@ Page({
         if (res.authSetting['scope.userInfo']) { //如果已经授权,从微信获取加密信息,发送给后端
           wx.getUserInfo({
             success: (e) => {
-              console.log(e)
-
               let submitInfo = {
                 iv: e.iv,
                 encrypted_data: e.encryptedData,
                 signature: e.rawData,
                 raw_data: e.rawData
               }
-              memberHttp.setWechatMiniProgramMemberInfo(submitInfo, () => {
-                memberHttp.getMemberDetail((d) => {
-                  if (d.member_info.icon_image.thumb) {
-                    this.setData({
-                      avatarUrl: d.member_info.icon_image.thumb,
-                    })
-                  }
+              memberHttp.setWechatMiniProgramMemberInfo(submitInfo, () => { //加密信息发给后端
+                memberHttp.getMemberDetail((d) => { //从后端获取头像
+                  this.setData({
+                    avatarUrl: d.member_info.icon_image.thumb,
+                  })
+
                 })
               })
 
@@ -43,12 +42,13 @@ Page({
           })
 
 
-          memberHttp.getMemberDetail((d) => {
-            this.setData({
-              avatarUrl: d.member_info.icon_image.thumb,
-              hasUserInfo: true
-            })
-          })
+          // memberHttp.getMemberDetail((d) => {
+          //   console.log('外部调用')
+          //   this.setData({
+          //     avatarUrl: d.member_info.icon_image.thumb,
+          //     hasUserInfo: true
+          //   })
+          // })
         } else { //如果没有同意授权,拉起授权按钮
           this.setData({
             hasUserInfo: false
@@ -123,17 +123,11 @@ Page({
   goAuthorize: function() {
     memberHttp.getMemberAuthInfo((d) => { //从后台获取授权信息
 
-      if (d.member_auth_info.member_deduct_contract_auth_status == '0') {
-        app.globalData.payment_code_info = this.data.payment_code_list[0]
-      }
-
       //模拟电商流程开始
-      if (d.member_auth_info.member_auth_status === "1") { //如果授权总状态为1，打开相机进行扫描
-
+      if (d.member_auth_info.member_auth_status === "1") { //如果授权总状态为1，进入结算页面
         if (d.member_auth_info.member_deduct_contract_auth_status == '0') { //如果没有签约代扣，支付方式全局变量设置为微信支付
           app.globalData.payment_code_info = this.data.payment_code_list[0]
         }
-        console.log('111', app.globalData.payment_code_info)
         var containerNo = 'CB7IIRVPT'; //保存货柜编号 TODO：后期改为硬件动态获取
         orderHttp.addProductOrder(containerNo, (d, status) => { //给后端传递货柜编号，获取订单编号ID，申请开门
           if (status) { //判断是否开门成功————如果开门
