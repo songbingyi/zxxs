@@ -21,20 +21,25 @@ App({
                 wx.setStorageSync('token', d.token);
                 wx.setStorageSync('member_id', d.member_id);
               } else { //判断本地TOKEN是否可用————如果status不可用，发起wechatLogin重新登录
+              this.globalData.requestOK = false
                 console.log("token已经过期，发起wechatlgoin")
-                wechatLogin()
+                wechatLogin(this)
               }
             })
           },
           fail: () => { //判断微信端sessionkey————如果sessionkey过期，发起wx.login
             console.log('sessionkey已经过期')
             wechatLogin()
+
+
           }
         })
       },
       fail: () => { //判断本地token————如果缓存里没有token，发起wx.login
         console.log('首次打开小程序检测：缓存里没有token,发起wechatLogin')
-        wechatLogin()
+        wechatLogin(this)
+
+
       }
     })
   },
@@ -85,6 +90,7 @@ App({
       payment_code_id:'1',
       payment_code_name:'wechat-weixinpay'
     },
-    avatarUrl: ''
+    avatarUrl: '',
+    requestOK:true
   }
 })

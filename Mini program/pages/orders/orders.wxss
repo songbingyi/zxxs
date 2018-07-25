@@ -89,6 +89,7 @@
     font-size: 32rpx;
     display: inline-block;
     color: #f8f8f8;
+    line-height: 100rpx;
 }
 
 .count-box {

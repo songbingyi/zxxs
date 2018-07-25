@@ -1,6 +1,6 @@
 //index.js
 //获取应用实例
-let app = getApp();
+const app = getApp();
 let util = require('../../utils/util.js');
 let memberHttp = require('../../service/member-http.service.js');
 let orderHttp = require('../../service/order-http.service.js');
@@ -17,6 +17,7 @@ Page({
   },
   onLoad: function() {
     //判断用户是否已经同意获取头像信息
+    let that = this;
     wx.getSetting({
       success: (res) => {
         //let userInfo = util.storageMethod.get('userInfo')
@@ -29,18 +30,64 @@ Page({
                 signature: e.rawData,
                 raw_data: e.rawData
               }
-              memberHttp.setWechatMiniProgramMemberInfo(submitInfo, () => { //加密信息发给后端
-                memberHttp.getMemberDetail((d) => { //从后端获取头像
-                  this.setData({
-                    avatarUrl: d.member_info.icon_image.thumb,
-                  })
 
-                })
-              })
+    //测试开始
+
+            if(app.globalData.requestOK == true){
+                  console.log('已经存在member_id，直接发起请求')
+                  memberHttp.setWechatMiniProgramMemberInfo(submitInfo, () => { //加密信息发给后端
+                    memberHttp.getMemberDetail((d) => { //从后端获取头像
+                      that.setData({
+                        avatarUrl: d.member_info.icon_image.thumb,
+                      })
+                    })
+                  })
+            }else{//如果缓存没有member_id，在APP里注册函数，等待APP执行
+                  app.syncallback = () => {
+                    memberHttp.setWechatMiniProgramMemberInfo(submitInfo, () => { //加密信息发给后端
+                      memberHttp.getMemberDetail((d) => { //从后端获取头像
+                        this.setData({
+                          avatarUrl: d.member_info.icon_image.thumb,
+                        })
+                      })
+                    })
+                  }
+                  console.log('不存在member_id，回调发起请求')
+                }
+   
+    //测试结束
+
+              // wx.getStorage({
+              //   key: 'member_id',
+              //   success: function(res) {
+              //     console.log('已经存在member_id，直接发起请求')
+              //     memberHttp.setWechatMiniProgramMemberInfo(submitInfo, () => { //加密信息发给后端
+              //       memberHttp.getMemberDetail((d) => { //从后端获取头像
+              //         that.setData({
+              //           avatarUrl: d.member_info.icon_image.thumb,
+              //         })
+              //       })
+              //     })
+              //   },
+              //   fail: () => {//如果缓存没有member_id，在APP里注册函数，等待APP执行
+              //     app.syncallback = () => {
+              //       memberHttp.setWechatMiniProgramMemberInfo(submitInfo, () => { //加密信息发给后端
+              //         memberHttp.getMemberDetail((d) => { //从后端获取头像
+              //           this.setData({
+              //             avatarUrl: d.member_info.icon_image.thumb,
+              //           })
+              //         })
+              //       })
+              //     }
+              //     console.log('不存在member_id，回调发起请求')
+              //   }
+              // })
+
+
+
 
             }
           })
-
 
           // memberHttp.getMemberDetail((d) => {
           //   console.log('外部调用')
@@ -130,6 +177,7 @@ Page({
         }
         var containerNo = 'CB7IIRVPT'; //保存货柜编号 TODO：后期改为硬件动态获取
         orderHttp.addProductOrder(containerNo, (d, status) => { //给后端传递货柜编号，获取订单编号ID，申请开门
+        
           if (status) { //判断是否开门成功————如果开门
             util.storageMethod.set('productOrderId', d.product_order_id) //订单编号ID存到缓存
             containerHttp.getContainerDetail(containerNo, (d) => { //获取仓库分类

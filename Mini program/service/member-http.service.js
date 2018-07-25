@@ -29,6 +29,7 @@ const loginWithToken = (callback) => {
     member_id: wx.getStorageSync('member_id')
   }
   BaseHttp.post(API.loginWithToken, para, (d, status) => {
+    console.log('status',status)
     callback(d,status)
   });
 }

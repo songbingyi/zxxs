@@ -31,6 +31,7 @@ Page({
               this.setData({
                 phoneNumber: phoneNumber
               })
+              util.storageMethod.set('phoneNumber', phoneNumber)
             })
           } else {//如果没有授权,头像下的文字显示请登录，并且可以点击登录
             this.setData({
@@ -109,12 +110,12 @@ Page({
       }//拼接电话加密信息参数
       memberHttp.setPhoneNumber(submitInfo, () => {//把返回的电话加密信息传给后端
         memberHttp.getMemberDetail((d)=>{//从后端获取解密后的电话号码，设置到视图层
-          var phoneNumber = util.phoneNumSub(d.member_info.mobile)//将电话号码中间五位加密
+          let phoneNumber = util.phoneNumSub(d.member_info.mobile)//将电话号码中间五位加密
             this.setData({
               phoneNumber: phoneNumber
             })
             util.storageMethod.set('userPhoneNum', phoneNumber)//把电话号码存到缓存中
- 
+
           }
         )
         wx.hideLoading()
