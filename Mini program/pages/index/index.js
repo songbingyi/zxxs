@@ -34,7 +34,7 @@ Page({
     //测试开始
 
             if(app.globalData.requestOK == true){
-                  console.log('已经存在member_id，直接发起请求')
+              console.log('requestOK == true，直接发起请求')
                   memberHttp.setWechatMiniProgramMemberInfo(submitInfo, () => { //加密信息发给后端
                     memberHttp.getMemberDetail((d) => { //从后端获取头像
                       that.setData({
@@ -43,6 +43,7 @@ Page({
                     })
                   })
             }else{//如果缓存没有member_id，在APP里注册函数，等待APP执行
+              console.log('equestOK == false，注册APP函数')
                   app.syncallback = () => {
                     memberHttp.setWechatMiniProgramMemberInfo(submitInfo, () => { //加密信息发给后端
                       memberHttp.getMemberDetail((d) => { //从后端获取头像
@@ -52,7 +53,7 @@ Page({
                       })
                     })
                   }
-                  console.log('不存在member_id，回调发起请求')
+
                 }
    
     //测试结束
@@ -82,10 +83,6 @@ Page({
               //     console.log('不存在member_id，回调发起请求')
               //   }
               // })
-
-
-
-
             }
           })
 
@@ -169,7 +166,6 @@ Page({
   //首页点击扫码
   goAuthorize: function() {
     memberHttp.getMemberAuthInfo((d) => { //从后台获取授权信息
-
       //模拟电商流程开始
       if (d.member_auth_info.member_auth_status === "1") { //如果授权总状态为1，进入结算页面
         if (d.member_auth_info.member_deduct_contract_auth_status == '0') { //如果没有签约代扣，支付方式全局变量设置为微信支付
@@ -177,11 +173,11 @@ Page({
         }
         var containerNo = 'CB7IIRVPT'; //保存货柜编号 TODO：后期改为硬件动态获取
         orderHttp.addProductOrder(containerNo, (d, status) => { //给后端传递货柜编号，获取订单编号ID，申请开门
-        
+
           if (status) { //判断是否开门成功————如果开门
             util.storageMethod.set('productOrderId', d.product_order_id) //订单编号ID存到缓存
             containerHttp.getContainerDetail(containerNo, (d) => { //获取仓库分类
-              var categoryId = d.container_info.warehouse_info.warehouse_category_info.warehouse_category_id
+              let categoryId = d.container_info.warehouse_info.warehouse_category_info.warehouse_category_id
               if (categoryId == "2001") { //判断仓库类型————如果是普通仓库，跳转order页面TODO
                 wx.navigateTo({
                   url: '../orders/orders'
@@ -199,8 +195,6 @@ Page({
           }
         })
         //模拟电商流程结束
-
-
         //硬件扫码程序开始
         // wx.scanCode({
         //   onlyFromCamera: true,

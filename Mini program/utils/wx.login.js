@@ -1,8 +1,9 @@
 const memberHttp = require('../service/member-http.service.js')
 
 var wechatLogin = function(t) {
-
+  t.globalData.requestOK = false
   wx.login({
+
     success: (res) => {
       console.log(res)
       var code = res.code;
@@ -15,7 +16,7 @@ var wechatLogin = function(t) {
           console.log('WechatLogin结束，获取新的token')
           wx.setStorageSync('token', d.token);
           wx.setStorageSync('member_id', d.member_id);
-          t.requestOK = true;
+          t.globalData.requestOK = true;
       // 由于 wx.login 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
 

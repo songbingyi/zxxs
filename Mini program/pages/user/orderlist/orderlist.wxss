@@ -7,7 +7,13 @@ page {
 .user-order-list {
     margin-top: 20rpx;
 }
-
+.order-list-title{
+  position: fixed;
+  z-index: 100000;
+}
+scroll-view {
+  position: relative;
+}
 .user-order-list .order-item {
     margin-bottom: 20rpx;
     background-color: #fff;
@@ -106,4 +112,27 @@ page {
     text-align: center;
     font-size: 24rpx;
     line-height: 80rpx;
+}
+
+.weui-cell__hd{
+  display: flex;
+  align-items:center;
+  flex-direction:column;
+  padding: 0;
+  color: #9b9b9b
+}
+.weui-cell__hd text {
+color: #cccccc;
+margin-top: 20rpx;
+font-size: 28rpx;
+}
+.weui-cell__hd image{
+  vertical-align: top;
+  line-height: 20px;
+}
+
+.weui-loadmore__tips {
+  display: inline-block;
+  vertical-align: middle;
+  color: #9b9b9b
 }

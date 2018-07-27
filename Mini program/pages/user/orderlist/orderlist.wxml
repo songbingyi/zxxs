@@ -1,47 +1,61 @@
 <!--pages/user/orderlist/orderlist.wxml-->
 <view class="wrap">
-    <view class="page-title" id='page-title'>
-        <text class="title">订单</text>
-    </view>
-    <!--滚动到底加载更多，距离底部20PX的时候触发-->
-    <scroll-view bindscrolltolower="lower" style="height:{{scrollHeight}}px;" scroll-y='true' lower-threshold='20'>
-        <view class="user-order-list">
-            <view class="order-item" wx:for="{{hisOrderList}}" wx:key="{{index}}">
-                <view class="order-num">
-                    <view class="title-num">
-                        <text class="item-num">订单编号：{{item.product_order_no}}</text>
-                        <text class="item-time">{{item.product_order_create_date}}</text>
-                    </view>
-                </view>
 
-                <view class="order-con">
-                    <view class='orderlist' wx:for='{{item.order_product_list}}' wx:key='{{index}}'>
-                        <text class="orderlist-title">{{item.product_name}}</text>
-                        <view class='price-num'>
-                            <text class="orderlist-counter">X{{item.quantity}}</text>
-                            <text class="iorderlist-price">￥{{item.price}}</text>
-                        </view>
-                    </view>
-                </view>
-                <view class="state-total">
-                    <view class="item-state">
-                        <button wx:if="{{item.product_order_status_info.product_order_status_id == '1002'}}" bindtap='clickPayBtn' data-product-id="{{item.product_order_id}}" class='gotopayBtn' plain="true">去支付
-                        </button>
-                        <!-- <text wx:if="{{item.product_order_status_info.product_order_status_id == '2001'}}">{{item.product_order_status_info.product_order_status_name}}</text> -->
-                        <text wx:if="{{item.product_order_status_info.product_order_status_id == '2001'}}">订单完成</text>
-                    </view>
-                    <view class="item-total">
-                        <text>共{{item.product_total_count
-}}份，合计<text class="price-total">￥{{item.total}}</text></text>
-                    </view>
-                </view>
+
+  <view class="page-title order-list-title" id='page-title'>
+    <text class="title">订单</text>
+  </view>
+
+  <view class="weui-loadmore" hidden="{{isHideLoadMore}}">
+    <view class="weui-loading"></view>
+    <view class="weui-loadmore__tips">正在刷新</view>
+  </view>
+
+  <!--滚动到底加载更多，距离底部20PX的时候触发;下拉超过30px的时候出发刷新-->
+  <scroll-view wx:if="{{!showOrder}}" bindscrolltolower="lower" style="height:{{scrollHeight}}px;top:{{topHeight}}px" scroll-y="true" lower-threshold='10' bindscrolltoupper="toper" upper-threshold="10" upper-threshold="-50" bindscrolltoupper='toper'>
+    <!--向下滑动刷新-->
+
+    <view class="user-order-list">
+      <view class="order-item" wx:for="{{hisOrderList}}" wx:key="{{index}}">
+        <view class="order-num">
+          <view class="title-num">
+            <text class="item-num">订单编号：{{item.product_order_no}}</text>
+            <text class="item-time">{{item.product_order_create_date}}</text>
+          </view>
+        </view>
+
+        <view class="order-con">
+          <view class='orderlist' wx:for='{{item.order_product_list}}' wx:key='{{index}}'>
+            <text class="orderlist-title">{{item.product_name}}</text>
+            <view class='price-num'>
+              <text class="orderlist-counter">X{{item.quantity}}</text>
+              <text class="iorderlist-price">￥{{item.price}}</text>
             </view>
-
+          </view>
         </view>
-        <view class='more' wx:if="{{hasMore}}">
-            <text>加载更多</text>
+        <view class="state-total">
+          <view class="item-state">
+            <button wx:if="{{item.product_order_status_info.product_order_status_id == '1002'}}" bindtap='clickPayBtn' data-product-id="{{item.product_order_id}}" class='gotopayBtn' plain="true">去支付
+            </button>
+            <!-- <text wx:if="{{item.product_order_status_info.product_order_status_id == '2001'}}">{{item.product_order_status_info.product_order_status_name}}</text> -->
+            <text wx:else>{{item.product_order_status_info.product_order_status_name}}</text>
+          </view>
+          <view class="item-total">
+            <text>共{{item.product_total_count
+}}份，合计<text class="price-total">￥{{item.total}}</text></text>
+          </view>
         </view>
-    </scroll-view>
+      </view>
 
+    </view>
+    <view class='more' wx:if="{{hasMore}}">
+      <text>加载更多</text>
+    </view>
+  </scroll-view>
+
+    <view wx:else class="weui-cell__hd">
+      <image src="../../../assets/images/no-order-icon.svg" style="width:130rpx; height: 130rpx;margin-top:200px"></image>
+      <text>空空如也~</text>
+  </view>
 
 </view>

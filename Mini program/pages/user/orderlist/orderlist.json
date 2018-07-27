@@ -1,1 +1,5 @@
-{}
+{
+
+        "navigationBarTitleText": "订单",
+        "enablePullDownRefresh": true
+}

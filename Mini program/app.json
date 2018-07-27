@@ -1,9 +1,9 @@
 {
   "pages": [
+    "pages/user/orderlist/orderlist",
     "pages/index/index",
     "pages/orders/orders",
     "pages/authorize/authorize",
-    "pages/user/orderlist/orderlist",
     "pages/user/user"
   ],
   "window": {
@@ -11,6 +11,7 @@
     "navigationBarBackgroundColor": "#f08300",
     "navigationBarTitleText": "",
     "navigationBarTextStyle": "#fff"
+
   },
   "networkTimeout": {
     "request": 16000

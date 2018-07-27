@@ -1,141 +1,145 @@
 .order-list {
-    padding: 40rpx;
-    margin-bottom: 0;
+  padding: 40rpx;
+  margin-bottom: 0;
 }
 
 .order-item {
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 40rpx;
-    border-bottom: 1rpx solid #eee;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 40rpx;
+  border-bottom: 1rpx solid #eee;
+}
+
+.product-image  image {
+  width: 130rpx;
+  height: 130rpx;
 }
 
 .item-title {
-    font-size: 32rpx;
-    line-height: 50rpx;
-    padding-right: 40rpx;
+  font-size: 32rpx;
+  line-height: 50rpx;
+  flex: 1;
+  margin-left: 40rpx;
 }
 
 .counter-box {
-    text-align: right;
-    flex: none;
+  text-align: right;
+  flex: none;
 }
 
 .unit-price {
-    font-size: 28rpx;
-    line-height: 50rpx;
-    margin-bottom: 40rpx;
-    display: block;
+  font-size: 28rpx;
+  line-height: 50rpx;
+  margin-bottom: 40rpx;
+  display: block;
 }
 
 .counter {
-    vertical-align: top;
-    height: 50rpx;
+  vertical-align: top;
+  height: 50rpx;
 }
 
 .counter text, .counter button {
-    float: right;
+  float: right;
 }
 
 .counter text {
-    display: block;
-    line-height: 50rpx;
-    height: 50rpx;
-    padding: 0 30rpx;
-    text-align: center;
+  display: block;
+  line-height: 50rpx;
+  height: 50rpx;
+  padding: 0 30rpx;
+  text-align: center;
 }
 
 .counter .btn {
-    width: 50rpx;
-    height: 50rpx;
-    border-radius: 50%;
-    font-size: 40rpx;
-    line-height: 42rpx;
-    text-align: center;
-    border: none;
-    padding: 0;
-    margin: 0;
-    display: block;
-    box-sizing: border-box;
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 50%;
+  font-size: 40rpx;
+  line-height: 42rpx;
+  text-align: center;
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: block;
+  box-sizing: border-box;
 }
 
 .counter .btn.add {
-    background-color: #f08300;
-    color: #fff;
+  background-color: #f08300;
+  color: #fff;
 }
 
 .counter .btn.minus {
-    border: 1px solid #eee;
-    color: #9b9b9b;
+  border: 1px solid #eee;
+  color: #9b9b9b;
 }
 
 .weixin-pay {
-    height: 100rpx;
-    line-height: 40rpx;
-    width: 375rpx;
-    float: right;
+  height: 100rpx;
+  line-height: 40rpx;
+  width: 375rpx;
+  float: right;
 }
 
 .weixin-pay icon {
-    /* color: #1AAD19; */
-    color: #f8f8f8;
-    font-size: 48rpx;
-    line-height: 48rpx;
-    margin-right: 30rpx;
-    vertical-align: text-top;
+  /* color: #1AAD19; */
+  color: #f8f8f8;
+  font-size: 48rpx;
+  line-height: 48rpx;
+  margin-right: 30rpx;
+  vertical-align: text-top;
 }
 
 .weixin-pay text {
-    font-size: 32rpx;
-    display: inline-block;
-    color: #f8f8f8;
-    line-height: 100rpx;
+  font-size: 32rpx;
+  display: inline-block;
+  color: #f8f8f8;
+  line-height: 100rpx;
 }
 
 .count-box {
-    float: left;
-    font-size: 28rpx;
-    line-height: 100rpx;
+  float: left;
+  font-size: 28rpx;
+  line-height: 100rpx;
 }
 
 .count-box .count-price {
-    color: #d0021b;
+  color: #d0021b;
 }
 
 .count-box .count {
-    font-size: 40rpx;
-    line-height: 40rpx;
+  font-size: 40rpx;
+  line-height: 40rpx;
 }
 
 .more {
-    color: #9b9b9b;
-    text-align: center;
-    font-size: 24rpx;
-    line-height: 80rpx;
+  color: #9b9b9b;
+  text-align: center;
+  font-size: 24rpx;
+  line-height: 80rpx;
 }
 
 .pay-count-box {
-    border-top: 1px solid #eee;
-    justify-content: space-between;
-    padding: 0rpx 0rpx 0rpx 40rpx;
-    vertical-align: text-top;
-    box-sizing: border-box;
+  border-top: 1px solid #eee;
+  justify-content: space-between;
+  padding: 0rpx 0rpx 0rpx 40rpx;
+  vertical-align: text-top;
+  box-sizing: border-box;
 }
 
 .wrap {
-
 }
 
 .content {
-
 }
 
 .weixin-pay-btn {
-    width: 100%;
-    color: #f8f8f8;
-    height: 100rpx;
+  width: 100%;
+  color: #f8f8f8;
+  height: 100rpx;
 }
 
 button::after {
-    border-radius: 0;
+  border-radius: 0;
 }

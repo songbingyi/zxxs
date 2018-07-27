@@ -6,6 +6,7 @@ let wxPay = require('../../utils/wx.pay.js')
 let util = require('../../utils/util.js')
 
 Page({
+
   data: {
     productList: [],
     totalPrice: 0,

@@ -58,11 +58,11 @@ storageMethod.set = function(key,keys){
  */
 function hasTouched(t,self){
   self.setData({
-    hasTouched: 1 //正在请求中，设置为1
+    hasTouched: true //正在请求中，设置为1
   })
   setTimeout(()=>{
     self.setData({
-      hasTouched: 0 //请求结束，设置为0
+      hasTouched: false //请求结束，设置为0
     })
   },t)
 }
@@ -82,12 +82,7 @@ function hasClicked(t, self) {
   }, t)
 }
 
-/** 
- * @name 电话号码中间五位加密
- */
-function phoneNumSub(num) {
-  return (num.substr(0,3)+'*****'+num.substr(7))
-}
+
 
 
 module.exports = {
@@ -96,5 +91,4 @@ module.exports = {
   storageMethod: storageMethod,
   hasTouched:hasTouched,
   hasClicked: hasClicked,
-  phoneNumSub: phoneNumSub,
 }

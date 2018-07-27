@@ -27,7 +27,7 @@ Page({
 
           if (d.member_auth_info.member_mobile_auth_status) {//如果已经授权，从后台拉取电话号码并显示
             memberHttp.getMemberDetail((e) => {
-              let phoneNumber = util.phoneNumSub(e.member_info.mobile)//将电话号码中间五位加密
+              let phoneNumber = e.member_info.mobile//将电话号码中间五位加密
               this.setData({
                 phoneNumber: phoneNumber
               })
@@ -37,7 +37,7 @@ Page({
             this.setData({
               phoneNumber: ''
             })
-            util.storageMethod.getSync('userPhoneNum', '')
+           // util.storageMethod.getSync('userPhoneNum', '')
           }
         })
       }

@@ -36,6 +36,7 @@ App({
         })
       },
       fail: () => { //判断本地token————如果缓存里没有token，发起wx.login
+
         console.log('首次打开小程序检测：缓存里没有token,发起wechatLogin')
         wechatLogin(this)
 
