@@ -1,0 +1,6 @@
+/* pages/notice/notice.wxss */
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+}

@@ -1,8 +1,9 @@
 {
   "pages": [
-    "pages/user/orderlist/orderlist",
-    "pages/index/index",
+    "pages/notice/notice",
     "pages/orders/orders",
+    "pages/index/index",
+    "pages/user/orderlist/orderlist",
     "pages/authorize/authorize",
     "pages/user/user"
   ],
@@ -14,6 +15,6 @@
 
   },
   "networkTimeout": {
-    "request": 16000
+    "request": 10000
   }
 }

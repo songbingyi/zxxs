@@ -92,6 +92,7 @@ App({
       payment_code_name:'wechat-weixinpay'
     },
     avatarUrl: '',
-    requestOK:true
+    requestOK:true,
+    CSNumber:'02968201798'//客服电话
   }
 })

@@ -9,9 +9,9 @@ Page({
     hasIconImage:false,
     phoneNumber:''
   },
-  makePhoneCall: function () {
+  callCS: function () {
     wx.makePhoneCall({
-      phoneNumber: '02968201798'
+      phoneNumber: app.globalData.CSNumber
     })
   },
   onLoad: function () {
@@ -58,8 +58,7 @@ Page({
     })
     //载入时从后端进行电话号码鉴权
 
-
-   
+  
   },
   openAuthPage(){//拉起头像授权界面
     this.setData({
@@ -110,7 +109,7 @@ Page({
       }//拼接电话加密信息参数
       memberHttp.setPhoneNumber(submitInfo, () => {//把返回的电话加密信息传给后端
         memberHttp.getMemberDetail((d)=>{//从后端获取解密后的电话号码，设置到视图层
-          let phoneNumber = util.phoneNumSub(d.member_info.mobile)//将电话号码中间五位加密
+          let phoneNumber = d.member_info.mobile//将电话号码中间五位加密
             this.setData({
               phoneNumber: phoneNumber
             })
@@ -122,4 +121,5 @@ Page({
       })
     }
   }
+
 })

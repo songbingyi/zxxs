@@ -31,32 +31,32 @@ Page({
                 raw_data: e.rawData
               }
 
-    //测试开始
+              //测试开始
 
-            if(app.globalData.requestOK == true){
-              console.log('requestOK == true，直接发起请求')
+              if (app.globalData.requestOK == true) {
+                console.log('requestOK == true，直接发起请求')
+                memberHttp.setWechatMiniProgramMemberInfo(submitInfo, () => { //加密信息发给后端
+                  memberHttp.getMemberDetail((d) => { //从后端获取头像
+                    that.setData({
+                      avatarUrl: d.member_info.icon_image.thumb,
+                    })
+                  })
+                })
+              } else { //如果缓存没有member_id，在APP里注册函数，等待APP执行
+                console.log('equestOK == false，注册APP函数')
+                app.syncallback = () => {
                   memberHttp.setWechatMiniProgramMemberInfo(submitInfo, () => { //加密信息发给后端
                     memberHttp.getMemberDetail((d) => { //从后端获取头像
-                      that.setData({
+                      this.setData({
                         avatarUrl: d.member_info.icon_image.thumb,
                       })
                     })
                   })
-            }else{//如果缓存没有member_id，在APP里注册函数，等待APP执行
-              console.log('equestOK == false，注册APP函数')
-                  app.syncallback = () => {
-                    memberHttp.setWechatMiniProgramMemberInfo(submitInfo, () => { //加密信息发给后端
-                      memberHttp.getMemberDetail((d) => { //从后端获取头像
-                        this.setData({
-                          avatarUrl: d.member_info.icon_image.thumb,
-                        })
-                      })
-                    })
-                  }
-
                 }
-   
-    //测试结束
+
+              }
+
+              //测试结束
 
               // wx.getStorage({
               //   key: 'member_id',
@@ -167,16 +167,21 @@ Page({
   goAuthorize: function() {
     memberHttp.getMemberAuthInfo((d) => { //从后台获取授权信息
       //模拟电商流程开始
+      wx.showLoading({
+        title: '开门中',
+      })
       if (d.member_auth_info.member_auth_status === "1") { //如果授权总状态为1，进入结算页面
         if (d.member_auth_info.member_deduct_contract_auth_status == '0') { //如果没有签约代扣，支付方式全局变量设置为微信支付
           app.globalData.payment_code_info = this.data.payment_code_list[0]
         }
-        var containerNo = 'CB7IIRVPT'; //保存货柜编号 TODO：后期改为硬件动态获取
+        var containerNo = 'CE4EKA2DY'; //保存货柜编号 TODO：后期改为硬件动态获取
         orderHttp.addProductOrder(containerNo, (d, status) => { //给后端传递货柜编号，获取订单编号ID，申请开门
 
           if (status) { //判断是否开门成功————如果开门
+
             util.storageMethod.set('productOrderId', d.product_order_id) //订单编号ID存到缓存
             containerHttp.getContainerDetail(containerNo, (d) => { //获取仓库分类
+              wx.hideLoading()
               let categoryId = d.container_info.warehouse_info.warehouse_category_info.warehouse_category_id
               if (categoryId == "2001") { //判断仓库类型————如果是普通仓库，跳转order页面TODO
                 wx.navigateTo({
@@ -186,12 +191,51 @@ Page({
               }
             }) //获取仓库分类结束
           } else { //判断是否开门成功————如果开门失败
-            let errorMsg = d.status.error_desc; //错误提示
-            wx.showModal({
-              title: '提示',
-              content: errorMsg,
-              showCancel: false
-            })
+          wx.hideLoading()
+            let errorMsg = d.status.error_desc, //错误提示
+              errorCode = d.status.error_code;//错误代码
+            switch (errorCode) {
+              case '3005':
+                wx.showModal({
+                  title: '提示',
+                  content: '货柜已无商品，请联系客服补货',
+                  showCancel: true,
+                  confirmText: '联系客服',
+                  success: function (res) {
+                    if (res.confirm) {//用户点击确定
+                      wx.makePhoneCall({//拨打客服电话
+                        phoneNumber: app.globalData.CSNumber
+                      })
+                    }
+                  }
+                });break;
+
+              case '3004':
+                wx.showModal({
+                  title: '提示',
+                  content: errorMsg,
+                  showCancel: false,
+                  success: function (res) {
+                    wx.navigateTo({
+                      url: '../user/orderlist/orderlist'
+                    })
+                  }
+                }); break;
+
+
+                default:
+                wx.showModal({
+                  title: '提示',
+                  content: errorMsg,
+                  showCancel: false
+                });break;
+            }
+            // wx.showModal({
+            //   title: '提示',
+            //   content: errorMsg,
+            //   showCancel: false
+            // })
+
           }
         })
         //模拟电商流程结束
@@ -252,6 +296,7 @@ Page({
         // })
         //硬件扫码程序结束
       } else { //总授权状态不为1
+        wx.hideLoading()
         app.globalData.memberAuthStatus = d.member_auth_info; //授权信息传给全局变量，给跳转页面使用
         wx.navigateTo({
           url: '../authorize/authorize'
@@ -267,10 +312,10 @@ Page({
 
 
   agreeGetUser(e) { //点击授权按钮
+
     if (e.detail.userInfo) { //用户点击同意授权之后，先渲染授权返回的头像，然后给后端发送加密信息，然后从后端拉取头像,点击拒绝后授权弹窗消失
       console.log("按钮", e)
       this.setData({
-        hasUserInfo: true,
         avatarUrl: e.detail.userInfo.avatarUrl
       })
       var submitInfo = {
@@ -294,9 +339,11 @@ Page({
         duration: 600,
       })
     } else {
-      this.setData({
-        hasUserInfo: true,
-      })
     }
+  },
+  hideUserInfo() {//点击授权的同时，去掉授权弹窗
+    this.setData({
+      hasUserInfo: true,
+    })
   }
 })

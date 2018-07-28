@@ -44,6 +44,7 @@ line-height:1em;
 .user-head .user-avatar image{
   width: 100%;
   height: 100%;
+  border-radius: 50%;
 }
 .user-head text{
   font-size: 40rpx;

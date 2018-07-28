@@ -85,10 +85,12 @@ function hasClicked(t, self) {
 
 
 
+
+
 module.exports = {
   formatTime: formatTime,
   showModalWithNotice: showModalWithNotice,
   storageMethod: storageMethod,
   hasTouched:hasTouched,
-  hasClicked: hasClicked,
+  hasClicked: hasClicked
 }

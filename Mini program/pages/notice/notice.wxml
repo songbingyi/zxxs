@@ -1,0 +1,7 @@
+<!--pages/notice/notice.wxml-->
+<view class='content'>
+            <icon type="success" size="93"></icon>
+            <text>支付成功</text>
+            <text>选完商品后请确认柜门已关，方便下一位用户选购商品，谢谢！</text>
+
+</view>
