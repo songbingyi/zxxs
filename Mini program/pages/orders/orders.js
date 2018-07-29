@@ -82,17 +82,12 @@ Page({
       util.hasTouched(1000,this)
       memberHttp.getMemberAuthInfo((d) => { //检查支付授权状态
         if (d.member_auth_info.member_deduct_contract_auth_status == '0') { //如果签约状态为否,发起微信支付
-          let successCallback = () => {
-              wx.redirectTo({ //支付成功 跳转首页
-                url: '../index/index',
-              })
-            },
-            failCallback = () => {
+          let failCallback = () => {
               wx.redirectTo({ //支付失败 跳转userlist
                 url: '../user/orderlist/orderlist'
               })
             };
-          wxPay(successCallback, failCallback)
+          wxPay( failCallback)
         }
       })
     }

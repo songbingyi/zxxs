@@ -1,0 +1,31 @@
+/* pages/notice/notice.wxss */
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 100rpx;
+}
+
+.success-text {
+    margin-top: 60rpx;
+}
+
+.desc-text {
+    color: #e64340;
+    font-size: 28rpx;
+    margin-top: 60rpx;
+    text-align: center;
+}
+
+.content button {
+    width: 320rpx;
+    height: 70rpx;
+    line-height: 70rpx;
+    margin-top: 386rpx;
+}
+
+.weui-btn_plain-primary {
+    color: #1aad19;
+    border: 1px solid #1aad19;
+}

@@ -105,17 +105,13 @@ Page({
     util.storageMethod.set('productOrderId', cProductId) //订单编号ID存到缓存
     memberHttp.getMemberAuthInfo((d) => { //检测授权状态
       if (d.member_auth_info.member_deduct_contract_auth_status == '0') { //如果签约状态为否
-        let successCallback = () => {
-          wx.redirectTo({
-            url: '../../index/index' //用户支付成功的回调:打开首页
-          })
-        };
+
         let failCallback = () => { //用户关闭支付的回调:重新打开orderlist页面
           // wx.redirectTo({
           //   url: 'orderlist'
           // })
         };
-        wxPay(successCallback, failCallback)
+        wxPay(failCallback)
       }
     })
   }

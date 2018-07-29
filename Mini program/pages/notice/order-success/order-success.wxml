@@ -1,0 +1,7 @@
+<!--pages/notice/notice.wxml-->
+<view class='content'>
+    <icon type="success" size="93"></icon>
+    <text class='success-text'>支付成功</text>
+    <text class='desc-text'>选完商品后请确认柜门已关 \n方便下一位用户选购商品，谢谢！</text>
+<button plain="true" type="primary" bindtap='backToIndex'>返回首页</button>
+</view>

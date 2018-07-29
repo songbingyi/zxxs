@@ -139,8 +139,8 @@ Page({
         payment_code_list: d.payment_code_list
       })
     })
-    // baseHttp.getProductOrderStatusList((d) => {
-    // })
+    baseHttp.getProductOrderStatusList((d) => {
+    })
     //请求base类接口结束
 
   },
@@ -174,7 +174,7 @@ Page({
         if (d.member_auth_info.member_deduct_contract_auth_status == '0') { //如果没有签约代扣，支付方式全局变量设置为微信支付
           app.globalData.payment_code_info = this.data.payment_code_list[0]
         }
-        var containerNo = 'CE4EKA2DY'; //保存货柜编号 TODO：后期改为硬件动态获取
+          var containerNo = 'CH8NMWNW4'; //保存货柜编号 TODO：后期改为硬件动态获取
         orderHttp.addProductOrder(containerNo, (d, status) => { //给后端传递货柜编号，获取订单编号ID，申请开门
 
           if (status) { //判断是否开门成功————如果开门
