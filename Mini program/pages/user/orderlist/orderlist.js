@@ -115,26 +115,25 @@ Page({
       }
     })
   },
-  onPullDownRefresh: ()=>{
-    let that = this;
-    orderHttp.getProductOrderList(1, (d, p) => { //初次加载页面获取page1数据
+  //下拉刷新
+  onPullDownRefresh: function(){
+      wx.stopPullDownRefresh()
+    orderHttp.getProductOrderList(1, (d, p) => { //页面获取page1数据
       if (p.total > 0) { //如果条目总数为真
-        that.setData({
-          hisOrderList: d.product_order_list, //渲染后台数据
-
+      console.log("123")
+          this.setData({
+          hisOrderList: d.product_order_list //渲染后台数据
         })
 
         if (p.more == '1') { //如果总条目为真，还有更多条目，底部的“记载更多”显示
-          that.setData({
+          this.setData({
             hasMore: true
           })
         }
-        wx.stopPullDownRefresh()
       } else { //如果条目总数为0,底部的‘加载更多’不显示
-        that.setData({
+        this.setData({
           showOrder: false
         })
-        wx.stopPullDownRefresh()
       }
     })
    
