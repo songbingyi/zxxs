@@ -114,5 +114,48 @@ Page({
         wxPay(failCallback)
       }
     })
-  }
+  },
+  onPullDownRefresh: ()=>{
+    let that = this;
+    orderHttp.getProductOrderList(1, (d, p) => { //初次加载页面获取page1数据
+      if (p.total > 0) { //如果条目总数为真
+        that.setData({
+          hisOrderList: d.product_order_list, //渲染后台数据
+
+        })
+
+        if (p.more == '1') { //如果总条目为真，还有更多条目，底部的“记载更多”显示
+          that.setData({
+            hasMore: true
+          })
+        }
+        wx.stopPullDownRefresh()
+      } else { //如果条目总数为0,底部的‘加载更多’不显示
+        that.setData({
+          showOrder: false
+        })
+        wx.stopPullDownRefresh()
+      }
+    })
+   
+  },
+  onReachBottom: function () {
+    if (this.data.hasMore == true) { //如果更多订单为1
+      if (!this.data.hasTouched) { //如果没有在请求中，发送请求
+        util.hasTouched(500, this) //间隔时间内不能再次出发
+        let page = this.data.page + 1; //触发一次滑动到底，page页数+1
+        orderHttp.getProductOrderList(page, (d, p) => { //获取订单列表
+          this.setData({
+            hisOrderList: this.data.hisOrderList.concat(d.product_order_list), //把新得到的订单推到现有数组里
+            page: page,
+            hasMore: p.more == '1' ? true : false
+          })
+        })
+      } else {
+        console.log('刷新过于频繁，请求不发送')
+      }
+    } else {
+      console.log('没有更多订单，不发起请求')
+    }
+  },
 })
