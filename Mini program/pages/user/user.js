@@ -4,7 +4,7 @@ let memberHttp = require('../../service/member-http.service.js')
 let util = require('../../utils/util.js')
 Page({
   data: {
-    userInfo: {},
+    avatarUrl: '',
     hasUserInfo: false,
     hasIconImage:false,
     phoneNumber:''
@@ -47,12 +47,15 @@ Page({
         if (res.authSetting['scope.userInfo']){//如果头像同意过授权，从后端获取用头像url
           memberHttp.getMemberDetail( (d)=>{
             this.setData({
-              userInfo:d.member_info,
+              avatarUrl: d.member_info.icon_image.thumb,
               hasIconImage:true
             })
             app.globalData.avatarUrl = d.member_info.icon_image.thumb //把更新后的头像传给全局变量
           })
         }else{//如果没有userinfo授权,头像显示默认头像，默认头像可以通过点击发起授权界面
+        this.setData({
+          hasIconImage: false,
+        })
         }
       }
     })
@@ -78,7 +81,7 @@ Page({
         memberHttp.getMemberDetail((d) => {//从后端获取userinfo
 
           this.setData({
-            userInfo: d.member_info,
+            avatarUrl: d.member_info.icon_image.thumb,
             hasUserInfo: false,
             hasIconImage: true,
           })

@@ -2,7 +2,7 @@
 <view class="wrap">
   <view class="user-head">
     <view class="user-avatar">
-     <image wx:if="{{hasIconImage}}" src="{{userInfo.icon_image.thumb}}"></image>
+     <image wx:if="{{hasIconImage}}" src="{{avatarUrl}}"></image>
  
       <!-- <button wx:else class='default' bindtap='openAuthPage' ><icon class="zuoxiang icon-avatar"></icon>
       </button> -->

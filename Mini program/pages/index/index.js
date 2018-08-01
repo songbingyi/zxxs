@@ -31,8 +31,7 @@ Page({
                 raw_data: e.rawData
               }
 
-              //测试开始
-
+              //JS运行到index页面，如果requestOK==true 直接发起用户信息请求，如果为false，在APP注册一个用户信息请求函数，在APP运行到请求时可以进行
               if (app.globalData.requestOK == true) {
                 console.log('requestOK == true，直接发起请求')
                 memberHttp.setWechatMiniProgramMemberInfo(submitInfo, () => { //加密信息发给后端
@@ -53,46 +52,9 @@ Page({
                     })
                   })
                 }
-
               }
-
-              //测试结束
-
-              // wx.getStorage({
-              //   key: 'member_id',
-              //   success: function(res) {
-              //     console.log('已经存在member_id，直接发起请求')
-              //     memberHttp.setWechatMiniProgramMemberInfo(submitInfo, () => { //加密信息发给后端
-              //       memberHttp.getMemberDetail((d) => { //从后端获取头像
-              //         that.setData({
-              //           avatarUrl: d.member_info.icon_image.thumb,
-              //         })
-              //       })
-              //     })
-              //   },
-              //   fail: () => {//如果缓存没有member_id，在APP里注册函数，等待APP执行
-              //     app.syncallback = () => {
-              //       memberHttp.setWechatMiniProgramMemberInfo(submitInfo, () => { //加密信息发给后端
-              //         memberHttp.getMemberDetail((d) => { //从后端获取头像
-              //           this.setData({
-              //             avatarUrl: d.member_info.icon_image.thumb,
-              //           })
-              //         })
-              //       })
-              //     }
-              //     console.log('不存在member_id，回调发起请求')
-              //   }
-              // })
             }
           })
-
-          // memberHttp.getMemberDetail((d) => {
-          //   console.log('外部调用')
-          //   this.setData({
-          //     avatarUrl: d.member_info.icon_image.thumb,
-          //     hasUserInfo: true
-          //   })
-          // })
         } else { //如果没有同意授权,拉起授权按钮
           this.setData({
             hasUserInfo: false
@@ -134,13 +96,13 @@ Page({
     //请求base类接口
     // baseHttp.getWarehouseCategoryList((d) => {
     // })
-    baseHttp.getPaymentCodeList((d) => {
-      this.setData({
-        payment_code_list: d.payment_code_list
-      })
-    })
-    baseHttp.getProductOrderStatusList((d) => {
-    })
+    // baseHttp.getPaymentCodeList((d) => {
+    //   this.setData({
+    //     payment_code_list: d.payment_code_list
+    //   })
+    // })
+    // baseHttp.getProductOrderStatusList((d) => {
+    // })
     //请求base类接口结束
 
   },
@@ -174,7 +136,7 @@ Page({
         if (d.member_auth_info.member_deduct_contract_auth_status == '0') { //如果没有签约代扣，支付方式全局变量设置为微信支付
           app.globalData.payment_code_info = this.data.payment_code_list[0]
         }
-          var containerNo = 'CH8NMWNW4'; //保存货柜编号 TODO：后期改为硬件动态获取
+        var containerNo = 'CH8NMWNW4'; //保存货柜编号 TODO：后期改为硬件动态获取
         orderHttp.addProductOrder(containerNo, (d, status) => { //给后端传递货柜编号，获取订单编号ID，申请开门
 
           if (status) { //判断是否开门成功————如果开门
@@ -191,9 +153,9 @@ Page({
               }
             }) //获取仓库分类结束
           } else { //判断是否开门成功————如果开门失败
-          wx.hideLoading()
+            wx.hideLoading()
             let errorMsg = d.status.error_desc, //错误提示
-              errorCode = d.status.error_code;//错误代码
+              errorCode = d.status.error_code; //错误代码
             switch (errorCode) {
               case '3005':
                 wx.showModal({
@@ -201,34 +163,37 @@ Page({
                   content: '货柜已无商品，请联系客服补货',
                   showCancel: true,
                   confirmText: '联系客服',
-                  success: function (res) {
-                    if (res.confirm) {//用户点击确定
-                      wx.makePhoneCall({//拨打客服电话
+                  success: function(res) {
+                    if (res.confirm) { //用户点击确定
+                      wx.makePhoneCall({ //拨打客服电话
                         phoneNumber: app.globalData.CSNumber
                       })
                     }
                   }
-                });break;
+                });
+                break;
 
               case '3004':
                 wx.showModal({
                   title: '提示',
                   content: errorMsg,
                   showCancel: false,
-                  success: function (res) {
+                  success: function(res) {
                     wx.navigateTo({
                       url: '../user/orderlist/orderlist'
                     })
                   }
-                }); break;
+                });
+                break;
 
 
-                default:
+              default:
                 wx.showModal({
                   title: '提示',
                   content: errorMsg,
                   showCancel: false
-                });break;
+                });
+                break;
             }
             // wx.showModal({
             //   title: '提示',
@@ -338,10 +303,9 @@ Page({
         title: '加载中...',
         duration: 600,
       })
-    } else {
-    }
+    } else {}
   },
-  hideUserInfo() {//点击授权的同时，去掉授权弹窗
+  hideUserInfo() { //点击授权的同时，去掉授权弹窗
     this.setData({
       hasUserInfo: true,
     })

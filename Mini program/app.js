@@ -16,12 +16,13 @@ App({
           success: () => { //判断微信端sessionkey————如果checkSession成功
             console.log('打开小程序检测:sessionkey可以用')
             memberHttp.loginWithToken((d, status) => { //把token和member_id传给后端
+              //this.globalData.requestOK = false
               if (status) { //判断本地TOKEN是否可用————如果status为真，服务器端token可用，把新的token和id存入缓存
                 console.log("用token获取新的token完成，")
                 wx.setStorageSync('token', d.token);
                 wx.setStorageSync('member_id', d.member_id);
               } else { //判断本地TOKEN是否可用————如果status不可用，发起wechatLogin重新登录
-              this.globalData.requestOK = false
+
                 console.log("token已经过期，发起wechatlgoin")
                 wechatLogin(this)
               }

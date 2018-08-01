@@ -2,6 +2,7 @@ const memberHttp = require('../service/member-http.service.js')
 
 var wechatLogin = function(t) {
   t.globalData.requestOK = false
+  console.log('发起wechatlogin requestOK设置为false')
   wx.login({
 
     success: (res) => {
@@ -17,12 +18,14 @@ var wechatLogin = function(t) {
           wx.setStorageSync('token', d.token);
           wx.setStorageSync('member_id', d.member_id);
           t.globalData.requestOK = true;
+          console.log('loginWithWechat成功 requestOK设置为true')
+          
       // 由于 wx.login 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
 
           if (t.syncallback) {
             t.syncallback()
-            console.log('回调发起请求:t.syncallback')
+            console.log('login里回调发起请求:t.syncallback')
           }else{
             console.log('t.syncallback不存在')
           }
@@ -38,14 +41,18 @@ var wechatLogin = function(t) {
           })
         })
       } else {
-        wx.showToast({
-          title: '登录失败，请关闭小程序重新登录' + res.errMsg,
+        wx.showModal({
+          title: '提示',
+          content: '登录失败，请关闭小程序重新登录' + res.errMsg,
+          showCancel: false
         })
       }
     },
     fail:()=>{
-      wx.showToast({
-        title: '登录失败，请检查网络状况'
+      wx.showModal({
+        title: '提示',
+        content: '登录失败，请检查网络状况',
+        showCancel:false
       })
     }
   })
