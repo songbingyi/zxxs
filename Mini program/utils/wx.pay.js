@@ -12,8 +12,8 @@ let wxPay = (failCallback) => {
                 'paySign': paymentParam.paySign,
                 'success': () => {
                     wx.showToast({
-                        title: '支付成功',
-                        icon: 'success',
+                        title: '订单查询中',
+                        icon: 'loading',
                         duration: 2000
                     })
                     orderHttp.getProductOrderDetail((d) => { //支付成功后，用户点击确认按钮时，询问后台订单状态，如果该订单是已付款，跳转notice/order-success页面
@@ -22,6 +22,11 @@ let wxPay = (failCallback) => {
                             wx.reLaunch({
                                 url: '/pages/notice/order-success/order-success',
                             })
+                        }else{//如果订单不是已付款状态，存入缓存，跳转至首页，首页读取缓存，跳转orderlist
+                          wx.setStorageSync("wrongOrder", true)
+                          wx.reLaunch({
+                            url: '/pages/index/index',
+                          })
                         }
 
                     })

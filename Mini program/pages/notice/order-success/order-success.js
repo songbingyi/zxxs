@@ -4,18 +4,18 @@ Page({
      * 页面的初始数据
      */
     data: {
-
+      backToIndex:"",
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function(options) {
-
     },
-    backToIndex: () => {
+    backToIndex: function() {
+      clearTimeout(this.data.backToIndex)
         wx.reLaunch({
-            url: '/pages/index/index',
+          url: '/pages/index/index',
         })
     },
     /**
@@ -28,12 +28,14 @@ Page({
     /**
      * 生命周期函数--监听页面显示
      */
-    onShow: function() {
-        let backToIndex = setTimeout(function(){
+    onShow: function() {//5秒钟后跳转首页，不可返回
+        this.setData({
+          backToIndex: setTimeout(function () {
             wx.reLaunch({
-                url: '/pages/index/index',
+              url: '/pages/index/index',
             })
-        }, 4000)
+          }, 5000)
+        })
     },
 
 
@@ -48,7 +50,9 @@ Page({
      * 生命周期函数--监听页面卸载
      */
     onUnload: function() {
-
+      wx.showLoading({
+        title: '载入中',
+      })
     },
 
     /**

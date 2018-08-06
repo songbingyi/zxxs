@@ -2,8 +2,8 @@
   <view class="page-title" id='page-title'>
     <text class="title">结算</text>
   </view>
-  <view class="content">
-    <scroll-view bindscrolltolower="lower" style="height:{{scrollHeight}}px;" scroll-y='true' lower-threshold='20'>
+  <!-- <view class="content"> -->
+    <scroll-view bindscrolltolower="lower" style="height:{{scrollHeight}}px;position:relative;top:{{topHeight}}px" scroll-y='true' lower-threshold='20'>
       <!-- <scroll-view bindscrolltolower="lower" style="height:400px;" scroll-y='true' lower-threshold='20'> -->
       <view class="order-list">
         <view class="order-item" wx:for="{{productList}}" wx:key="{{index}}">
@@ -29,9 +29,9 @@
         <text>加载更多</text>
       </view>
     </scroll-view>
-  </view>
+  <!-- </view> -->
 
-  <view class="pay-count-box" id='payBox'>
+  <view class="pay-count-box" id='payBox' >
     <view class="count-box">
       <text>应支付：</text>
       <text class="count-price">￥<text class="count">{{totalPrice}}</text></text>

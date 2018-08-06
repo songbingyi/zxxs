@@ -15,7 +15,23 @@ Page({
     albumDisabled: true,
     bindDisabled: false
   },
-  onLoad: function() {
+  onLoad: function(res) {
+
+      //缓存里查看是否有异常订单,如果有跳转至orderlist
+    wx.getStorage({
+      key: 'wrongOrder',
+      success: function (res) {
+        wx.showLoading({
+          title: '载入中',
+        })
+        if (res.data == true) {
+          wx.navigateTo({
+            url: '/pages/user/orderlist/orderlist?wrongorder=1',
+          })
+        }
+      },
+    })
+
     //判断用户是否已经同意获取头像信息
     let that = this;
     wx.getSetting({
@@ -63,46 +79,20 @@ Page({
       }
     })
 
-    //测试后端接口
-    // wx.request({
-    //   url: 'http://218.244.158.175/zxxs_server/api_client/index.php/',
-    //   data: {
-    //     device_type: '50',
-    //     device_version: '1.0',
-    //     version_code: '1',
-    //     channel: '1001', //20001_website
-    //     token: '8342be59ec4e97a887adaeb472b5356c',
-    //     route: 'order/product_order/addProductOrder',
-    //     jsonText: JSON.stringify(
-    //       {
-    //       member_id:"1",
-    //       container_no:"CB7IIRVPT"}
-    //     )
-    //   },
-    //   header: {
-    //     'content-type': 'application/x-www-form-urlencoded'
-    //   },
-    //   method: "POST",
-    //   success: function (d) {
-    //     console.log('Result => 111', JSON.stringify(d.data));
-
-    //   },
-    //   fail: function (e) {
-    //     console.loh('提示', '请求失败:' + JSON.stringify(e));
-    //   }
-    // });
-    //测试后端接口结束
 
     //请求base类接口
+    //基本-货柜类型
     // baseHttp.getWarehouseCategoryList((d) => {
     // })
-    // baseHttp.getPaymentCodeList((d) => {
-    //   this.setData({
-    //     payment_code_list: d.payment_code_list
-    //   })
-    // })
-    // baseHttp.getProductOrderStatusList((d) => {
-    // })
+    //基本-支付类型
+    baseHttp.getPaymentCodeList((d) => {
+      this.setData({
+        payment_code_list: d.payment_code_list
+      })
+    })
+    //基本-订单状态
+    baseHttp.getProductOrderStatusList((d) => {
+    })
     //请求base类接口结束
 
   },

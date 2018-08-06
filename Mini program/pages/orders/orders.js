@@ -16,7 +16,8 @@ Page({
     hasMore: false,
     hasTouched: false,
     hasClicked:false,
-    scrollHeight: 200,
+    scrollHeight: '',
+    topHeight:''
   },
 
   //onReady navigate返回后可以继续保持数据 TODO 应该不存在返回状态 暂时改为onload
@@ -33,7 +34,8 @@ Page({
           //获取底部高度,单位px
           wx.createSelectorQuery().select('#payBox').boundingClientRect((rect) => {
             this.setData({
-              scrollHeight: res.windowHeight - topheight - rect.height //设置滚动区域的高度，单位px
+              scrollHeight: res.windowHeight - topheight - rect.height, //设置滚动区域的高度，单位px
+              topHeight: topheight
             })
           }).exec()
         }).exec()
@@ -179,6 +181,7 @@ Page({
     console.log('禁止连续点击')
   }
   },
+  //触发下拉刷新的功能
   lower() {
       if (this.data.hasMore == true) { //如果更多订单为1
         if (!this.data.hasTouched) { //如果没有在请求中，发送请求

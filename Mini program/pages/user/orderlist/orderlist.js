@@ -55,6 +55,22 @@ Page({
         })
       }
     })
+    if (options.wrongorder == "1"){
+        wx.showModal({
+          title: '提示',
+          content: '订单存在异常，请联系客服',
+          cancelText: '取消',
+          confirmText: '联系客服',
+          success:(res)=>{
+            if(res.confirm){//用户点击联系客服
+
+            }
+          }
+        })
+    }
+  },
+  onShow:function(){
+      wx.hideLoading()
   },
   lower() {
     if (this.data.hasMore == true) { //如果更多订单为1
@@ -138,6 +154,7 @@ Page({
     })
    
   },
+  //上滑刷新
   onReachBottom: function () {
     if (this.data.hasMore == true) { //如果更多订单为1
       if (!this.data.hasTouched) { //如果没有在请求中，发送请求

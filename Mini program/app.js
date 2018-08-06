@@ -4,10 +4,11 @@ const memberHttp = require('service/member-http.service.js');
 
 App({
   onLaunch: function(res) {
-    console.log('启动场景值',res)
+    console.log('启动场景值', res)
     wx.showLoading({
       title: '加载中',
     })
+
     wx.getStorage({
       key: "token",
       success: (res) => { //判断本地token————如果缓存里有token
@@ -41,14 +42,14 @@ App({
         console.log('首次打开小程序检测：缓存里没有token,发起wechatLogin')
         wechatLogin(this)
 
-
       }
     })
   },
   onShow: function(res) {
-    console.log('res.scene',res.scene)
+
+    console.log('res.scene', res.scene)
     wx.hideLoading()
-    if (res.scene == '1034'){
+    if (res.scene == '1034') {
       wx.redirectTo({
         url: '../index/index'
       })
@@ -89,11 +90,11 @@ App({
     orderList: [],
     pageCount: '10',
     payment_code_info: {
-      payment_code_id:'1',
-      payment_code_name:'wechat-weixinpay'
+      payment_code_id: '1',
+      payment_code_name: 'wechat-weixinpay'
     },
     avatarUrl: '',
-    requestOK:true,
-    CSNumber:'02968201798'//客服电话
+    requestOK: true,
+    CSNumber: '02968201798' //客服电话
   }
 })

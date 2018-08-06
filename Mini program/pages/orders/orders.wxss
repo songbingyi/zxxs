@@ -2,6 +2,11 @@
   padding: 0 40rpx;
   margin-bottom: 0;
 }
+#page-title {
+  position: fixed;
+  z-index: 100000;
+  top:0;
+}
 
 .order-item {
   display: flex;
@@ -136,12 +141,10 @@
   padding: 0rpx 0rpx 0rpx 40rpx;
   vertical-align: text-top;
   box-sizing: border-box;
-}
-
-.wrap {
-}
-
-.content {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
 }
 
 .weixin-pay-btn {
