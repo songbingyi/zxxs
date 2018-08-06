@@ -18,14 +18,13 @@ let wxPay = (failCallback) => {
                     })
                     orderHttp.getProductOrderDetail((d) => { //支付成功后，用户点击确认按钮时，询问后台订单状态，如果该订单是已付款，跳转notice/order-success页面
                         if (d.product_order_info.product_order_status_info.product_order_status_id == '2001') {
-            
-                            wx.reLaunch({
+                            wx.redirectTo({
                                 url: '/pages/notice/order-success/order-success',
                             })
                         }else{//如果订单不是已付款状态，存入缓存，跳转至首页，首页读取缓存，跳转orderlist
-                          wx.setStorageSync("wrongOrder", true)
-                          wx.reLaunch({
-                            url: '/pages/index/index',
+                         // wx.setStorageSync("wrongOrder", true)
+                            wx.redirectTo({
+                            url: '/pages/user/orderlist/orderlist?wrongorder=1',
                           })
                         }
 

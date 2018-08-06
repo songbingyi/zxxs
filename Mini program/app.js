@@ -46,15 +46,13 @@ App({
     })
   },
   onShow: function(res) {
-
-    console.log('res.scene', res.scene)
     wx.hideLoading()
     if (res.scene == '1034') {
       wx.redirectTo({
         url: '../index/index'
       })
     }
-    console.log(res)
+    
     if (res.scene === '1038') { // 场景值1038：从被打开的小程序返回
       const {
         appId,

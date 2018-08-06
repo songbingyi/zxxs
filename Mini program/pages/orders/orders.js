@@ -15,7 +15,6 @@ Page({
     page: 1,
     hasMore: false,
     hasTouched: false,
-    hasClicked:false,
     scrollHeight: '',
     topHeight:''
   },
@@ -73,11 +72,12 @@ Page({
           })
         }
       })
-      wx.hideLoading()
     })
     //根据授权状态决定支付方式
   },
-
+onShow:function(){
+wx.hideLoading()
+},
   //点击支付按钮后发起支付行为
   clickPayBtn() {
     if (this.data.hasTouched == false) {

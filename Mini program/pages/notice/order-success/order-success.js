@@ -14,8 +14,9 @@ Page({
     },
     backToIndex: function() {
       clearTimeout(this.data.backToIndex)
-        wx.reLaunch({
-          url: '/pages/index/index',
+        wx.navigateBack({
+          //url: '/pages/index/index',
+          delta:2
         })
     },
     /**
@@ -31,8 +32,9 @@ Page({
     onShow: function() {//5秒钟后跳转首页，不可返回
         this.setData({
           backToIndex: setTimeout(function () {
-            wx.reLaunch({
-              url: '/pages/index/index',
+              wx.navigateBack({
+              //url: '/pages/index/index',
+                delta: 2
             })
           }, 5000)
         })
@@ -43,16 +45,14 @@ Page({
      * 生命周期函数--监听页面隐藏
      */
     onHide: function() {
-
+        clearTimeout(this.data.backToIndex)
     },
 
     /**
      * 生命周期函数--监听页面卸载
      */
     onUnload: function() {
-      wx.showLoading({
-        title: '载入中',
-      })
+        clearTimeout(this.data.backToIndex)
     },
 
     /**
