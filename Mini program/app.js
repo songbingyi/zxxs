@@ -30,7 +30,7 @@ App({
           },
           fail: () => { //判断微信端sessionkey————如果sessionkey过期，发起wx.login
             console.log('sessionkey已经过期')
-            wechatLogin()
+            wechatLogin(this)
 
 
           }
