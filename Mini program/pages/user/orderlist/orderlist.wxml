@@ -6,10 +6,10 @@
     <text class="title">订单</text>
   </view>
 
-  <view class="weui-loadmore" hidden="{{isHideLoadMore}}">
+  <!-- <view class="weui-loadmore" hidden="{{isHideLoadMore}}">
     <view class="weui-loading"></view>
     <view class="weui-loadmore__tips">正在刷新</view>
-  </view>
+  </view> -->
 
   <!--滚动到底加载更多，距离底部20PX的时候触发;下拉超过30px的时候出发刷新-->
   <!-- <scroll-view wx:if="{{showOrder}}" bindscrolltolower="lower" style="height:{{scrollHeight}}px;top:{{topHeight}}px" scroll-y="true" lower-threshold='10' bindscrolltoupper="toper" upper-threshold="10" upper-threshold="-50" bindscrolltoupper='toper'> -->

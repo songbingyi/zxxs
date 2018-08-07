@@ -94,5 +94,12 @@ App({
     avatarUrl: '',
     requestOK: true,
     CSNumber: '02968201798' //客服电话
+  },
+  //转发事件
+  onShareAppMessage: function (res) {
+    return {
+      title: '坐享小食',
+      path: '/pages/index/index'
+    }
   }
 })

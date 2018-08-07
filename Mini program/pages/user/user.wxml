@@ -11,8 +11,10 @@
 
     </view>
 
-    <text wx:if="{{phoneNumber}}">{{phoneNumber}}</text>
-    <button wx:else open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" plain="true" style='border:none'>未登录</button>
+    <text class='phoneNumberText' wx:if="{{phoneNumber}}">{{phoneNumber}}</text>
+
+    <button  class='loginBtn' wx:else open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"><text>请登录</text></button>
+
   </view>
   <view class="weui-cells weui-cells_after-title">
     <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active" url="orderlist/orderlist">
@@ -33,13 +35,3 @@
     </button>
   </view>
 </view>
-<!-- <view class="userInfoBox" wx:if="{{hasUserInfo}}">
-  <view class="userInfoTitle">
-    标题
-  </view>
-  <view class="userInfoContent">坐享小食小程序需要您授权获取信息，点击“开始授权”进行授权</view>
-
-  <button open-type="getUserInfo" bindgetuserinfo="agreeGetUser" plain="true" type='primary' style='border:none' class="userAgreeBtn" lang="zh_CN">开始授权</button>
-
-</view>
-<view class="userInfoMask"  wx:if="{{hasUserInfo}}"></view> -->

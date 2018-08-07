@@ -132,8 +132,8 @@ font-size: 28rpx;
   line-height: 20px;
 }
 
-.weui-loadmore__tips {
+/* .weui-loadmore__tips {
   display: inline-block;
   vertical-align: middle;
   color: #9b9b9b
-}
+} */

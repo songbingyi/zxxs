@@ -14,7 +14,7 @@ Page({
         hasMore: false, //是否隐藏底部的加载更多
         hasTouched: false,
         scrollHeight: '', //滚动区域的高度
-        isHideLoadMore: true, //是否隐藏顶部的刷新
+        //isHideLoadMore: true, //是否隐藏顶部的刷新
         topHeight: '',
         showOrder: true //是否显示空空如也
     },
@@ -66,6 +66,9 @@ Page({
                             phoneNumber: app.globalData.CSNumber
                         })
                     } else if (res.cancel) {//用户点击取消刷新页面
+                    wx.showLoading({
+                      title: '载入中',
+                    })
                         this.onPullDownRefresh()
                         
                     }
@@ -142,7 +145,6 @@ Page({
         wx.stopPullDownRefresh()
         orderHttp.getProductOrderList(1, (d, p) => { //页面获取page1数据
             if (p.total > 0) { //如果条目总数为真
-                console.log("123")
                 this.setData({
                     hisOrderList: d.product_order_list //渲染后台数据
                 })
@@ -157,8 +159,9 @@ Page({
                     showOrder: false
                 })
             }
+            wx.hideLoading()
         })
-
+      wx.hideLoading()
     },
     //上滑刷新
     onReachBottom: function() {

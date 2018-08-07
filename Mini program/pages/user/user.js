@@ -5,9 +5,9 @@ let util = require('../../utils/util.js')
 Page({
   data: {
     avatarUrl: '',
-    hasUserInfo: false,
-    hasIconImage:false,
-    phoneNumber:''
+    //hasUserInfo: false,
+    hasIconImage:true,
+    phoneNumber:" "
   },
   callCS: function () {
     wx.makePhoneCall({
@@ -37,7 +37,7 @@ Page({
             this.setData({
               phoneNumber: ''
             })
-           // util.storageMethod.getSync('userPhoneNum', '')
+          
           }
         })
       }
@@ -63,11 +63,11 @@ Page({
 
   
   },
-  openAuthPage(){//拉起头像授权界面
-    this.setData({
-      hasUserInfo: true,
-    })
-  },
+  // openAuthPage(){//拉起头像授权界面
+  //   this.setData({
+  //     hasUserInfo: true,
+  //   })
+  // },
   agreeGetUser(e) { //点击头像授权按钮
     if (e.detail.userInfo) { //用户点击同意授权,从后端获取memberInfo，设置到视图层
 
@@ -82,7 +82,7 @@ Page({
 
           this.setData({
             avatarUrl: d.member_info.icon_image.thumb,
-            hasUserInfo: false,
+            //hasUserInfo: false,
             hasIconImage: true,
           })
           app.globalData.avatarUrl = d.member_info.icon_image.thumb //把更新后的头像传给全局变量
@@ -94,9 +94,9 @@ Page({
         duration: 600,
       })
     } else {//用户点击拒绝，授权按钮消失，仍然显示默认头像
-      this.setData({
-        hasUserInfo: false,
-      })
+      // this.setData({
+      //   hasUserInfo: false,
+      // })
     }
   },
   getPhoneNumber(res){

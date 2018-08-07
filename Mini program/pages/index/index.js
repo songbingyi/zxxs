@@ -12,8 +12,8 @@ Page({
     avatarUrl: '',
     hasUserInfo: true,
     indexLogo: "http://218.244.158.175/static/zuoxiang/images/logo_indexbg.png",
-    albumDisabled: true,
-    bindDisabled: false
+    //albumDisabled: true,
+    //bindDisabled: false
   },
   onLoad: function(res) {
 
@@ -231,5 +231,12 @@ Page({
     this.setData({
       hasUserInfo: true,
     })
+  },
+  //转发事件
+  onShareAppMessage: function (res) {
+    return {
+      title: '坐享小食',
+      path: '/pages/index/index'
+    }
   }
 })
