@@ -53,7 +53,7 @@ Page({
             }
         })
         //如果支付成功，但是订单状态不是已付款，则弹出提示
-        if (options.wrongorder !== "1") {
+        if (options.wrongorder == "1") {
             wx.showModal({
                 title: '提示',
                 content: '上笔订单可能存在异常，请联系客服',
